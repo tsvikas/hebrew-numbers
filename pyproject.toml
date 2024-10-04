@@ -86,7 +86,7 @@ ignore = [
   #"FIX",      # flake8-fixme
   #"ERA001",   # eradicate/commented-out-code
   #"PLR091",   # PyLint-Refactor/too-many-*
-  #"TRY003",   # tryceratops/raise-vanilla-args
+  "TRY003",   # tryceratops/raise-vanilla-args
 ]
 
 [tool.ruff.lint.flake8-annotations]
