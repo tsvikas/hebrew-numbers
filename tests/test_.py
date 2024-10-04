@@ -1,2 +1,2 @@
 def test_import():
-    import hebrew_numerals  # noqa: F401
+    import hebrew_numbers  # noqa: F401

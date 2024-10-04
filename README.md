@@ -1,4 +1,4 @@
-hebrew_numerals
+hebrew_numbers
 ==========
 ## Usage
 

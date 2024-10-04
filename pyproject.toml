@@ -1,12 +1,12 @@
 [tool.poetry]
-name = "hebrew_numerals"
+name = "hebrew_numbers"
 version = "0.0.0"  # managed with poetry-dynamic-versioning
 description = ""
 authors = ["Tsvika S <tsvikas@gmail.com>"]
 # optional settings:
 license = "AGPL-3.0-or-later"
 readme = "README.md"
-repository = "https://github.com/tsvikas/hebrew_numerals"
+repository = "https://github.com/tsvikas/hebrew_numbers"
 
 [tool.poetry.dependencies]
 python = ">=3.12,<3.13"
@@ -38,12 +38,12 @@ build-backend = "poetry_dynamic_versioning.backend"
 
 
 [tool.pytest.ini_options]
-addopts = "--doctest-modules --cov=hebrew_numerals"
+addopts = "--doctest-modules --cov=hebrew_numbers"
 
 
 [tool.mypy]
 mypy_path = "stubs"
-packages = "hebrew_numerals"
+packages = "hebrew_numbers"
 strict = true
 
 
@@ -97,7 +97,7 @@ mypy-init-return = true  # allow you to omit the return type annotation for __in
 allow-dict-calls-with-keyword-arguments = true
 
 [tool.ruff.lint.per-file-ignores]
-"hebrew_numerals/" = [
+"hebrew_numbers/" = [
   "PT",       # flake8-pytest-style
 ]
 "tests/*.py" = [
