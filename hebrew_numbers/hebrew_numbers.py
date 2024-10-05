@@ -171,15 +171,13 @@ def number(  # noqa: C901
             raise ValueError("Construct can't be zero")
         return "אפס"
 
-    def add_suffix(
-        number: int, suffix: str, grammatical_gender: GrammaticalGender
-    ) -> str:
-        if number == 0:
+    def add_suffix(n: int, suffix: str, grammatical_gender: GrammaticalGender) -> str:
+        if n == 0:
             return ""
-        if number == 1:
+        if n == 1:
             return suffix
         prefix = join_words(
-            decompose_hundreds(number, grammatical_gender, ConstructState.ABSOLUTE)
+            decompose_hundreds(n, grammatical_gender, ConstructState.ABSOLUTE)
         )
         return f"{prefix} {suffix}"
 
