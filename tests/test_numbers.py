@@ -47,14 +47,11 @@ from hebrew_numbers import ConstructState, GrammaticalGender
         ),
     ],
 )
-def test_cardinal_feminine(n: int, s: str):
+def test_number_feminine_absolute(n: int, s: str):
     assert (
-        hebrew_numbers.cardinal_number(
-            n, GrammaticalGender.FEMININE, ConstructState.ABSOLUTE
-        )
+        hebrew_numbers.number(n, GrammaticalGender.FEMININE, ConstructState.ABSOLUTE)
         == s
     )
-    assert hebrew_numbers.cardinal_number_absolute_feminine(n) == s
 
 
 @pytest.mark.parametrize(
@@ -100,14 +97,11 @@ def test_cardinal_feminine(n: int, s: str):
         ),
     ],
 )
-def test_cardinal_masculine(n: int, s: str):
+def test_number_masculine_absolute(n: int, s: str):
     assert (
-        hebrew_numbers.cardinal_number(
-            n, GrammaticalGender.MASCULINE, ConstructState.ABSOLUTE
-        )
+        hebrew_numbers.number(n, GrammaticalGender.MASCULINE, ConstructState.ABSOLUTE)
         == s
     )
-    assert hebrew_numbers.cardinal_number_absolute_masculine(n) == s
 
 
 @pytest.mark.parametrize(
@@ -152,14 +146,11 @@ def test_cardinal_masculine(n: int, s: str):
         ),
     ],
 )
-def test_cardinal_feminine_construct(n: int, s: str):
+def test_number_feminine_construct(n: int, s: str):
     assert (
-        hebrew_numbers.cardinal_number(
-            n, GrammaticalGender.FEMININE, ConstructState.CONSTRUCT
-        )
+        hebrew_numbers.number(n, GrammaticalGender.FEMININE, ConstructState.CONSTRUCT)
         == s
     )
-    assert hebrew_numbers.cardinal_number_construct_feminine(n) == s
 
 
 @pytest.mark.parametrize(
@@ -204,14 +195,11 @@ def test_cardinal_feminine_construct(n: int, s: str):
         ),
     ],
 )
-def test_cardinal_masculine_construct(n: int, s: str):
+def test_number_masculine_construct(n: int, s: str):
     assert (
-        hebrew_numbers.cardinal_number(
-            n, GrammaticalGender.MASCULINE, ConstructState.CONSTRUCT
-        )
+        hebrew_numbers.number(n, GrammaticalGender.MASCULINE, ConstructState.CONSTRUCT)
         == s
     )
-    assert hebrew_numbers.cardinal_number_construct_masculine(n) == s
 
 
 @pytest.mark.parametrize(

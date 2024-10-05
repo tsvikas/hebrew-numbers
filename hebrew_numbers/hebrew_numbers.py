@@ -159,8 +159,7 @@ def decompose_hundreds(
     return [hundreds_word, tenth_word, last_digits_word]
 
 
-# מספר מונה
-def cardinal_number(  # noqa: C901
+def number(  # noqa: C901
     n: int, grammatical_gender: GrammaticalGender, construct_state: ConstructState
 ) -> str:
     if n >= 1_000_000_000_000_000:  # noqa: PLR2004
@@ -239,14 +238,15 @@ def cardinal_number(  # noqa: C901
     return join_words(words)
 
 
-def count_number(
+# מספר מונה
+def cardinal_number(
     n: int, grammatical_gender: GrammaticalGender, *, is_definite_noun: bool = False
 ) -> str:
     if n < 0:
         raise ValueError("must use a non-negative number")
     if 2 <= n <= (10 if is_definite_noun else 2):  # noqa: PLR2004
-        return cardinal_number(n, grammatical_gender, ConstructState.CONSTRUCT)
-    return cardinal_number(n, grammatical_gender, ConstructState.ABSOLUTE)
+        return number(n, grammatical_gender, ConstructState.CONSTRUCT)
+    return number(n, grammatical_gender, ConstructState.ABSOLUTE)
 
 
 def count_noun(
@@ -257,7 +257,7 @@ def count_noun(
     *,
     is_definite_noun: bool = False,
 ) -> str:
-    s = count_number(n, grammatical_gender, is_definite_noun=is_definite_noun)
+    s = cardinal_number(n, grammatical_gender, is_definite_noun=is_definite_noun)
     if n == 1:
         return f"{singular_form} {'ה' if is_definite_noun else ''}{s}"
     return f"{s} {plural_form}"
@@ -266,9 +266,9 @@ def count_noun(
 # מספר סתמי
 def indefinite_number(n: int) -> str:
     if n < 0:
-        s = cardinal_number(-n, GrammaticalGender.FEMININE, ConstructState.ABSOLUTE)
+        s = number(-n, GrammaticalGender.FEMININE, ConstructState.ABSOLUTE)
         return f"מינוס {s}"
-    return cardinal_number(n, GrammaticalGender.FEMININE, ConstructState.ABSOLUTE)
+    return number(n, GrammaticalGender.FEMININE, ConstructState.ABSOLUTE)
 
 
 # מספר סודר
@@ -276,7 +276,7 @@ def ordinal_number(n: int, grammatical_gender: GrammaticalGender) -> str:
     if n <= 0:
         raise ValueError("Ordinal numbers are only defined for positive integers")
     if n > 10:  # noqa: PLR2004
-        return cardinal_number(n, grammatical_gender, ConstructState.ABSOLUTE)
+        return number(n, grammatical_gender, ConstructState.ABSOLUTE)
     if grammatical_gender == GrammaticalGender.FEMININE:
         return {
             1: "ראשונה",
@@ -306,26 +306,6 @@ def ordinal_number(n: int, grammatical_gender: GrammaticalGender) -> str:
     raise ValueError("Invalid grammatical state")
 
 
-cardinal_number_absolute = functools.partial(
-    cardinal_number, construct_state=ConstructState.ABSOLUTE
-)
-cardinal_number_absolute_masculine = functools.partial(
-    cardinal_number_absolute, grammatical_gender=GrammaticalGender.MASCULINE
-)
-cardinal_number_absolute_feminine = functools.partial(
-    cardinal_number_absolute, grammatical_gender=GrammaticalGender.FEMININE
-)
-
-cardinal_number_construct = functools.partial(
-    cardinal_number, construct_state=ConstructState.CONSTRUCT
-)
-cardinal_number_construct_masculine = functools.partial(
-    cardinal_number_construct, grammatical_gender=GrammaticalGender.MASCULINE
-)
-cardinal_number_construct_feminine = functools.partial(
-    cardinal_number_construct, grammatical_gender=GrammaticalGender.FEMININE
-)
-
 ordinal_number_masculine = functools.partial(
     ordinal_number, grammatical_gender=GrammaticalGender.MASCULINE
 )
@@ -333,11 +313,11 @@ ordinal_number_feminine = functools.partial(
     ordinal_number, grammatical_gender=GrammaticalGender.FEMININE
 )
 
-count_number_masculine = functools.partial(
-    count_number, grammatical_gender=GrammaticalGender.MASCULINE
+cardinal_number_masculine = functools.partial(
+    cardinal_number, grammatical_gender=GrammaticalGender.MASCULINE
 )
-count_number_feminine = functools.partial(
-    count_number, grammatical_gender=GrammaticalGender.FEMININE
+cardinal_number_feminine = functools.partial(
+    cardinal_number, grammatical_gender=GrammaticalGender.FEMININE
 )
 count_noun_masculine = functools.partial(
     count_noun, grammatical_gender=GrammaticalGender.MASCULINE
