@@ -229,6 +229,7 @@ def test_cardinal_masculine_construct(n: int, s: str):
         (1000000000, "מיליארד"),
         (1000000000000, "טריליון"),
         (-1000000000000, "מינוס טריליון"),
+        (-999, "מינוס תשע מאות תשעים ותשע"),
     ],
 )
 def test_indefinite_number(n: int, s: str):
@@ -246,6 +247,7 @@ def test_indefinite_number(n: int, s: str):
         (12, "שתיים־עשרה"),
         (13, "שלוש־עשרה"),
         (20, "עשרים"),
+        (21, "עשרים ואחת"),
     ],
 )
 def test_ordinal_number_feminine(n: int, s: str):
@@ -264,6 +266,7 @@ def test_ordinal_number_feminine(n: int, s: str):
         (12, "שניים־עשר"),
         (13, "שלושה־עשר"),
         (20, "עשרים"),
+        (21, "עשרים ואחד"),
     ],
 )
 def test_ordinal_number_masculine(n: int, s: str):
