@@ -1,6 +1,7 @@
 import pytest
 
 import hebrew_numbers
+from hebrew_numbers import ConstructState, GrammaticalGender
 
 
 @pytest.mark.parametrize(
@@ -49,9 +50,7 @@ import hebrew_numbers
 def test_cardinal_feminine(n: int, s: str):
     assert (
         hebrew_numbers.cardinal_number(
-            n,
-            hebrew_numbers.GrammaticalGender.FEMININE,
-            hebrew_numbers.ConstructState.ABSOLUTE,
+            n, GrammaticalGender.FEMININE, ConstructState.ABSOLUTE
         )
         == s
     )
@@ -104,9 +103,7 @@ def test_cardinal_feminine(n: int, s: str):
 def test_cardinal_masculine(n: int, s: str):
     assert (
         hebrew_numbers.cardinal_number(
-            n,
-            hebrew_numbers.GrammaticalGender.MASCULINE,
-            hebrew_numbers.ConstructState.ABSOLUTE,
+            n, GrammaticalGender.MASCULINE, ConstructState.ABSOLUTE
         )
         == s
     )
@@ -158,9 +155,7 @@ def test_cardinal_masculine(n: int, s: str):
 def test_cardinal_feminine_construct(n: int, s: str):
     assert (
         hebrew_numbers.cardinal_number(
-            n,
-            hebrew_numbers.GrammaticalGender.FEMININE,
-            hebrew_numbers.ConstructState.CONSTRUCT,
+            n, GrammaticalGender.FEMININE, ConstructState.CONSTRUCT
         )
         == s
     )
@@ -212,9 +207,7 @@ def test_cardinal_feminine_construct(n: int, s: str):
 def test_cardinal_masculine_construct(n: int, s: str):
     assert (
         hebrew_numbers.cardinal_number(
-            n,
-            hebrew_numbers.GrammaticalGender.MASCULINE,
-            hebrew_numbers.ConstructState.CONSTRUCT,
+            n, GrammaticalGender.MASCULINE, ConstructState.CONSTRUCT
         )
         == s
     )
@@ -256,9 +249,7 @@ def test_indefinite_number(n: int, s: str):
     ],
 )
 def test_ordinal_number_feminine(n: int, s: str):
-    assert (
-        hebrew_numbers.ordinal_number(n, hebrew_numbers.GrammaticalGender.FEMININE) == s
-    )
+    assert hebrew_numbers.ordinal_number(n, GrammaticalGender.FEMININE) == s
     assert hebrew_numbers.ordinal_number_feminine(n) == s
 
 
@@ -276,8 +267,5 @@ def test_ordinal_number_feminine(n: int, s: str):
     ],
 )
 def test_ordinal_number_masculine(n: int, s: str):
-    assert (
-        hebrew_numbers.ordinal_number(n, hebrew_numbers.GrammaticalGender.MASCULINE)
-        == s
-    )
+    assert hebrew_numbers.ordinal_number(n, GrammaticalGender.MASCULINE) == s
     assert hebrew_numbers.ordinal_number_masculine(n) == s
