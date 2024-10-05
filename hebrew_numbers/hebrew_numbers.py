@@ -270,17 +270,17 @@ def count_noun(
     *,
     is_definite_noun: bool = False,
 ) -> str:
-    s = cardinal_number(n, grammatical_gender, is_definite_noun=is_definite_noun)
+    n_str = cardinal_number(n, grammatical_gender, is_definite_noun=is_definite_noun)
     if n == 1:
-        return f"{singular_form} {'ה' if is_definite_noun else ''}{s}"
-    return f"{s} {plural_form}"
+        return f"{singular_form} {'ה' if is_definite_noun else ''}{n_str}"
+    return f"{n_str} {plural_form}"
 
 
 # מספר סתמי
 def indefinite_number(n: int) -> str:
     if n < 0:
-        s = number(-n, GrammaticalGender.FEMININE, ConstructState.ABSOLUTE)
-        return f"מינוס {s}"
+        n_str = number(-n, GrammaticalGender.FEMININE, ConstructState.ABSOLUTE)
+        return f"מינוס {n_str}"
     return number(n, GrammaticalGender.FEMININE, ConstructState.ABSOLUTE)
 
 
