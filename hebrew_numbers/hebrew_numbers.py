@@ -99,13 +99,28 @@ def translate_to_20(
             (GrammaticalGender.MASCULINE, ConstructState.ABSOLUTE): "עשרה",
             (GrammaticalGender.MASCULINE, ConstructState.CONSTRUCT): "עשרת",
         }[grammatical_gender, construct_state]
+    if n == 11:  # noqa: PLR2004
+        n_str = translate_one_digit(
+            n % 10, grammatical_gender, ConstructState.CONSTRUCT
+        )
+    elif n == 12:  # noqa: PLR2004
+        n_str = {
+            GrammaticalGender.FEMININE: "שתים",
+            GrammaticalGender.MASCULINE: "שנים",
+        }[grammatical_gender]
+    else:
+        n_str = translate_one_digit(
+            n % 10,
+            grammatical_gender,
+            {
+                GrammaticalGender.FEMININE: ConstructState.CONSTRUCT,
+                GrammaticalGender.MASCULINE: ConstructState.ABSOLUTE,
+            }[grammatical_gender],
+        )
     suffix = {GrammaticalGender.FEMININE: "־עשרה", GrammaticalGender.MASCULINE: "־עשר"}[
         grammatical_gender
     ]
-    return (
-        translate_one_digit(n % 10, grammatical_gender, ConstructState.ABSOLUTE)
-        + suffix
-    )
+    return f"{n_str}{suffix}"
 
 
 def decompose_hundreds(
