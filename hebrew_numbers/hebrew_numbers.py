@@ -325,7 +325,6 @@ ordinal_number_masculine = functools.partial(
 ordinal_number_feminine = functools.partial(
     ordinal_number, grammatical_gender=GrammaticalGender.FEMININE
 )
-
 cardinal_number_masculine = functools.partial(
     cardinal_number, grammatical_gender=GrammaticalGender.MASCULINE
 )
