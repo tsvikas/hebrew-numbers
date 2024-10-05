@@ -29,17 +29,32 @@ def translate_one_digit(
         raise ValueError("number needs to be between 1 to 9")
     match grammatical_gender:
         case GrammaticalGender.FEMININE:
-            return {
-                1: "אחת",
-                2: "שתיים",
-                3: "שלוש",
-                4: "ארבע",
-                5: "חמש",
-                6: "שש",
-                7: "שבע",
-                8: "שמונה",
-                9: "תשע",
-            }[n]
+            match construct_state:
+                case ConstructState.ABSOLUTE:
+                    return {
+                        1: "אחת",
+                        2: "שתיים",
+                        3: "שלוש",
+                        4: "ארבע",
+                        5: "חמש",
+                        6: "שש",
+                        7: "שבע",
+                        8: "שמונה",
+                        9: "תשע",
+                    }[n]
+                case ConstructState.CONSTRUCT:
+                    return {
+                        1: "אחת",
+                        2: "שתי",
+                        3: "שלוש",
+                        4: "ארבע",
+                        5: "חמש",
+                        6: "שש",
+                        7: "שבע",
+                        8: "שמונה",
+                        9: "תשע",
+                    }[n]
+
         case GrammaticalGender.MASCULINE:
             match construct_state:
                 case ConstructState.ABSOLUTE:
