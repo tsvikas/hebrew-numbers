@@ -272,3 +272,48 @@ def test_ordinal_number_feminine(n: int, s: str):
 def test_ordinal_number_masculine(n: int, s: str):
     assert hebrew_numbers.ordinal_number(n, GrammaticalGender.MASCULINE) == s
     assert hebrew_numbers.ordinal_number_masculine(n) == s
+
+
+@pytest.mark.parametrize(
+    ("n", "singular", "plural", "is_masculine", "is_definite_noun", "s"),
+    [
+        (1, "ילד", "ילדים", True, False, "ילד אחד"),
+        (2, "ילד", "ילדים", True, False, "שני ילדים"),
+        (3, "ילד", "ילדים", True, False, "שלושה ילדים"),
+        (10, "ילד", "ילדים", True, False, "עשרה ילדים"),
+        (20, "ילד", "ילדים", True, False, "עשרים ילדים"),
+        (1, "ילדה", "ילדות", False, False, "ילדה אחת"),
+        (2, "ילדה", "ילדות", False, False, "שתי ילדות"),
+        (3, "ילדה", "ילדות", False, False, "שלוש ילדות"),
+        (10, "ילדה", "ילדות", False, False, "עשר ילדות"),
+        (20, "ילדה", "ילדות", False, False, "עשרים ילדות"),
+        (1, "הילד", "הילדים", True, True, "הילד האחד"),
+        (2, "הילד", "הילדים", True, True, "שני הילדים"),
+        (3, "הילד", "הילדים", True, True, "שלושת הילדים"),
+        (10, "הילד", "הילדים", True, True, "עשרת הילדים"),
+        (20, "הילד", "הילדים", True, True, "עשרים הילדים"),
+        (1, "הילדה", "הילדות", False, True, "הילדה האחת"),
+        (2, "הילדה", "הילדות", False, True, "שתי הילדות"),
+        (3, "הילדה", "הילדות", False, True, "שלוש הילדות"),
+        (10, "הילדה", "הילדות", False, True, "עשר הילדות"),
+        (20, "הילדה", "הילדות", False, True, "עשרים הילדות"),
+    ],
+)
+def test_count_noun(  # noqa: PLR0913
+    n: int,
+    singular: str,
+    plural: str,
+    is_masculine: bool,  # noqa: FBT001
+    is_definite_noun: bool,  # noqa: FBT001
+    s: str,
+):
+    assert (
+        hebrew_numbers.count_noun(
+            n,
+            singular,
+            plural,
+            GrammaticalGender.MASCULINE if is_masculine else GrammaticalGender.FEMININE,
+            is_definite_noun=is_definite_noun,
+        )
+        == s
+    )

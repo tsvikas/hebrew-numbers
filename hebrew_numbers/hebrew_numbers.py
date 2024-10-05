@@ -239,6 +239,30 @@ def cardinal_number(  # noqa: C901
     return join_words(words)
 
 
+def count_number(
+    n: int, grammatical_gender: GrammaticalGender, *, is_definite_noun: bool = False
+) -> str:
+    if n < 0:
+        raise ValueError("must use a non-negative number")
+    if 2 <= n <= (10 if is_definite_noun else 2):  # noqa: PLR2004
+        return cardinal_number(n, grammatical_gender, ConstructState.CONSTRUCT)
+    return cardinal_number(n, grammatical_gender, ConstructState.ABSOLUTE)
+
+
+def count_noun(
+    n: int,
+    singular_form: str,
+    plural_form: str,
+    grammatical_gender: GrammaticalGender,
+    *,
+    is_definite_noun: bool = False,
+) -> str:
+    s = count_number(n, grammatical_gender, is_definite_noun=is_definite_noun)
+    if n == 1:
+        return f"{singular_form} {'ה' if is_definite_noun else ''}{s}"
+    return f"{s} {plural_form}"
+
+
 # מספר סתמי
 def indefinite_number(n: int) -> str:
     if n < 0:
@@ -307,4 +331,17 @@ ordinal_number_masculine = functools.partial(
 )
 ordinal_number_feminine = functools.partial(
     ordinal_number, grammatical_gender=GrammaticalGender.FEMININE
+)
+
+count_number_masculine = functools.partial(
+    count_number, grammatical_gender=GrammaticalGender.MASCULINE
+)
+count_number_feminine = functools.partial(
+    count_number, grammatical_gender=GrammaticalGender.FEMININE
+)
+count_noun_masculine = functools.partial(
+    count_noun, grammatical_gender=GrammaticalGender.MASCULINE
+)
+count_noun_feminine = functools.partial(
+    count_noun, grammatical_gender=GrammaticalGender.FEMININE
 )
