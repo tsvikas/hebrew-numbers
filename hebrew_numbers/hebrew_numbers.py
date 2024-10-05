@@ -191,10 +191,10 @@ def number(  # noqa: C901
             return ""
         if n == 1:
             return suffix
-        prefix = join_words(
+        n_str = join_words(
             decompose_hundreds(n, grammatical_gender, ConstructState.ABSOLUTE)
         )
-        return f"{prefix} {suffix}"
+        return f"{n_str} {suffix}"
 
     trillions = n // 1_000_000_000_000
     trillions_word = add_suffix(trillions, "טריליון", GrammaticalGender.MASCULINE)
