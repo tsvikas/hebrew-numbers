@@ -55,6 +55,7 @@ def test_cardinal_feminine(n: int, s: str):
         )
         == s
     )
+    assert hebrew_numbers.cardinal_number_absolute_feminine(n) == s
 
 
 @pytest.mark.parametrize(
@@ -109,6 +110,7 @@ def test_cardinal_masculine(n: int, s: str):
         )
         == s
     )
+    assert hebrew_numbers.cardinal_number_absolute_masculine(n) == s
 
 
 @pytest.mark.parametrize(
@@ -162,6 +164,7 @@ def test_cardinal_feminine_construct(n: int, s: str):
         )
         == s
     )
+    assert hebrew_numbers.cardinal_number_construct_feminine(n) == s
 
 
 @pytest.mark.parametrize(
@@ -215,6 +218,7 @@ def test_cardinal_masculine_construct(n: int, s: str):
         )
         == s
     )
+    assert hebrew_numbers.cardinal_number_construct_masculine(n) == s
 
 
 @pytest.mark.parametrize(
@@ -255,6 +259,7 @@ def test_ordinal_number_feminine(n: int, s: str):
     assert (
         hebrew_numbers.ordinal_number(n, hebrew_numbers.GrammaticalGender.FEMININE) == s
     )
+    assert hebrew_numbers.ordinal_number_feminine(n) == s
 
 
 @pytest.mark.parametrize(
@@ -275,3 +280,4 @@ def test_ordinal_number_masculine(n: int, s: str):
         hebrew_numbers.ordinal_number(n, hebrew_numbers.GrammaticalGender.MASCULINE)
         == s
     )
+    assert hebrew_numbers.ordinal_number_masculine(n) == s

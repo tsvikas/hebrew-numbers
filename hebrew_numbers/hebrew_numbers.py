@@ -1,4 +1,5 @@
 import enum
+import functools
 
 
 class GrammaticalGender(enum.Enum):
@@ -279,3 +280,31 @@ def ordinal_number(n: int, grammatical_gender: GrammaticalGender) -> str:
             10: "עשירי",
         }[n]
     raise ValueError("Invalid grammatical state")
+
+
+cardinal_number_absolute = functools.partial(
+    cardinal_number, construct_state=ConstructState.ABSOLUTE
+)
+cardinal_number_absolute_masculine = functools.partial(
+    cardinal_number_absolute, grammatical_gender=GrammaticalGender.MASCULINE
+)
+cardinal_number_absolute_feminine = functools.partial(
+    cardinal_number_absolute, grammatical_gender=GrammaticalGender.FEMININE
+)
+
+cardinal_number_construct = functools.partial(
+    cardinal_number, construct_state=ConstructState.CONSTRUCT
+)
+cardinal_number_construct_masculine = functools.partial(
+    cardinal_number_construct, grammatical_gender=GrammaticalGender.MASCULINE
+)
+cardinal_number_construct_feminine = functools.partial(
+    cardinal_number_construct, grammatical_gender=GrammaticalGender.FEMININE
+)
+
+ordinal_number_masculine = functools.partial(
+    ordinal_number, grammatical_gender=GrammaticalGender.MASCULINE
+)
+ordinal_number_feminine = functools.partial(
+    ordinal_number, grammatical_gender=GrammaticalGender.FEMININE
+)
