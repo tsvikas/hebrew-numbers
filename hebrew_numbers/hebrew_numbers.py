@@ -98,8 +98,12 @@ def translate_to_20(
             (GrammaticalGender.MASCULINE, ConstructState.ABSOLUTE): "עשרה",
             (GrammaticalGender.MASCULINE, ConstructState.CONSTRUCT): "עשרת",
         }[grammatical_gender, construct_state]
-    return translate_one_digit(n % 10, grammatical_gender, ConstructState.ABSOLUTE) + (
-        "־עשרה" if grammatical_gender == GrammaticalGender.FEMININE else "־עשר"
+    suffix = {GrammaticalGender.FEMININE: "־עשרה", GrammaticalGender.MASCULINE: "־עשר"}[
+        grammatical_gender
+    ]
+    return (
+        translate_one_digit(n % 10, grammatical_gender, ConstructState.ABSOLUTE)
+        + suffix
     )
 
 
