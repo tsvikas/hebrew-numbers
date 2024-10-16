@@ -25,7 +25,7 @@ def create_csv(numbers: Iterable[int], output_fn: Path):
 
     funcs = [getattr(hebrew_numbers, name) for name in number_types]
 
-    with open(output_fn, 'w', newline='', encoding='utf-8') as csvfile:
+    with open(output_fn, "w", newline="", encoding="utf-8") as csvfile:
         writer = csv.writer(csvfile)
         writer.writerow([""] + number_types)
 
@@ -41,10 +41,18 @@ def fib(min: int, max: int):
         if a > min:
             yield a
 
-if __name__ == '__main__':
+
+if __name__ == "__main__":
     create_csv(
         [
-            -10, -3, *range(200), *range(200, 2000, 100), *range(2000, 20000, 1000), *range(20000, 100001, 10000), *[int(10**n) for n in range(6, 20)], *list(fib(200, 999999999999))
+            -10,
+            -3,
+            *range(200),
+            *range(200, 2000, 100),
+            *range(2000, 20000, 1000),
+            *range(20000, 100001, 10000),
+            *[int(10**n) for n in range(6, 20)],
+            *list(fib(200, 999999999999)),
         ],
-        Path("output.csv")
+        Path("output.csv"),
     )
