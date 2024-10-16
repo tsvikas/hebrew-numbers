@@ -15,11 +15,11 @@ def create_csv(numbers: Iterable[int]) -> str:
     number_types = [
         "indefinite_number",
         "cardinal_number_feminine",
-        "ordinal_number_feminine",
         "cardinal_number_feminine_definite",
+        "ordinal_number_feminine",
         "cardinal_number_masculine",
-        "ordinal_number_masculine",
         "cardinal_number_masculine_definite",
+        "ordinal_number_masculine",
     ]
 
     funcs = [getattr(hebrew_numbers, name) for name in number_types]
