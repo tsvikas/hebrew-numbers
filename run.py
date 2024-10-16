@@ -1,5 +1,4 @@
 from collections.abc import Iterable
-from pathlib import Path
 import csv
 
 import hebrew_numbers
@@ -12,7 +11,7 @@ def maybe_str(func, i):
         return ""
 
 
-def create_csv(numbers: Iterable[int], output_fn: Path):
+def create_csv(numbers: Iterable[int]) -> str:
     number_types = [
         "indefinite_number",
         "cardinal_number_feminine",
@@ -24,26 +23,27 @@ def create_csv(numbers: Iterable[int], output_fn: Path):
     ]
 
     funcs = [getattr(hebrew_numbers, name) for name in number_types]
+    output = io.StringIO()
+    writer = csv.writer(output)
+    writer.writerow([""] + number_types)
 
-    with open(output_fn, "w", newline="", encoding="utf-8") as csvfile:
-        writer = csv.writer(csvfile)
-        writer.writerow([""] + number_types)
-
-        for i in numbers:
-            row = [i] + [maybe_str(func, i) for func in funcs]
-            writer.writerow(row)
+    for i in numbers:
+        row = [i] + [maybe_str(func, i) for func in funcs]
+        writer.writerow(row)
+    return output.getvalue()
 
 
 def fib(min: int, max: int):
     a, b = 0, 1
-    while a < max:
+    while b < max:
         a, b = b, a + b
         if a > min:
             yield a
 
 
 if __name__ == "__main__":
-    create_csv(
+    import io
+    output = create_csv(
         [
             -10,
             -3,
@@ -52,7 +52,7 @@ if __name__ == "__main__":
             *range(2000, 20000, 1000),
             *range(20000, 100001, 10000),
             *[int(10**n) for n in range(6, 20)],
-            *list(fib(200, 999999999999)),
-        ],
-        Path("output.csv"),
+            *list(fib(200, 999999999999999)),
+        ]
     )
+    print(output)
