@@ -331,6 +331,12 @@ cardinal_number_masculine = functools.partial(
 cardinal_number_feminine = functools.partial(
     cardinal_number, grammatical_gender=GrammaticalGender.FEMININE
 )
+cardinal_number_masculine_definite = functools.partial(
+    cardinal_number, grammatical_gender=GrammaticalGender.MASCULINE, is_definite_noun=True
+)
+cardinal_number_feminine_definite = functools.partial(
+    cardinal_number, grammatical_gender=GrammaticalGender.FEMININE, is_definite_noun=True
+)
 count_noun_masculine = functools.partial(
     count_noun, grammatical_gender=GrammaticalGender.MASCULINE
 )
