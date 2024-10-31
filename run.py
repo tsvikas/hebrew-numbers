@@ -59,7 +59,7 @@ def create_csv(numbers: Iterable[int]) -> str:
     }
     output = io.StringIO()
     writer = csv.writer(output)
-    writer.writerow([""] + list(funcs))
+    writer.writerow(["", *funcs])
     writer.writerow(
         ["סוג"]
         + [
@@ -96,7 +96,7 @@ def create_csv(numbers: Iterable[int]) -> str:
     return output.getvalue()
 
 
-def fib(min: int, max: int):
+def fib(min: int, max: int):  # noqa: A002
     a, b = 0, 1
     while b < max:
         a, b = b, a + b
@@ -119,10 +119,10 @@ if __name__ == "__main__":
             *range(0, 3001, 100),
             *range(0, 30001, 1000),
             *range(0, 300001, 10000),
-            *[int(10**n) for n in range(0, 20)],
-            *[int(10**n) + 1 for n in range(0, 20)],
+            *[int(10**n) for n in range(20)],
+            *[int(10**n) + 1 for n in range(20)],
             *list(fib(1, 999999999999999)),
         }
     )
     output = create_csv(numbers)
-    print(output)
+    print(output)  # noqa: T201
