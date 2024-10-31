@@ -228,7 +228,7 @@ def _decompose_hundreds(
 
 
 def cardinal_number(  # noqa: C901
-    n: int, grammatical_gender: GrammaticalGender | str, construct_state: ConstructState
+    n: int, gender: GrammaticalGender | str, construct_state: ConstructState
 ) -> str:
     """
     Translate a positive integer into Hebrew words as a cardinal number (מספר מונה).
@@ -253,7 +253,7 @@ def cardinal_number(  # noqa: C901
     >>> cardinal_number(1_001_001_001_001_000_000, GrammaticalGender.FEMININE, ConstructState.ABSOLUTE)
     'קווינטיליון קוודריליון טריליון מיליארד ומיליון'
     """
-    grammatical_gender = GrammaticalGender.from_string(grammatical_gender)
+    grammatical_gender = GrammaticalGender.from_string(gender)
     if n >= 1_000_000_000_000_000_000 * 1000:
         raise InvalidNumberError("Numbers must be below 10^21")
     if n < 0:
@@ -371,7 +371,7 @@ def indefinite_number(n: int) -> str:
     return cardinal_number(n, GrammaticalGender.FEMININE, ConstructState.ABSOLUTE)
 
 
-def ordinal_number(n: int, grammatical_gender: GrammaticalGender | str) -> str:
+def ordinal_number(n: int, gender: GrammaticalGender | str) -> str:
     """
     Create a string representing an ordinal number (מספר סודר).
 
@@ -394,7 +394,7 @@ def ordinal_number(n: int, grammatical_gender: GrammaticalGender | str) -> str:
     >>> ordinal_number(42, GrammaticalGender.MASCULINE)
     'ארבעים ושניים'
     """
-    grammatical_gender = GrammaticalGender.from_string(grammatical_gender)
+    grammatical_gender = GrammaticalGender.from_string(gender)
     if n <= 0:
         raise InvalidNumberError("Ordinal numbers must be positive integers")
     if n > 10:  # noqa: PLR2004
@@ -430,7 +430,7 @@ def ordinal_number(n: int, grammatical_gender: GrammaticalGender | str) -> str:
 
 def count_prefix(
     n: int,
-    grammatical_gender: GrammaticalGender | str,
+    gender: GrammaticalGender | str,
     *,
     is_definite_noun: bool = False,
 ) -> str:
@@ -461,7 +461,7 @@ def count_prefix(
     >>> count_prefix(11, GrammaticalGender.MASCULINE)
     'אַחַד־עשר'
     """
-    grammatical_gender = GrammaticalGender.from_string(grammatical_gender)
+    grammatical_gender = GrammaticalGender.from_string(gender)
     if n < 0:
         raise InvalidNumberError("The number must be non-negative")
     if n == 1:
@@ -483,7 +483,7 @@ def count_noun(
     n: int,
     singular_form: str,
     plural_form: str,
-    grammatical_gender: GrammaticalGender | str,
+    gender: GrammaticalGender | str,
     *,
     is_definite_noun: bool = False,
 ) -> str:
@@ -515,7 +515,7 @@ def count_noun(
     >>> count_noun(3, "הילדה", "הילדות", GrammaticalGender.FEMININE, is_definite_noun=True)
     'שְלוש הילדות'
     """
-    grammatical_gender = GrammaticalGender.from_string(grammatical_gender)
+    grammatical_gender = GrammaticalGender.from_string(gender)
     if n == 1:
         n_str = ("ה" if is_definite_noun else "") + cardinal_number(
             n,
@@ -528,30 +528,30 @@ def count_noun(
 
 
 ordinal_number_masculine = functools.partial(
-    ordinal_number, grammatical_gender=GrammaticalGender.MASCULINE
+    ordinal_number, gender=GrammaticalGender.MASCULINE
 )
 ordinal_number_feminine = functools.partial(
-    ordinal_number, grammatical_gender=GrammaticalGender.FEMININE
+    ordinal_number, gender=GrammaticalGender.FEMININE
 )
 cardinal_number_masculine = functools.partial(
-    count_prefix, grammatical_gender=GrammaticalGender.MASCULINE
+    count_prefix, gender=GrammaticalGender.MASCULINE
 )
 cardinal_number_feminine = functools.partial(
-    count_prefix, grammatical_gender=GrammaticalGender.FEMININE
+    count_prefix, gender=GrammaticalGender.FEMININE
 )
 cardinal_number_masculine_definite = functools.partial(
     count_prefix,
-    grammatical_gender=GrammaticalGender.MASCULINE,
+    gender=GrammaticalGender.MASCULINE,
     is_definite_noun=True,
 )
 cardinal_number_feminine_definite = functools.partial(
     count_prefix,
-    grammatical_gender=GrammaticalGender.FEMININE,
+    gender=GrammaticalGender.FEMININE,
     is_definite_noun=True,
 )
 count_noun_masculine = functools.partial(
-    count_noun, grammatical_gender=GrammaticalGender.MASCULINE
+    count_noun, gender=GrammaticalGender.MASCULINE
 )
 count_noun_feminine = functools.partial(
-    count_noun, grammatical_gender=GrammaticalGender.FEMININE
+    count_noun, gender=GrammaticalGender.FEMININE
 )
