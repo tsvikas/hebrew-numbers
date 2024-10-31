@@ -181,8 +181,8 @@ def _decompose_hundreds(
 def number(  # noqa: C901
     n: int, grammatical_gender: GrammaticalGender, construct_state: ConstructState
 ) -> str:
-    if n >= 1_000_000_000_000_000:  # noqa: PLR2004
-        raise InvalidNumberError("Numbers above 10^15 are too large")
+    if n >= 1_000_000_000_000_000_000 * 1000:
+        raise InvalidNumberError("Numbers above 10^21 are too large")
     if n < 0:
         raise InvalidNumberError("Negative numbers don't have a form")
     if n == 0:
@@ -200,16 +200,26 @@ def number(  # noqa: C901
         )
         return f"{n_str} {suffix}"
 
-    trillions = n // 1_000_000_000_000
+    quintillions = n // 1_000_000_000_000_000_000 % 1000
+    quintillions_word = add_suffix(
+        quintillions, "קווינטיליון", GrammaticalGender.MASCULINE
+    )
+
+    quadrillions = n // 1_000_000_000_000_000 % 1000
+    quadrillions_word = add_suffix(
+        quadrillions, "קוודריליון", GrammaticalGender.MASCULINE
+    )
+
+    trillions = n // 1_000_000_000_000 % 1000
     trillions_word = add_suffix(trillions, "טריליון", GrammaticalGender.MASCULINE)
 
-    billions = n % 1_000_000_000_000 // 1_000_000_000
+    billions = n // 1_000_000_000 % 1000
     billions_word = add_suffix(billions, "מיליארד", GrammaticalGender.MASCULINE)
 
-    millions = n % 1_000_000_000 // 1_000_000
+    millions = n // 1_000_000 % 1000
     millions_word = add_suffix(millions, "מיליון", GrammaticalGender.MASCULINE)
 
-    thousands = n % 1_000_000 // 1_000
+    thousands = n // 1_000 % 1000
     if thousands == 0:
         thousands_word = ""
     elif thousands == 1:
@@ -246,6 +256,8 @@ def number(  # noqa: C901
         )
 
     words = [
+        quintillions_word,
+        quadrillions_word,
         trillions_word,
         billions_word,
         millions_word,
