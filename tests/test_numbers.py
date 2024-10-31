@@ -53,10 +53,10 @@ def remove_nikud(s: str) -> str:
         ),
     ],
 )
-def test_number_feminine_absolute(n: int, s: str):
+def test_cardinal_number_feminine_absolute(n: int, s: str):
     assert (
         remove_nikud(
-            hebrew_numbers.number(
+            hebrew_numbers.cardinal_number(
                 n, GrammaticalGender.FEMININE, ConstructState.ABSOLUTE
             )
         )
@@ -107,10 +107,10 @@ def test_number_feminine_absolute(n: int, s: str):
         ),
     ],
 )
-def test_number_masculine_absolute(n: int, s: str):
+def test_cardinal_number_masculine_absolute(n: int, s: str):
     assert (
         remove_nikud(
-            hebrew_numbers.number(
+            hebrew_numbers.cardinal_number(
                 n, GrammaticalGender.MASCULINE, ConstructState.ABSOLUTE
             )
         )
@@ -160,10 +160,10 @@ def test_number_masculine_absolute(n: int, s: str):
         ),
     ],
 )
-def test_number_feminine_construct(n: int, s: str):
+def test_cardinal_number_feminine_construct(n: int, s: str):
     assert (
         remove_nikud(
-            hebrew_numbers.number(
+            hebrew_numbers.cardinal_number(
                 n, GrammaticalGender.FEMININE, ConstructState.CONSTRUCT
             )
         )
@@ -213,10 +213,10 @@ def test_number_feminine_construct(n: int, s: str):
         ),
     ],
 )
-def test_number_masculine_construct(n: int, s: str):
+def test_cardinal_number_masculine_construct(n: int, s: str):
     assert (
         remove_nikud(
-            hebrew_numbers.number(
+            hebrew_numbers.cardinal_number(
                 n, GrammaticalGender.MASCULINE, ConstructState.CONSTRUCT
             )
         )

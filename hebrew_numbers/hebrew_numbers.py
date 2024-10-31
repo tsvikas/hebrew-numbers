@@ -209,7 +209,7 @@ def _decompose_hundreds(
     return [hundreds_word, tenth_word, last_digits_word]
 
 
-def number(  # noqa: C901
+def cardinal_number(  # noqa: C901
     n: int, grammatical_gender: GrammaticalGender, construct_state: ConstructState
 ) -> str:
     """
@@ -317,9 +317,9 @@ def indefinite_number(n: int) -> str:
     Supports integers up to 10^21.
     """
     if n < 0:
-        n_str = number(-n, GrammaticalGender.FEMININE, ConstructState.ABSOLUTE)
+        n_str = cardinal_number(-n, GrammaticalGender.FEMININE, ConstructState.ABSOLUTE)
         return f"מינוס {n_str}"
-    return number(n, GrammaticalGender.FEMININE, ConstructState.ABSOLUTE)
+    return cardinal_number(n, GrammaticalGender.FEMININE, ConstructState.ABSOLUTE)
 
 
 def ordinal_number(n: int, grammatical_gender: GrammaticalGender) -> str:
@@ -331,7 +331,7 @@ def ordinal_number(n: int, grammatical_gender: GrammaticalGender) -> str:
     if n <= 0:
         raise InvalidNumberError("Ordinal numbers must be positive integers")
     if n > 10:  # noqa: PLR2004
-        return number(n, grammatical_gender, ConstructState.ABSOLUTE)
+        return cardinal_number(n, grammatical_gender, ConstructState.ABSOLUTE)
     if grammatical_gender == GrammaticalGender.FEMININE:
         return {
             1: "ראשונה",
@@ -361,7 +361,7 @@ def ordinal_number(n: int, grammatical_gender: GrammaticalGender) -> str:
     raise ValueError("Invalid grammatical_gender provided")
 
 
-def cardinal_number(
+def count_prefix(
     n: int, grammatical_gender: GrammaticalGender, *, is_definite_noun: bool = False
 ) -> str:
     """
@@ -386,7 +386,7 @@ def cardinal_number(
         construct_state = (
             ConstructState.CONSTRUCT if is_definite_noun else ConstructState.ABSOLUTE
         )
-    return number(n, grammatical_gender, construct_state)
+    return cardinal_number(n, grammatical_gender, construct_state)
 
 
 def count_noun(
@@ -405,13 +405,13 @@ def count_noun(
     Supports non-negative integers up to 10^21.
     """
     if n == 1:
-        n_str = ("ה" if is_definite_noun else "") + number(
+        n_str = ("ה" if is_definite_noun else "") + cardinal_number(
             n,
             grammatical_gender,
             ConstructState.ABSOLUTE,
         )
         return f"{singular_form} {n_str}"
-    n_str = cardinal_number(n, grammatical_gender, is_definite_noun=is_definite_noun)
+    n_str = count_prefix(n, grammatical_gender, is_definite_noun=is_definite_noun)
     return f"{n_str} {plural_form}"
 
 
@@ -422,18 +422,18 @@ ordinal_number_feminine = functools.partial(
     ordinal_number, grammatical_gender=GrammaticalGender.FEMININE
 )
 cardinal_number_masculine = functools.partial(
-    cardinal_number, grammatical_gender=GrammaticalGender.MASCULINE
+    count_prefix, grammatical_gender=GrammaticalGender.MASCULINE
 )
 cardinal_number_feminine = functools.partial(
-    cardinal_number, grammatical_gender=GrammaticalGender.FEMININE
+    count_prefix, grammatical_gender=GrammaticalGender.FEMININE
 )
 cardinal_number_masculine_definite = functools.partial(
-    cardinal_number,
+    count_prefix,
     grammatical_gender=GrammaticalGender.MASCULINE,
     is_definite_noun=True,
 )
 cardinal_number_feminine_definite = functools.partial(
-    cardinal_number,
+    count_prefix,
     grammatical_gender=GrammaticalGender.FEMININE,
     is_definite_noun=True,
 )
