@@ -44,7 +44,7 @@ def _join_words(
     """
     words = [w for w in words if w]
     if not words:
-        raise ValueError("words must be non-empty")
+        raise ValueError("The 'words' list must contain at least one non-empty string")
     if len(words) == 1:
         return words[0]
     return f"{sep.join(words[:-1])}{last_sep}{words[-1]}"
@@ -55,7 +55,7 @@ def _translate_one_digit(
 ) -> str:
     """Translate a single digit (1-9) into the corresponding Hebrew word."""
     if not 1 <= n <= 9:  # noqa: PLR2004
-        raise ValueError("number needs to be between 1 to 9")
+        raise ValueError("The number must be an integer between 1 and 9")
     match grammatical_gender:
         case GrammaticalGender.FEMININE:
             match construct_state:
@@ -83,7 +83,6 @@ def _translate_one_digit(
                         8: "שמונֶה",
                         9: "תשע",
                     }[n]
-
         case GrammaticalGender.MASCULINE:
             match construct_state:
                 case ConstructState.ABSOLUTE:
@@ -110,7 +109,7 @@ def _translate_one_digit(
                         8: "שמונת",
                         9: "תשעת",
                     }[n]
-    raise ValueError("invalid values")
+    raise ValueError("Invalid grammatical_gender or construct_state provided")
 
 
 def _translate_to_20(
@@ -118,7 +117,7 @@ def _translate_to_20(
 ) -> str:
     """Translate a number from 1 to 19 into the corresponding Hebrew word."""
     if not 1 <= n <= 19:  # noqa: PLR2004
-        raise ValueError("number needs to be between 1 to 19")
+        raise ValueError("The number must be between 1 and 19")
     if n < 10:  # noqa: PLR2004
         return _translate_one_digit(n, grammatical_gender, construct_state)
     if n == 10:  # noqa: PLR2004
@@ -162,7 +161,7 @@ def _decompose_hundreds(
     Words represent the hundreds, tens, and units.
     """
     if not 1 <= n <= 999:  # noqa: PLR2004
-        raise ValueError("number needs to be between 1 to 999")
+        raise ValueError("The number must be between 1 and 999")
     hundreds_digit = n // 100
     if hundreds_digit == 0:
         hundreds_word = ""
@@ -222,12 +221,12 @@ def number(  # noqa: C901
     Supports non-negative integers up to 10^21.
     """
     if n >= 1_000_000_000_000_000_000 * 1000:
-        raise InvalidNumberError("Numbers above 10^21 are too large")
+        raise InvalidNumberError("Numbers must be below 10^21")
     if n < 0:
-        raise InvalidNumberError("Negative numbers don't have a form")
+        raise InvalidNumberError("Negative numbers do not have a valid representation")
     if n == 0:
         if construct_state == ConstructState.CONSTRUCT:
-            raise InvalidNumberError("Zero don't have a construct form")
+            raise InvalidNumberError("Zero does not have a construct form")
         return "אפס"
 
     def add_suffix(n: int, suffix: str, grammatical_gender: GrammaticalGender) -> str:
@@ -323,9 +322,9 @@ def cardinal_number(
     Does not support `n = 1`, as a singular item is not using a prefix.
     """
     if n < 0:
-        raise InvalidNumberError("must use a non-negative number")
+        raise InvalidNumberError("The number must be non-negative")
     if n == 1:
-        raise InvalidNumberError("counting one is a special case")
+        raise InvalidNumberError("The value '1' cannot be used as a prefix for a noun")
     # GRAMMAR RULE: always using construct form for 2
     if n == 2:  # noqa: PLR2004
         construct_state = ConstructState.CONSTRUCT
@@ -385,9 +384,7 @@ def ordinal_number(n: int, grammatical_gender: GrammaticalGender) -> str:
     Supports positive integers up to 10^21.
     """
     if n <= 0:
-        raise InvalidNumberError(
-            "Ordinal numbers are only defined for positive integers"
-        )
+        raise InvalidNumberError("Ordinal numbers must be positive integers")
     if n > 10:  # noqa: PLR2004
         return number(n, grammatical_gender, ConstructState.ABSOLUTE)
     if grammatical_gender == GrammaticalGender.FEMININE:
@@ -416,7 +413,7 @@ def ordinal_number(n: int, grammatical_gender: GrammaticalGender) -> str:
             9: "תשיעי",
             10: "עשירי",
         }[n]
-    raise ValueError("Invalid grammatical state")
+    raise ValueError("Invalid grammatical_gender provided")
 
 
 ordinal_number_masculine = functools.partial(
