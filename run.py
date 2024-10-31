@@ -60,6 +60,35 @@ def create_csv(numbers: Iterable[int]) -> str:
     output = io.StringIO()
     writer = csv.writer(output)
     writer.writerow([""] + list(funcs))
+    writer.writerow(
+        ["סוג"]
+        + [
+            (
+                "סתמי"
+                if name.startswith("indefinite")
+                else (
+                    "מונה"
+                    if name.startswith("cardinal")
+                    else (
+                        "סודר"
+                        if name.startswith("ordinal")
+                        else "דוגמת שימוש" if name.startswith("count") else ""
+                    )
+                )
+            )
+            for name in funcs
+        ]
+    )
+    writer.writerow(
+        ["מין"]
+        + [
+            "נקבה" if "feminine" in name else "זכר" if "masculine" in name else ""
+            for name in funcs
+        ]
+    )
+    writer.writerow(
+        ["נסמך/מיודע"] + ["כן" if "definite" in name else "" for name in funcs]
+    )
 
     for i in numbers:
         row = [i] + [maybe_str(func, i) for func in funcs.values()]
