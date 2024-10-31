@@ -107,21 +107,27 @@ def fib(min: int, max: int):  # noqa: A002
 if __name__ == "__main__":
     import io
 
+    max_n = 1000000000000000000000
     numbers = sorted(
         {
             -1,
             0,
             1,
-            1000000000000000 - 1,
+            max_n - 1,
+            max_n,
             -10,
             -3,
             *range(301),
-            *range(0, 3001, 100),
+            *range(0, 2001, 100),
             *range(0, 30001, 1000),
-            *range(0, 300001, 10000),
+            *range(0, 200001, 10000),
+            *range(0, 2000001, 100000),
+            *range(0, 30000001, 1000000),
+            *range(0, 30000000001, 1000000000),
             *[int(10**n) for n in range(20)],
             *[int(10**n) + 1 for n in range(20)],
-            *list(fib(1, 999999999999999)),
+            *[int(10**n) for n in range(0, 40, 3)],
+            *list(fib(1, max_n)),
         }
     )
     output = create_csv(numbers)
