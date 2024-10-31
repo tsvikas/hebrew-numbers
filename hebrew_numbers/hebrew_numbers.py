@@ -40,7 +40,7 @@ def translate_one_digit(
                         5: "חמש",
                         6: "שש",
                         7: "שבע",
-                        8: "שמונה",
+                        8: "שמונֶה",
                         9: "תשע",
                     }[n]
                 case ConstructState.CONSTRUCT:
@@ -52,7 +52,7 @@ def translate_one_digit(
                         5: "חמש",
                         6: "שש",
                         7: "שבע",
-                        8: "שמונה",
+                        8: "שמונֶה",
                         9: "תשע",
                     }[n]
 
@@ -67,7 +67,7 @@ def translate_one_digit(
                         5: "חמישה",
                         6: "שישה",
                         7: "שבעה",
-                        8: "שמונה",
+                        8: "שמונָה",
                         9: "תשעה",
                     }[n]
                 case ConstructState.CONSTRUCT:
