@@ -19,6 +19,17 @@ class GrammaticalGender(enum.StrEnum):
     FEMININE = "f"
     MASCULINE = "m"
 
+    @classmethod
+    def from_string(cls, s: "str | GrammaticalGender") -> "GrammaticalGender":
+        if isinstance(s, GrammaticalGender):
+            return s
+        s = s.lower()
+        if "masculine".startswith(s) or "male".startswith(s) or "זכר".startswith(s):
+            return cls.MASCULINE
+        if "feminine".startswith(s) or "female".startswith(s) or "נקבה".startswith(s):
+            return cls.FEMININE
+        raise ValueError(f"Invalid gender: {s}")
+
 
 class ConstructState(enum.Enum):
     """
@@ -217,7 +228,7 @@ def _decompose_hundreds(
 
 
 def cardinal_number(  # noqa: C901
-    n: int, grammatical_gender: GrammaticalGender, construct_state: ConstructState
+    n: int, grammatical_gender: GrammaticalGender | str, construct_state: ConstructState
 ) -> str:
     """
     Translate a positive integer into Hebrew words as a cardinal number (מספר מונה).
@@ -242,6 +253,7 @@ def cardinal_number(  # noqa: C901
     >>> cardinal_number(1_001_001_001_001_000_000, GrammaticalGender.FEMININE, ConstructState.ABSOLUTE)
     'קווינטיליון קוודריליון טריליון מיליארד ומיליון'
     """
+    grammatical_gender = GrammaticalGender.from_string(grammatical_gender)
     if n >= 1_000_000_000_000_000_000 * 1000:
         raise InvalidNumberError("Numbers must be below 10^21")
     if n < 0:
@@ -359,7 +371,7 @@ def indefinite_number(n: int) -> str:
     return cardinal_number(n, GrammaticalGender.FEMININE, ConstructState.ABSOLUTE)
 
 
-def ordinal_number(n: int, grammatical_gender: GrammaticalGender) -> str:
+def ordinal_number(n: int, grammatical_gender: GrammaticalGender | str) -> str:
     """
     Create a string representing an ordinal number (מספר סודר).
 
@@ -382,6 +394,7 @@ def ordinal_number(n: int, grammatical_gender: GrammaticalGender) -> str:
     >>> ordinal_number(42, GrammaticalGender.MASCULINE)
     'ארבעים ושניים'
     """
+    grammatical_gender = GrammaticalGender.from_string(grammatical_gender)
     if n <= 0:
         raise InvalidNumberError("Ordinal numbers must be positive integers")
     if n > 10:  # noqa: PLR2004
@@ -416,7 +429,10 @@ def ordinal_number(n: int, grammatical_gender: GrammaticalGender) -> str:
 
 
 def count_prefix(
-    n: int, grammatical_gender: GrammaticalGender, *, is_definite_noun: bool = False
+    n: int,
+    grammatical_gender: GrammaticalGender | str,
+    *,
+    is_definite_noun: bool = False,
 ) -> str:
     """
     Generate a Hebrew cardinal number (מספר מונה) suitable as a prefix before a noun.
@@ -445,6 +461,7 @@ def count_prefix(
     >>> count_prefix(11, GrammaticalGender.MASCULINE)
     'אַחַד־עשר'
     """
+    grammatical_gender = GrammaticalGender.from_string(grammatical_gender)
     if n < 0:
         raise InvalidNumberError("The number must be non-negative")
     if n == 1:
@@ -466,7 +483,7 @@ def count_noun(
     n: int,
     singular_form: str,
     plural_form: str,
-    grammatical_gender: GrammaticalGender,
+    grammatical_gender: GrammaticalGender | str,
     *,
     is_definite_noun: bool = False,
 ) -> str:
@@ -498,6 +515,7 @@ def count_noun(
     >>> count_noun(3, "הילדה", "הילדות", GrammaticalGender.FEMININE, is_definite_noun=True)
     'שְלוש הילדות'
     """
+    grammatical_gender = GrammaticalGender.from_string(grammatical_gender)
     if n == 1:
         n_str = ("ה" if is_definite_noun else "") + cardinal_number(
             n,
