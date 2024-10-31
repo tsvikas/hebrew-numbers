@@ -60,7 +60,7 @@ def translate_one_digit(
             match construct_state:
                 case ConstructState.ABSOLUTE:
                     return {
-                        1: "אחד",
+                        1: "אֶחָד",
                         2: "שניים",
                         3: "שלושה",
                         4: "ארבעה",
@@ -72,7 +72,7 @@ def translate_one_digit(
                     }[n]
                 case ConstructState.CONSTRUCT:
                     return {
-                        1: "אחד",
+                        1: "אַחַד",
                         2: "שני",
                         3: "שלושת",
                         4: "ארבעת",
