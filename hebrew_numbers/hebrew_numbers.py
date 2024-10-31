@@ -2,6 +2,10 @@ import enum
 import functools
 
 
+class InvalidNumberError(Exception):
+    pass
+
+
 class GrammaticalGender(enum.Enum):
     FEMININE = 0  # צורת נקבה
     MASCULINE = 1  # צורת זכר
@@ -178,12 +182,12 @@ def number(  # noqa: C901
     n: int, grammatical_gender: GrammaticalGender, construct_state: ConstructState
 ) -> str:
     if n >= 1_000_000_000_000_000:  # noqa: PLR2004
-        raise NotImplementedError("Number is too large")
+        raise InvalidNumberError("Numbers above 10^15 are too large")
     if n < 0:
-        raise ValueError("Negative number")
+        raise InvalidNumberError("Negative numbers don't have a form")
     if n == 0:
         if construct_state == ConstructState.CONSTRUCT:
-            raise ValueError("Construct can't be zero")
+            raise InvalidNumberError("Zero don't have a construct form")
         return "אפס"
 
     def add_suffix(n: int, suffix: str, grammatical_gender: GrammaticalGender) -> str:
@@ -256,9 +260,9 @@ def cardinal_number(
     n: int, grammatical_gender: GrammaticalGender, *, is_definite_noun: bool = False
 ) -> str:
     if n < 0:
-        raise ValueError("must use a non-negative number")
+        raise InvalidNumberError("must use a non-negative number")
     if n == 1:
-        raise ValueError("one is a special case")
+        raise InvalidNumberError("counting one is a special case")
     if n == 2:  # noqa: PLR2004
         return number(n, grammatical_gender, ConstructState.CONSTRUCT)
     if n > 10:  # noqa: PLR2004
@@ -302,7 +306,9 @@ def indefinite_number(n: int) -> str:
 # מספר סודר
 def ordinal_number(n: int, grammatical_gender: GrammaticalGender) -> str:
     if n <= 0:
-        raise ValueError("Ordinal numbers are only defined for positive integers")
+        raise InvalidNumberError(
+            "Ordinal numbers are only defined for positive integers"
+        )
     if n > 10:  # noqa: PLR2004
         return number(n, grammatical_gender, ConstructState.ABSOLUTE)
     if grammatical_gender == GrammaticalGender.FEMININE:

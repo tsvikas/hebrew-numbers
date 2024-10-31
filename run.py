@@ -7,7 +7,7 @@ import hebrew_numbers
 def maybe_str(func, i):
     try:
         return str(func(i))
-    except Exception:
+    except hebrew_numbers.InvalidNumberError:
         return ""
 
 
