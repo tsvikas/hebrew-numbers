@@ -41,6 +41,13 @@ def _join_words(
     Combine all words in the list into a single string.
 
     Words are separated by `sep`, with the final pair separated by `last_sep`.
+
+    >>> _join_words(["מאה", "עשרים", "שלוש"])
+    'מאה עשרים ושלוש'
+    >>> _join_words(["מאה", "עשרים", ""])
+    'מאה ועשרים'
+    >>> _join_words(["מאה"])
+    'מאה'
     """
     words = [w for w in words if w]
     if not words:
@@ -219,6 +226,21 @@ def cardinal_number(  # noqa: C901
     (absolute, construct).
 
     Supports non-negative integers up to 10^21.
+
+    >>> cardinal_number(0, GrammaticalGender.FEMININE, ConstructState.ABSOLUTE)
+    'אפס'
+    >>> cardinal_number(1234, GrammaticalGender.FEMININE, ConstructState.ABSOLUTE)
+    'אלף מאתיים שלושים וארבע'
+    >>> cardinal_number(3, GrammaticalGender.FEMININE, ConstructState.CONSTRUCT)
+    'שְלוש'
+    >>> cardinal_number(1234, GrammaticalGender.MASCULINE, ConstructState.ABSOLUTE)
+    'אלף מאתיים שלושים וארבעה'
+    >>> cardinal_number(3, GrammaticalGender.MASCULINE, ConstructState.CONSTRUCT)
+    'שלושת'
+    >>> cardinal_number(1234567, GrammaticalGender.FEMININE, ConstructState.ABSOLUTE)
+    'מיליון מאתיים שלושים וארבעה אלף חמש מאות שישים ושבע'
+    >>> cardinal_number(1_001_001_001_001_000_000, GrammaticalGender.FEMININE, ConstructState.ABSOLUTE)
+    'קווינטיליון קוודריליון טריליון מיליארד ומיליון'
     """
     if n >= 1_000_000_000_000_000_000 * 1000:
         raise InvalidNumberError("Numbers must be below 10^21")
@@ -315,7 +337,22 @@ def indefinite_number(n: int) -> str:
 
     For negative numbers, the string will include a "minus" prefix (מינוס).
     Supports integers up to 10^21.
-    """
+
+    >>> indefinite_number(0)
+    'אפס'
+    >>> indefinite_number(1)
+    'אחת'
+    >>> indefinite_number(2)
+    'שתיים'
+    >>> indefinite_number(3)
+    'שָלוש'
+    >>> indefinite_number(10)
+    'עשר'
+    >>> indefinite_number(1234567)
+    'מיליון מאתיים שלושים וארבעה אלף חמש מאות שישים ושבע'
+    >>> indefinite_number(1_001_001_001_001_000_000)
+    'קווינטיליון קוודריליון טריליון מיליארד ומיליון'
+   """
     if n < 0:
         n_str = cardinal_number(-n, GrammaticalGender.FEMININE, ConstructState.ABSOLUTE)
         return f"מינוס {n_str}"
@@ -327,6 +364,23 @@ def ordinal_number(n: int, grammatical_gender: GrammaticalGender) -> str:
     Create a string representing an ordinal number (מספר סודר).
 
     Supports positive integers up to 10^21.
+
+    >>> ordinal_number(1, GrammaticalGender.FEMININE)
+    'ראשונה'
+    >>> ordinal_number(2, GrammaticalGender.FEMININE)
+    'שנייה'
+    >>> ordinal_number(3, GrammaticalGender.FEMININE)
+    'שלישית'
+    >>> ordinal_number(4, GrammaticalGender.MASCULINE)
+    'רביעי'
+    >>> ordinal_number(5, GrammaticalGender.MASCULINE)
+    'חמישי'
+    >>> ordinal_number(6, GrammaticalGender.MASCULINE)
+    'שישי'
+    >>> ordinal_number(31, GrammaticalGender.FEMININE)
+    'שלושים ואחת'
+    >>> ordinal_number(42, GrammaticalGender.MASCULINE)
+    'ארבעים ושניים'
     """
     if n <= 0:
         raise InvalidNumberError("Ordinal numbers must be positive integers")
@@ -371,6 +425,25 @@ def count_prefix(
     indefinite (שם עצם מיודע/לא מיודע).
     Supports non-negative integers up to 10^21.
     Does not support `n = 1`, as a singular item is not using a prefix.
+
+    >>> count_prefix(0, GrammaticalGender.FEMININE)
+    'אפס'
+    >>> count_prefix(2, GrammaticalGender.FEMININE)
+    'שתי'
+    >>> count_prefix(3, GrammaticalGender.FEMININE, is_definite_noun=False)
+    'שָלוש'
+    >>> count_prefix(3, GrammaticalGender.FEMININE, is_definite_noun=True)
+    'שְלוש'
+    >>> count_prefix(11, GrammaticalGender.FEMININE)
+    'אחת־עשרה'
+    >>> count_prefix(2, GrammaticalGender.MASCULINE)
+    'שני'
+    >>> count_prefix(3, GrammaticalGender.MASCULINE, is_definite_noun=False)
+    'שלושה'
+    >>> count_prefix(3, GrammaticalGender.MASCULINE, is_definite_noun=True)
+    'שלושת'
+    >>> count_prefix(11, GrammaticalGender.MASCULINE)
+    'אַחַד־עשר'
     """
     if n < 0:
         raise InvalidNumberError("The number must be non-negative")
@@ -403,6 +476,27 @@ def count_noun(
     Chooses the appropriate form based on `n` and adjusts for grammatical gender
     and definiteness.
     Supports non-negative integers up to 10^21.
+
+    >>> count_noun(0, "ילד", "ילדים", GrammaticalGender.MASCULINE, is_definite_noun=False)
+    'אפס ילדים'
+    >>> count_noun(0, "ילדה", "ילדות", GrammaticalGender.FEMININE, is_definite_noun=False)
+    'אפס ילדות'
+    >>> count_noun(1, "ילד", "ילדים", GrammaticalGender.MASCULINE, is_definite_noun=False)
+    'ילד אֶחָד'
+    >>> count_noun(1, "הילד", "הילדים", GrammaticalGender.MASCULINE, is_definite_noun=True)
+    'הילד האֶחָד'
+    >>> count_noun(1, "ילדה", "ילדות", GrammaticalGender.FEMININE, is_definite_noun=False)
+    'ילדה אחת'
+    >>> count_noun(1, "הילדה", "הילדות", GrammaticalGender.FEMININE, is_definite_noun=True)
+    'הילדה האחת'
+    >>> count_noun(3, "ילד", "ילדים", GrammaticalGender.MASCULINE, is_definite_noun=False)
+    'שלושה ילדים'
+    >>> count_noun(3, "הילד", "הילדים", GrammaticalGender.MASCULINE, is_definite_noun=True)
+    'שלושת הילדים'
+    >>> count_noun(3, "ילדה", "ילדות", GrammaticalGender.FEMININE, is_definite_noun=False)
+    'שָלוש ילדות'
+    >>> count_noun(3, "הילדה", "הילדות", GrammaticalGender.FEMININE, is_definite_noun=True)
+    'שְלוש הילדות'
     """
     if n == 1:
         n_str = ("ה" if is_definite_noun else "") + cardinal_number(
