@@ -301,9 +301,7 @@ def count_noun(
             ConstructState.ABSOLUTE,
         )
         return f"{singular_form} {n_str}"
-    n_str = cardinal_number(
-        n, grammatical_gender, is_definite_noun=is_definite_noun and n != 1
-    )
+    n_str = cardinal_number(n, grammatical_gender, is_definite_noun=is_definite_noun)
     return f"{n_str} {plural_form}"
 
 
