@@ -257,6 +257,8 @@ def cardinal_number(
 ) -> str:
     if n < 0:
         raise ValueError("must use a non-negative number")
+    if n == 1:
+        raise ValueError("one is a special case")
     if n == 2:  # noqa: PLR2004
         return number(n, grammatical_gender, ConstructState.CONSTRUCT)
     if n > 10:  # noqa: PLR2004
@@ -276,11 +278,16 @@ def count_noun(
     *,
     is_definite_noun: bool = False,
 ) -> str:
+    if n == 1:
+        n_str = ("ה" if is_definite_noun else "") + number(
+            n,
+            grammatical_gender,
+            ConstructState.ABSOLUTE,
+        )
+        return f"{singular_form} {n_str}"
     n_str = cardinal_number(
         n, grammatical_gender, is_definite_noun=is_definite_noun and n != 1
     )
-    if n == 1:
-        return f"{singular_form} {'ה' if is_definite_noun else ''}{n_str}"
     return f"{n_str} {plural_form}"
 
 
