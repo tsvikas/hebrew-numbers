@@ -87,7 +87,7 @@ def create_csv(numbers: Iterable[int]) -> str:
         ]
     )
     writer.writerow(
-        ["נסמך/מיודע"] + ["כן" if "definite" in name else "" for name in funcs]
+        ["נסמך/מיודע"] + ["כן" if "_definite" in name else "" for name in funcs]
     )
 
     for i in numbers:
