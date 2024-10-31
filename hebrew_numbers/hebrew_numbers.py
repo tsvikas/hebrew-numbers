@@ -257,11 +257,11 @@ def cardinal_number(
 ) -> str:
     if n < 0:
         raise ValueError("must use a non-negative number")
-    if n == 1:
-        return number(n, grammatical_gender, ConstructState.CONSTRUCT if is_definite_noun else ConstructState.ABSOLUTE)
-    if 2 <= n <= (10 if is_definite_noun else 2):  # noqa: PLR2004
+    if n == 2:  # noqa: PLR2004
         return number(n, grammatical_gender, ConstructState.CONSTRUCT)
-    return number(n, grammatical_gender, ConstructState.ABSOLUTE)
+    if n > 10:  # noqa: PLR2004
+        return number(n, grammatical_gender, ConstructState.ABSOLUTE)
+    return number(n, grammatical_gender, ConstructState.CONSTRUCT if is_definite_noun else ConstructState.ABSOLUTE)
 
 
 def count_noun(
