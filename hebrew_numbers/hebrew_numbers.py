@@ -3,22 +3,45 @@ import functools
 
 
 class InvalidNumberError(Exception):
-    pass
+    """Exception raised when a number cannot be represented."""
 
 
-class GrammaticalGender(enum.Enum):
-    FEMININE = 0  # צורת נקבה
-    MASCULINE = 1  # צורת זכר
+class GrammaticalGender(enum.StrEnum):
+    """
+    Represents grammatical gender (מין דקדוקי).
+
+    Attributes:
+        FEMININE: Feminine form (צורת הנקבה), e.g., "שלוש ילדות".
+        MASCULINE: Masculine form (צורת הזכר), e.g., "שלושה ילדים".
+
+    """
+
+    FEMININE = "f"
+    MASCULINE = "m"
 
 
 class ConstructState(enum.Enum):
-    ABSOLUTE = 0  # צורת נפרד
-    CONSTRUCT = 1  # צורת נסמך
+    """
+    Represents the construct state (צורת נסמך) in grammar.
+
+    Attributes:
+        ABSOLUTE: Absolute form (צורת הנפרד), e.g., "שלושה ילדים".
+        CONSTRUCT: Construct form (צורת הנסמך), e.g., "שלושת הילדים".
+
+    """
+
+    ABSOLUTE = False
+    CONSTRUCT = True
 
 
 def _join_words(
     words: list[str], sep: str = " ", last_sep: str = " ו"  # noqa: RUF001
 ) -> str:
+    """
+    Combine all words in the list into a single string.
+
+    Words are separated by `sep`, with the final pair separated by `last_sep`.
+    """
     words = [w for w in words if w]
     if not words:
         raise ValueError("words must be non-empty")
@@ -30,6 +53,7 @@ def _join_words(
 def _translate_one_digit(
     n: int, grammatical_gender: GrammaticalGender, construct_state: ConstructState
 ) -> str:
+    """Translate a single digit (1-9) into the corresponding Hebrew word."""
     if not 1 <= n <= 9:  # noqa: PLR2004
         raise ValueError("number needs to be between 1 to 9")
     match grammatical_gender:
@@ -92,6 +116,7 @@ def _translate_one_digit(
 def _translate_to_20(
     n: int, grammatical_gender: GrammaticalGender, construct_state: ConstructState
 ) -> str:
+    """Translate a number from 1 to 19 into the corresponding Hebrew word."""
     if not 1 <= n <= 19:  # noqa: PLR2004
         raise ValueError("number needs to be between 1 to 19")
     if n < 10:  # noqa: PLR2004
@@ -103,6 +128,7 @@ def _translate_to_20(
             (GrammaticalGender.MASCULINE, ConstructState.ABSOLUTE): "עשרה",
             (GrammaticalGender.MASCULINE, ConstructState.CONSTRUCT): "עשרת",
         }[grammatical_gender, construct_state]
+    # GRAMMAR RULE: weird exceptions for 11 and 12
     if n == 11:  # noqa: PLR2004
         n_str = _translate_one_digit(
             n % 10, grammatical_gender, ConstructState.CONSTRUCT
@@ -130,6 +156,11 @@ def _translate_to_20(
 def _decompose_hundreds(
     n: int, grammatical_gender: GrammaticalGender, construct_state: ConstructState
 ) -> list[str]:
+    """
+    Translate a number from 1 to 999 into a list of Hebrew words.
+
+    Words represent the hundreds, tens, and units.
+    """
     if not 1 <= n <= 999:  # noqa: PLR2004
         raise ValueError("number needs to be between 1 to 999")
     hundreds_digit = n // 100
@@ -140,6 +171,7 @@ def _decompose_hundreds(
     elif hundreds_digit == 2:  # noqa: PLR2004
         hundreds_word = "מאתיים"
     else:
+        # GRAMMAR RULE: construct_state is always used for hundreds
         hundreds_word = (
             _translate_one_digit(
                 hundreds_digit, GrammaticalGender.FEMININE, ConstructState.CONSTRUCT
@@ -166,13 +198,13 @@ def _decompose_hundreds(
         assert last_digits < 20  # noqa: PLR2004, S101
 
     if last_digits:
+        # GRAMMAR RULE: construct_state is applied only up to 20
         last_digits_word = _translate_to_20(
             last_digits,
             grammatical_gender,
             ConstructState.ABSOLUTE if n >= 20 else construct_state,  # noqa: PLR2004
         )
     else:
-
         last_digits_word = ""
 
     return [hundreds_word, tenth_word, last_digits_word]
@@ -181,6 +213,14 @@ def _decompose_hundreds(
 def number(  # noqa: C901
     n: int, grammatical_gender: GrammaticalGender, construct_state: ConstructState
 ) -> str:
+    """
+    Translate a positive integer into Hebrew words as a cardinal number (מספר מונה).
+
+    This function respects grammatical gender (masculine, feminine) and construct state
+    (absolute, construct).
+
+    Supports non-negative integers up to 10^21.
+    """
     if n >= 1_000_000_000_000_000_000 * 1000:
         raise InvalidNumberError("Numbers above 10^21 are too large")
     if n < 0:
@@ -195,6 +235,7 @@ def number(  # noqa: C901
             return ""
         if n == 1:
             return suffix
+        # GRAMMAR RULE: construct_state is not used for 10^6 and above
         n_str = _join_words(
             _decompose_hundreds(n, grammatical_gender, ConstructState.ABSOLUTE)
         )
@@ -226,6 +267,7 @@ def number(  # noqa: C901
         thousands_word = "אלף"
     elif thousands == 2:  # noqa: PLR2004
         thousands_word = "אלפיים"
+    # GRAMMAR RULE: construct_state is used for 1000 only up to 10
     elif thousands <= 10:  # noqa: PLR2004
         thousands_word = (
             _join_words(
@@ -249,6 +291,7 @@ def number(  # noqa: C901
     if last_digits == 0:
         last_digits_words = []
     else:
+        # GRAMMAR RULE: construct_state is applied only up to 20
         last_digits_words = _decompose_hundreds(
             last_digits,
             grammatical_gender,
@@ -271,19 +314,29 @@ def number(  # noqa: C901
 def cardinal_number(
     n: int, grammatical_gender: GrammaticalGender, *, is_definite_noun: bool = False
 ) -> str:
+    """
+    Generate a Hebrew cardinal number (מספר מונה) suitable as a prefix before a noun.
+
+    Chooses the correct construct state based on whether the noun is definite or
+    indefinite (שם עצם מיודע/לא מיודע).
+    Supports non-negative integers up to 10^21.
+    Does not support `n = 1`, as a singular item is not using a prefix.
+    """
     if n < 0:
         raise InvalidNumberError("must use a non-negative number")
     if n == 1:
         raise InvalidNumberError("counting one is a special case")
+    # GRAMMAR RULE: always using construct form for 2
     if n == 2:  # noqa: PLR2004
-        return number(n, grammatical_gender, ConstructState.CONSTRUCT)
-    if n > 10:  # noqa: PLR2004
-        return number(n, grammatical_gender, ConstructState.ABSOLUTE)
-    return number(
-        n,
-        grammatical_gender,
-        ConstructState.CONSTRUCT if is_definite_noun else ConstructState.ABSOLUTE,
-    )
+        construct_state = ConstructState.CONSTRUCT
+    # GRAMMAR RULE: never using construct form for numbers above 10
+    elif n > 10:  # noqa: PLR2004
+        construct_state = ConstructState.ABSOLUTE
+    else:
+        construct_state = (
+            ConstructState.CONSTRUCT if is_definite_noun else ConstructState.ABSOLUTE
+        )
+    return number(n, grammatical_gender, construct_state)
 
 
 def count_noun(
@@ -294,6 +347,13 @@ def count_noun(
     *,
     is_definite_noun: bool = False,
 ) -> str:
+    """
+    Generate a Hebrew phrase for counting a noun, handling singular and plural forms.
+
+    Chooses the appropriate form based on `n` and adjusts for grammatical gender
+    and definiteness.
+    Supports non-negative integers up to 10^21.
+    """
     if n == 1:
         n_str = ("ה" if is_definite_noun else "") + number(
             n,
@@ -305,16 +365,25 @@ def count_noun(
     return f"{n_str} {plural_form}"
 
 
-# מספר סתמי
 def indefinite_number(n: int) -> str:
+    """
+    Create a string representing an indefinite number (מספר סתמי).
+
+    For negative numbers, the string will include a "minus" prefix (מינוס).
+    Supports integers up to 10^21.
+    """
     if n < 0:
         n_str = number(-n, GrammaticalGender.FEMININE, ConstructState.ABSOLUTE)
         return f"מינוס {n_str}"
     return number(n, GrammaticalGender.FEMININE, ConstructState.ABSOLUTE)
 
 
-# מספר סודר
 def ordinal_number(n: int, grammatical_gender: GrammaticalGender) -> str:
+    """
+    Create a string representing an ordinal number (מספר סודר).
+
+    Supports positive integers up to 10^21.
+    """
     if n <= 0:
         raise InvalidNumberError(
             "Ordinal numbers are only defined for positive integers"
