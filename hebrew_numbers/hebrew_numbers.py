@@ -16,7 +16,7 @@ class ConstructState(enum.Enum):
     CONSTRUCT = 1  # צורת נסמך
 
 
-def join_words(
+def _join_words(
     words: list[str], sep: str = " ", last_sep: str = " ו"  # noqa: RUF001
 ) -> str:
     words = [w for w in words if w]
@@ -27,7 +27,7 @@ def join_words(
     return f"{sep.join(words[:-1])}{last_sep}{words[-1]}"
 
 
-def translate_one_digit(
+def _translate_one_digit(
     n: int, grammatical_gender: GrammaticalGender, construct_state: ConstructState
 ) -> str:
     if not 1 <= n <= 9:  # noqa: PLR2004
@@ -89,13 +89,13 @@ def translate_one_digit(
     raise ValueError("invalid values")
 
 
-def translate_to_20(
+def _translate_to_20(
     n: int, grammatical_gender: GrammaticalGender, construct_state: ConstructState
 ) -> str:
     if not 1 <= n <= 19:  # noqa: PLR2004
         raise ValueError("number needs to be between 1 to 19")
     if n < 10:  # noqa: PLR2004
-        return translate_one_digit(n, grammatical_gender, construct_state)
+        return _translate_one_digit(n, grammatical_gender, construct_state)
     if n == 10:  # noqa: PLR2004
         return {
             (GrammaticalGender.FEMININE, ConstructState.ABSOLUTE): "עשר",
@@ -104,7 +104,7 @@ def translate_to_20(
             (GrammaticalGender.MASCULINE, ConstructState.CONSTRUCT): "עשרת",
         }[grammatical_gender, construct_state]
     if n == 11:  # noqa: PLR2004
-        n_str = translate_one_digit(
+        n_str = _translate_one_digit(
             n % 10, grammatical_gender, ConstructState.CONSTRUCT
         )
     elif n == 12:  # noqa: PLR2004
@@ -113,7 +113,7 @@ def translate_to_20(
             GrammaticalGender.MASCULINE: "שנים",
         }[grammatical_gender]
     else:
-        n_str = translate_one_digit(
+        n_str = _translate_one_digit(
             n % 10,
             grammatical_gender,
             {
@@ -127,7 +127,7 @@ def translate_to_20(
     return f"{n_str}{suffix}"
 
 
-def decompose_hundreds(
+def _decompose_hundreds(
     n: int, grammatical_gender: GrammaticalGender, construct_state: ConstructState
 ) -> list[str]:
     if not 1 <= n <= 999:  # noqa: PLR2004
@@ -141,7 +141,7 @@ def decompose_hundreds(
         hundreds_word = "מאתיים"
     else:
         hundreds_word = (
-            translate_one_digit(
+            _translate_one_digit(
                 hundreds_digit, GrammaticalGender.FEMININE, ConstructState.CONSTRUCT
             )
             + " מאות"
@@ -166,7 +166,7 @@ def decompose_hundreds(
         assert last_digits < 20  # noqa: PLR2004, S101
 
     if last_digits:
-        last_digits_word = translate_to_20(
+        last_digits_word = _translate_to_20(
             last_digits,
             grammatical_gender,
             ConstructState.ABSOLUTE if n >= 20 else construct_state,  # noqa: PLR2004
@@ -195,8 +195,8 @@ def number(  # noqa: C901
             return ""
         if n == 1:
             return suffix
-        n_str = join_words(
-            decompose_hundreds(n, grammatical_gender, ConstructState.ABSOLUTE)
+        n_str = _join_words(
+            _decompose_hundreds(n, grammatical_gender, ConstructState.ABSOLUTE)
         )
         return f"{n_str} {suffix}"
 
@@ -218,8 +218,8 @@ def number(  # noqa: C901
         thousands_word = "אלפיים"
     elif thousands <= 10:  # noqa: PLR2004
         thousands_word = (
-            join_words(
-                decompose_hundreds(
+            _join_words(
+                _decompose_hundreds(
                     thousands, GrammaticalGender.MASCULINE, ConstructState.CONSTRUCT
                 )
             )
@@ -227,8 +227,8 @@ def number(  # noqa: C901
         )
     else:
         thousands_word = (
-            join_words(
-                decompose_hundreds(
+            _join_words(
+                _decompose_hundreds(
                     thousands, GrammaticalGender.MASCULINE, ConstructState.ABSOLUTE
                 )
             )
@@ -239,7 +239,7 @@ def number(  # noqa: C901
     if last_digits == 0:
         last_digits_words = []
     else:
-        last_digits_words = decompose_hundreds(
+        last_digits_words = _decompose_hundreds(
             last_digits,
             grammatical_gender,
             construct_state if n < 1000 else ConstructState.ABSOLUTE,  # noqa: PLR2004
@@ -252,7 +252,7 @@ def number(  # noqa: C901
         thousands_word,
         *last_digits_words,
     ]
-    return join_words(words)
+    return _join_words(words)
 
 
 # מספר מונה
