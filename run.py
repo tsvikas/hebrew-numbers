@@ -1,5 +1,5 @@
-from collections.abc import Iterable
 import csv
+from collections.abc import Iterable
 
 import hebrew_numbers
 
