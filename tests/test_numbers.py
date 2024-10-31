@@ -1,7 +1,13 @@
+import re
+
 import pytest
 
 import hebrew_numbers
 from hebrew_numbers import ConstructState, GrammaticalGender
+
+
+def remove_nikud(s: str) -> str:
+    return re.sub("[\u0591-\u05bd\u05bf-\u05C7]+", "", s)
 
 
 @pytest.mark.parametrize(
@@ -49,7 +55,11 @@ from hebrew_numbers import ConstructState, GrammaticalGender
 )
 def test_number_feminine_absolute(n: int, s: str):
     assert (
-        hebrew_numbers.number(n, GrammaticalGender.FEMININE, ConstructState.ABSOLUTE)
+        remove_nikud(
+            hebrew_numbers.number(
+                n, GrammaticalGender.FEMININE, ConstructState.ABSOLUTE
+            )
+        )
         == s
     )
 
@@ -99,7 +109,11 @@ def test_number_feminine_absolute(n: int, s: str):
 )
 def test_number_masculine_absolute(n: int, s: str):
     assert (
-        hebrew_numbers.number(n, GrammaticalGender.MASCULINE, ConstructState.ABSOLUTE)
+        remove_nikud(
+            hebrew_numbers.number(
+                n, GrammaticalGender.MASCULINE, ConstructState.ABSOLUTE
+            )
+        )
         == s
     )
 
@@ -148,7 +162,11 @@ def test_number_masculine_absolute(n: int, s: str):
 )
 def test_number_feminine_construct(n: int, s: str):
     assert (
-        hebrew_numbers.number(n, GrammaticalGender.FEMININE, ConstructState.CONSTRUCT)
+        remove_nikud(
+            hebrew_numbers.number(
+                n, GrammaticalGender.FEMININE, ConstructState.CONSTRUCT
+            )
+        )
         == s
     )
 
@@ -197,7 +215,11 @@ def test_number_feminine_construct(n: int, s: str):
 )
 def test_number_masculine_construct(n: int, s: str):
     assert (
-        hebrew_numbers.number(n, GrammaticalGender.MASCULINE, ConstructState.CONSTRUCT)
+        remove_nikud(
+            hebrew_numbers.number(
+                n, GrammaticalGender.MASCULINE, ConstructState.CONSTRUCT
+            )
+        )
         == s
     )
 
@@ -221,7 +243,7 @@ def test_number_masculine_construct(n: int, s: str):
     ],
 )
 def test_indefinite_number(n: int, s: str):
-    assert hebrew_numbers.indefinite_number(n) == s
+    assert remove_nikud(hebrew_numbers.indefinite_number(n)) == s
 
 
 @pytest.mark.parametrize(
@@ -239,8 +261,10 @@ def test_indefinite_number(n: int, s: str):
     ],
 )
 def test_ordinal_number_feminine(n: int, s: str):
-    assert hebrew_numbers.ordinal_number(n, GrammaticalGender.FEMININE) == s
-    assert hebrew_numbers.ordinal_number_feminine(n) == s
+    assert (
+        remove_nikud(hebrew_numbers.ordinal_number(n, GrammaticalGender.FEMININE)) == s
+    )
+    assert remove_nikud(hebrew_numbers.ordinal_number_feminine(n)) == s
 
 
 @pytest.mark.parametrize(
@@ -258,8 +282,10 @@ def test_ordinal_number_feminine(n: int, s: str):
     ],
 )
 def test_ordinal_number_masculine(n: int, s: str):
-    assert hebrew_numbers.ordinal_number(n, GrammaticalGender.MASCULINE) == s
-    assert hebrew_numbers.ordinal_number_masculine(n) == s
+    assert (
+        remove_nikud(hebrew_numbers.ordinal_number(n, GrammaticalGender.MASCULINE)) == s
+    )
+    assert remove_nikud(hebrew_numbers.ordinal_number_masculine(n)) == s
 
 
 @pytest.mark.parametrize(
@@ -296,12 +322,18 @@ def test_count_noun(  # noqa: PLR0913
     s: str,
 ):
     assert (
-        hebrew_numbers.count_noun(
-            n,
-            singular,
-            plural,
-            GrammaticalGender.MASCULINE if is_masculine else GrammaticalGender.FEMININE,
-            is_definite_noun=is_definite_noun,
+        remove_nikud(
+            hebrew_numbers.count_noun(
+                n,
+                singular,
+                plural,
+                (
+                    GrammaticalGender.MASCULINE
+                    if is_masculine
+                    else GrammaticalGender.FEMININE
+                ),
+                is_definite_noun=is_definite_noun,
+            )
         )
         == s
     )
