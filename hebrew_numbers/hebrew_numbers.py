@@ -352,7 +352,7 @@ def indefinite_number(n: int) -> str:
     'מיליון מאתיים שלושים וארבעה אלף חמש מאות שישים ושבע'
     >>> indefinite_number(1_001_001_001_001_000_000)
     'קווינטיליון קוודריליון טריליון מיליארד ומיליון'
-   """
+    """
     if n < 0:
         n_str = cardinal_number(-n, GrammaticalGender.FEMININE, ConstructState.ABSOLUTE)
         return f"מינוס {n_str}"
