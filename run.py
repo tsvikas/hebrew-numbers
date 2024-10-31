@@ -47,10 +47,10 @@ def create_csv(numbers: Iterable[int]) -> str:
     funcs = {
         "indefinite_number": hebrew_numbers.indefinite_number,
         "cardinal_number_feminine": hebrew_numbers.cardinal_number_feminine,
-        "cardinal_number_feminine_definite": hebrew_numbers.cardinal_number_feminine_definite,
+        "cardinal_number_feminine_definite": hebrew_numbers.cardinal_number_feminine_definite,  # noqa: E501
         "ordinal_number_feminine": hebrew_numbers.ordinal_number_feminine,
         "cardinal_number_masculine": hebrew_numbers.cardinal_number_masculine,
-        "cardinal_number_masculine_definite": hebrew_numbers.cardinal_number_masculine_definite,
+        "cardinal_number_masculine_definite": hebrew_numbers.cardinal_number_masculine_definite,  # noqa: E501
         "ordinal_number_masculine": hebrew_numbers.ordinal_number_masculine,
         "count_female": count_female,
         "count_female_definite": count_female_definite,
