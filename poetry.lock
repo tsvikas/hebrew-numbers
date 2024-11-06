@@ -483,6 +483,20 @@ pytest = ">=4.6"
 testing = ["fields", "hunter", "process-tests", "pytest-xdist", "six", "virtualenv"]
 
 [[package]]
+name = "pytest-datadir"
+version = "1.5.0"
+description = "pytest plugin for test data directories and files"
+optional = false
+python-versions = ">=3.8"
+files = [
+    {file = "pytest-datadir-1.5.0.tar.gz", hash = "sha256:1617ed92f9afda0c877e4eac91904b5f779d24ba8f5e438752e3ae39d8d2ee3f"},
+    {file = "pytest_datadir-1.5.0-py3-none-any.whl", hash = "sha256:34adf361bcc7b37961bbc1dfa8d25a4829e778bab461703c38a5c50ca9c36dc8"},
+]
+
+[package.dependencies]
+pytest = ">=5.0"
+
+[[package]]
 name = "pytest-pretty"
 version = "1.2.0"
 description = "pytest plugin for printing summary data as I want it"
@@ -496,6 +510,28 @@ files = [
 [package.dependencies]
 pytest = ">=7"
 rich = ">=12"
+
+[[package]]
+name = "pytest-regressions"
+version = "2.5.0"
+description = "Easy to use fixtures to write regression tests."
+optional = false
+python-versions = ">=3.8"
+files = [
+    {file = "pytest-regressions-2.5.0.tar.gz", hash = "sha256:818c7884c1cff3babf89eebb02cbc27b307856b1985427c24d52cb812a106fd9"},
+    {file = "pytest_regressions-2.5.0-py3-none-any.whl", hash = "sha256:8c4e5c4037325fdb0825bc1fdcb75e17e03adf3407049f0cb704bb996d496255"},
+]
+
+[package.dependencies]
+pytest = ">=6.2.0"
+pytest-datadir = ">=1.2.0"
+pyyaml = "*"
+
+[package.extras]
+dataframe = ["numpy", "pandas"]
+dev = ["matplotlib", "mypy", "numpy", "pandas", "pillow", "pre-commit", "restructuredtext-lint", "tox"]
+image = ["numpy", "pillow"]
+num = ["numpy", "pandas"]
 
 [[package]]
 name = "pytest-reverse"
@@ -652,4 +688,4 @@ test = ["covdefaults (>=2.3)", "coverage (>=7.2.7)", "coverage-enable-subprocess
 [metadata]
 lock-version = "2.0"
 python-versions = ">=3.12,<4"
-content-hash = "51c8a0708c187a522fd715655e651e94e96269385166ada585bf35183d8852ed"
+content-hash = "ed477f025b7f64d863f52f8d909da6e870b3412041fec77197e1ffc505557743"
