@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 import enum
 
 
@@ -19,7 +21,7 @@ class GrammaticalGender(enum.Enum):
     MASCULINE = "m"
 
     @classmethod
-    def from_string(cls, s: "str | GrammaticalGender") -> "GrammaticalGender":
+    def from_string(cls, s: str | GrammaticalGender) -> GrammaticalGender:
         if isinstance(s, GrammaticalGender):
             return s
         s = s.lower()
@@ -49,7 +51,7 @@ class ConstructState(enum.Enum):
     CONSTRUCT79 = "construct79"
 
     @classmethod
-    def from_boolean(cls, val: "bool | ConstructState") -> "ConstructState":
+    def from_boolean(cls, val: bool | ConstructState) -> ConstructState:
         if isinstance(val, bool):
             return ConstructState.CONSTRUCT if val else ConstructState.ABSOLUTE
         return val

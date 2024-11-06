@@ -9,7 +9,7 @@ readme = "README.md"
 repository = "https://github.com/tsvikas/hebrew_numbers"
 
 [tool.poetry.dependencies]
-python = ">=3.12,<4"
+python = ">=3.9,<4"
 
 [tool.poetry.group.dev.dependencies]
 black = "^24"
@@ -49,12 +49,12 @@ strict = true
 
 
 [tool.black]
-target-version = ["py312"]
+target-version = ["py39"]
 preview = false
 
 
 [tool.ruff]
-target-version = "py312"
+target-version = "py39"
 
 [tool.ruff.lint]
 select = ["ALL"]
