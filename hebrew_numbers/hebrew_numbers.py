@@ -1,5 +1,4 @@
 import enum
-import functools
 
 
 class InvalidNumberError(Exception):
@@ -527,25 +526,3 @@ def count_noun(
         return f"{singular_form} {n_str}"
     n_str = count_prefix(n, grammatical_gender, is_definite_noun=is_definite_noun)
     return f"{n_str} {plural_form}"
-
-
-ordinal_number_masculine = functools.partial(
-    ordinal_number, gender=GrammaticalGender.MASCULINE
-)
-ordinal_number_feminine = functools.partial(
-    ordinal_number, gender=GrammaticalGender.FEMININE
-)
-cardinal_number_masculine = functools.partial(
-    count_prefix, gender=GrammaticalGender.MASCULINE
-)
-cardinal_number_feminine = functools.partial(
-    count_prefix, gender=GrammaticalGender.FEMININE
-)
-cardinal_number_masculine_definite = functools.partial(
-    count_prefix, gender=GrammaticalGender.MASCULINE, is_definite_noun=True
-)
-cardinal_number_feminine_definite = functools.partial(
-    count_prefix, gender=GrammaticalGender.FEMININE, is_definite_noun=True
-)
-count_noun_masculine = functools.partial(count_noun, gender=GrammaticalGender.MASCULINE)
-count_noun_feminine = functools.partial(count_noun, gender=GrammaticalGender.FEMININE)

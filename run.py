@@ -1,4 +1,5 @@
 import csv
+import functools
 from collections.abc import Iterable
 
 import hebrew_numbers
@@ -46,12 +47,24 @@ def count_male_definite(n: int) -> str:
 def create_csv(numbers: Iterable[int]) -> str:
     funcs = {
         "indefinite_number": hebrew_numbers.indefinite_number,
-        "cardinal_number_feminine": hebrew_numbers.cardinal_number_feminine,
-        "cardinal_number_feminine_definite": hebrew_numbers.cardinal_number_feminine_definite,
-        "ordinal_number_feminine": hebrew_numbers.ordinal_number_feminine,
-        "cardinal_number_masculine": hebrew_numbers.cardinal_number_masculine,
-        "cardinal_number_masculine_definite": hebrew_numbers.cardinal_number_masculine_definite,
-        "ordinal_number_masculine": hebrew_numbers.ordinal_number_masculine,
+        "cardinal_number_feminine": functools.partial(
+            hebrew_numbers.count_prefix, gender="f", is_definite_noun=False
+        ),
+        "cardinal_number_feminine_definite": functools.partial(
+            hebrew_numbers.count_prefix, gender="f", is_definite_noun=True
+        ),
+        "ordinal_number_feminine": functools.partial(
+            hebrew_numbers.ordinal_number, gender="f"
+        ),
+        "cardinal_number_masculine": functools.partial(
+            hebrew_numbers.count_prefix, gender="m", is_definite_noun=False
+        ),
+        "cardinal_number_masculine_definite": functools.partial(
+            hebrew_numbers.count_prefix, gender="m", is_definite_noun=True
+        ),
+        "ordinal_number_masculine": functools.partial(
+            hebrew_numbers.ordinal_number, gender="m"
+        ),
         "count_female": count_female,
         "count_female_definite": count_female_definite,
         "count_male": count_male,
