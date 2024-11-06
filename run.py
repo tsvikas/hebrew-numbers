@@ -3,6 +3,7 @@ import functools
 from collections.abc import Iterable
 
 import hebrew_numbers
+from fib import fib
 
 
 def maybe_str(func, i):
@@ -28,81 +29,94 @@ def count_male_definite(n: int) -> str:
     return hebrew_numbers.count_noun(n, "הילד", "הילדים", "m", definite=True)
 
 
+NUMBER_FORMS_FEMININE = {
+    "indefinite_number": hebrew_numbers.indefinite_number,
+    "cardinal_number_feminine_absolute": functools.partial(
+        hebrew_numbers.cardinal_number, gender="f", construct=False
+    ),
+    "cardinal_number_feminine_construct": functools.partial(
+        hebrew_numbers.cardinal_number, gender="f", construct=True
+    ),
+    "ordinal_number_feminine": functools.partial(
+        hebrew_numbers.ordinal_number, gender="f"
+    ),
+    "count_female_indefinite_prefix": functools.partial(
+        hebrew_numbers.count_prefix, gender="f", definite=False
+    ),
+    "count_female_definite_prefix": functools.partial(
+        hebrew_numbers.count_prefix, gender="f", definite=True
+    ),
+    "count_female_indefinite_example": count_female,
+    "count_female_definite_example": count_female_definite,
+}
+NUMBER_FORMS_MASCULINE = {
+    "cardinal_number_masculine_absolute": functools.partial(
+        hebrew_numbers.cardinal_number, gender="m", construct=False
+    ),
+    "cardinal_number_masculine_construct": functools.partial(
+        hebrew_numbers.cardinal_number, gender="m", construct=True
+    ),
+    "ordinal_number_masculine": functools.partial(
+        hebrew_numbers.ordinal_number, gender="m"
+    ),
+    "count_male_indefinite_prefix": functools.partial(
+        hebrew_numbers.count_prefix, gender="m", definite=False
+    ),
+    "count_male_definite_prefix": functools.partial(
+        hebrew_numbers.count_prefix, gender="m", definite=True
+    ),
+    "count_male_indefinite_example": count_male,
+    "count_male_definite_example": count_male_definite,
+}
+
+
 def create_csv(numbers: Iterable[int]) -> str:
-    funcs = {
-        "indefinite_number": hebrew_numbers.indefinite_number,
-        "cardinal_number_feminine": functools.partial(
-            hebrew_numbers.cardinal_number, gender="f", construct=False
-        ),
-        "cardinal_number_feminine_construct": functools.partial(
-            hebrew_numbers.cardinal_number, gender="f", construct=True
-        ),
-        "ordinal_number_feminine": functools.partial(
-            hebrew_numbers.ordinal_number, gender="f"
-        ),
-        "cardinal_number_masculine": functools.partial(
-            hebrew_numbers.cardinal_number, gender="m", construct=False
-        ),
-        "cardinal_number_masculine_construct": functools.partial(
-            hebrew_numbers.cardinal_number, gender="m", construct=True
-        ),
-        "ordinal_number_masculine": functools.partial(
-            hebrew_numbers.ordinal_number, gender="m"
-        ),
-        "count_female": count_female,
-        "count_female_definite": count_female_definite,
-        "count_male": count_male,
-        "count_male_definite": count_male_definite,
-    }
     output = io.StringIO()
     writer = csv.writer(output)
-    writer.writerow(["", *funcs])
     writer.writerow(
-        ["סוג"]
-        + [
-            (
-                "סתמי"
-                if name.startswith("indefinite")
-                else (
-                    "מונה"
-                    if name.startswith("cardinal")
-                    else (
-                        "סודר"
-                        if name.startswith("ordinal")
-                        else "דוגמת שימוש" if name.startswith("count") else ""
-                    )
-                )
-            )
-            for name in funcs
+        [
+            "",
+            "indefinite_number / cardinal_number_feminine_absolute",
+            "cardinal_number_feminine_construct",
+            "ordinal_number_feminine",
+            "count_female_indefinite_example",
+            "count_female_definite_example",
+            "cardinal_number_masculine_absolute",
+            "cardinal_number_masculine_construct",
+            "ordinal_number_masculine",
+            "count_male_indefinite_example",
+            "count_male_definite_example",
         ]
     )
-    writer.writerow(
-        ["מין"]
-        + [
-            "נקבה" if "feminine" in name else "זכר" if "masculine" in name else ""
-            for name in funcs
-        ]
-    )
-    writer.writerow(
-        ["נסמך/מיודע"]
-        + [
-            "כן" if "_definite" in name or "_construct" in name else ""
-            for name in funcs
-        ]
-    )
-
     for i in numbers:
-        row = [i] + [maybe_str(func, i) for func in funcs.values()]
+        if i > 10:  # noqa: PLR2004
+            f_forms = {
+                maybe_str(func, i)
+                for name, func in NUMBER_FORMS_FEMININE.items()
+                if not name.endswith("_example")
+            }
+            m_forms = {
+                maybe_str(func, i)
+                for name, func in NUMBER_FORMS_MASCULINE.items()
+                if not name.endswith("_example")
+            }
+            assert len(f_forms) == len(m_forms) == 1  # noqa: S101
+            row = [i, *f_forms, "", "", "", "", *m_forms, "", "", "", ""]
+        else:
+            funcs = {
+                k: v
+                for k, v in NUMBER_FORMS_FEMININE.items()
+                if not k.endswith("prefix")
+            } | {
+                k: v
+                for k, v in NUMBER_FORMS_MASCULINE.items()
+                if not k.endswith("prefix")
+            }
+            row = [i] + [maybe_str(func, i) for func in funcs.values()]
+            assert i <= 0 or row[1] == row[2], f"{row[1]=}, {row[2]=}"  # noqa: S101
+            del row[2]
         writer.writerow(row)
     return output.getvalue()
-
-
-def fib(min: int, max: int):  # noqa: A002
-    a, b = 0, 1
-    while b < max:
-        a, b = b, a + b
-        if a > min:
-            yield a
 
 
 if __name__ == "__main__":
@@ -128,9 +142,8 @@ if __name__ == "__main__":
             *[int(10**n) for n in range(20)],
             *[int(10**n) + 1 for n in range(20)],
             *[int(10**n) for n in range(0, 40, 3)],
-            *list(fib(1, max_n)),
             *range(0, 10_000_000_000, 1111111111),
         }
-    )
+    ) + list(fib(200, max_n))
     output = create_csv(numbers)
     print(output)  # noqa: T201
