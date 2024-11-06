@@ -79,60 +79,53 @@ def _translate_one_digit(
     """Translate a single digit (1-9) into the corresponding Hebrew word."""
     if not 1 <= n <= 9:  # noqa: PLR2004
         raise ValueError("The number must be an integer between 1 and 9")
-    match grammatical_gender:
-        case GrammaticalGender.FEMININE:
-            match construct_state:
-                case ConstructState.ABSOLUTE:
-                    return {
-                        1: "אחת",
-                        2: "שתיים",
-                        3: "שָלוש",
-                        4: "ארבע",
-                        5: "חמש",
-                        6: "שש",
-                        7: "שבע",
-                        8: "שמונֶה",
-                        9: "תשע",
-                    }[n]
-                case ConstructState.CONSTRUCT:
-                    return {
-                        1: "אחת",
-                        2: "שתי",
-                        3: "שְלוש",
-                        4: "ארבע",
-                        5: "חמש",
-                        6: "שש",
-                        7: "שבע",
-                        8: "שמונֶה",
-                        9: "תשע",
-                    }[n]
-        case GrammaticalGender.MASCULINE:
-            match construct_state:
-                case ConstructState.ABSOLUTE:
-                    return {
-                        1: "אֶחָד",
-                        2: "שניים",
-                        3: "שלושה",
-                        4: "ארבעה",
-                        5: "חמישה",
-                        6: "שישה",
-                        7: "שבעה",
-                        8: "שמונָה",
-                        9: "תשעה",
-                    }[n]
-                case ConstructState.CONSTRUCT:
-                    return {
-                        1: "אַחַד",
-                        2: "שני",
-                        3: "שלושת",
-                        4: "ארבעת",
-                        5: "חמשת",
-                        6: "ששת",
-                        7: "שבעת",
-                        8: "שמונת",
-                        9: "תשעת",
-                    }[n]
-    raise ValueError("Invalid grammatical_gender or construct_state provided")
+    numbers = {
+        (GrammaticalGender.FEMININE, ConstructState.ABSOLUTE): {
+            1: "אחת",
+            2: "שתיים",
+            3: "שָלוש",
+            4: "ארבע",
+            5: "חמש",
+            6: "שש",
+            7: "שבע",
+            8: "שמונֶה",
+            9: "תשע",
+        },
+        (GrammaticalGender.FEMININE, ConstructState.CONSTRUCT): {
+            1: "אחת",
+            2: "שתי",
+            3: "שְלוש",
+            4: "ארבע",
+            5: "חמש",
+            6: "שש",
+            7: "שבע",
+            8: "שמונֶה",
+            9: "תשע",
+        },
+        (GrammaticalGender.MASCULINE, ConstructState.ABSOLUTE): {
+            1: "אֶחָד",
+            2: "שניים",
+            3: "שלושה",
+            4: "ארבעה",
+            5: "חמישה",
+            6: "שישה",
+            7: "שבעה",
+            8: "שמונָה",
+            9: "תשעה",
+        },
+        (GrammaticalGender.MASCULINE, ConstructState.CONSTRUCT): {
+            1: "אַחַד",
+            2: "שני",
+            3: "שלושת",
+            4: "ארבעת",
+            5: "חמשת",
+            6: "ששת",
+            7: "שבעת",
+            8: "שמונת",
+            9: "תשעת",
+        },
+    }
+    return numbers[(grammatical_gender, construct_state)][n]
 
 
 def _translate_to_20(
