@@ -139,8 +139,8 @@ if __name__ == "__main__":
             *range(0, 1000001, 100000),
             *range(0, 21000001, 1000000),
             *range(0, 21000000001, 1000000000),
-            *[int(10**n) for n in range(20)],
-            *[int(10**n) + 1 for n in range(20)],
+            *[int(10**n) for n in range(21)],
+            *[int(10**n) + 1 for n in range(21)],
             *[int(10**n) for n in range(0, 40, 3)],
             *range(0, 10_000_000_000, 1111111111),
         }
