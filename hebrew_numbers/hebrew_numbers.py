@@ -475,6 +475,7 @@ def count_prefix(
     # GRAMMAR RULE: never using construct form for numbers above 10
     elif n > 10:  # noqa: PLR2004
         construct_state = ConstructState.ABSOLUTE
+    # GRAMMAR RULE: for numbers between 3 and 10, use construct form for definite nouns
     else:
         construct_state = (
             ConstructState.CONSTRUCT if is_definite_noun else ConstructState.ABSOLUTE
