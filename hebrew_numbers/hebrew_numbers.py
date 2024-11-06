@@ -549,9 +549,5 @@ cardinal_number_feminine_definite = functools.partial(
     gender=GrammaticalGender.FEMININE,
     is_definite_noun=True,
 )
-count_noun_masculine = functools.partial(
-    count_noun, gender=GrammaticalGender.MASCULINE
-)
-count_noun_feminine = functools.partial(
-    count_noun, gender=GrammaticalGender.FEMININE
-)
+count_noun_masculine = functools.partial(count_noun, gender=GrammaticalGender.MASCULINE)
+count_noun_feminine = functools.partial(count_noun, gender=GrammaticalGender.FEMININE)
