@@ -139,3 +139,50 @@ def test_count_noun(
         for n in NUMBERS_TO_TEST
     }
     data_regression.check(data)
+
+
+@pytest.mark.parametrize(
+    "construct", [ConstructState.ABSOLUTE, ConstructState.CONSTRUCT]
+)
+def test_cardinal_number_genderless(construct: ConstructState) -> None:
+    for n in NUMBERS_TO_TEST:
+        nn = n * 10
+        if nn % 10 == 1:
+            continue
+        num_f = return_errors(
+            hebrew_numbers.cardinal_number,
+            (nn * 10, "f", construct),
+            valid_exceptions=InvalidNumberError,
+        )
+        num_m = return_errors(
+            hebrew_numbers.cardinal_number,
+            (nn * 10, "m", construct),
+            valid_exceptions=InvalidNumberError,
+        )
+        assert num_f == num_m
+
+
+@pytest.mark.parametrize(
+    "gender", [GrammaticalGender.FEMININE, GrammaticalGender.MASCULINE]
+)
+def test_over_10(gender: GrammaticalGender) -> None:
+    for n in NUMBERS_TO_TEST:
+        if n <= 10:
+            continue
+        assert (
+            return_errors(
+                hebrew_numbers.cardinal_number,
+                (n, gender, ConstructState.ABSOLUTE),
+                valid_exceptions=InvalidNumberError,
+            )
+            == return_errors(
+                hebrew_numbers.cardinal_number,
+                (n, gender, ConstructState.CONSTRUCT),
+                valid_exceptions=InvalidNumberError,
+            )
+            == return_errors(
+                hebrew_numbers.ordinal_number,
+                (n, gender),
+                valid_exceptions=InvalidNumberError,
+            )
+        )
