@@ -259,7 +259,7 @@ def cardinal_number(  # noqa: C901
     grammatical_gender = GrammaticalGender.from_string(gender)
     construct_state = ConstructState.from_boolean(construct)
     if n >= 1_000_000_000_000_000_000 * 1000:
-        raise InvalidNumberError("Numbers must be below 10^21")
+        raise InvalidNumberError("Number must be below 10^21")
     if n <= 0:
         raise InvalidNumberError("Number must be positive")
 
@@ -398,7 +398,7 @@ def ordinal_number(n: int, gender: GrammaticalGender | str) -> str:
     """
     grammatical_gender = GrammaticalGender.from_string(gender)
     if n <= 0:
-        raise InvalidNumberError("Ordinal numbers must be positive integers")
+        raise InvalidNumberError("Number must be positive")
     if n > 10:  # noqa: PLR2004
         return cardinal_number(n, grammatical_gender, ConstructState.ABSOLUTE)
     if grammatical_gender == GrammaticalGender.FEMININE:
@@ -460,9 +460,9 @@ def count_prefix(
     """
     grammatical_gender = GrammaticalGender.from_string(gender)
     if n <= 0:
-        raise InvalidNumberError("The number must be positive")
+        raise InvalidNumberError("Number must be positive")
     if n == 1:
-        raise InvalidNumberError("The value '1' cannot be used as a prefix for a noun")
+        raise InvalidNumberError("The count-form of number '1' is not a prefix")
     # GRAMMAR RULE: always using construct form for 2
     if n == 2:  # noqa: PLR2004
         construct_state = ConstructState.CONSTRUCT

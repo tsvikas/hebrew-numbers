@@ -1,7 +1,7 @@
--1000000000000: InvalidNumberError('The number must be positive')
--999: InvalidNumberError('The number must be positive')
--1: InvalidNumberError('The number must be positive')
-0: InvalidNumberError('The number must be positive')
+-1000000000000: InvalidNumberError('Number must be positive')
+-999: InvalidNumberError('Number must be positive')
+-1: InvalidNumberError('Number must be positive')
+0: InvalidNumberError('Number must be positive')
 1: הילדה האחת
 2: שתי הילדות
 3: שְלוש הילדות

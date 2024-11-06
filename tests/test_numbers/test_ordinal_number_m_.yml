@@ -1,7 +1,7 @@
--1000000000000: InvalidNumberError('Ordinal numbers must be positive integers')
--999: InvalidNumberError('Ordinal numbers must be positive integers')
--1: InvalidNumberError('Ordinal numbers must be positive integers')
-0: InvalidNumberError('Ordinal numbers must be positive integers')
+-1000000000000: InvalidNumberError('Number must be positive')
+-999: InvalidNumberError('Number must be positive')
+-1: InvalidNumberError('Number must be positive')
+0: InvalidNumberError('Number must be positive')
 1: ראשון
 2: שני
 3: שלישי

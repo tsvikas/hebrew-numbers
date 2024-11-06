@@ -1,8 +1,8 @@
--1000000000000: InvalidNumberError('The number must be positive')
--999: InvalidNumberError('The number must be positive')
--1: InvalidNumberError('The number must be positive')
-0: InvalidNumberError('The number must be positive')
-1: InvalidNumberError("The value '1' cannot be used as a prefix for a noun")
+-1000000000000: InvalidNumberError('Number must be positive')
+-999: InvalidNumberError('Number must be positive')
+-1: InvalidNumberError('Number must be positive')
+0: InvalidNumberError('Number must be positive')
+1: InvalidNumberError("The count-form of number '1' is not a prefix")
 2: שני
 3: שלושה
 10: עשרה
