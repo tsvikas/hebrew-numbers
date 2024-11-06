@@ -1,339 +1,118 @@
-import re
-
 import pytest
+from pytest_regressions.data_regression import DataRegressionFixture
 
 import hebrew_numbers
-from hebrew_numbers import ConstructState, GrammaticalGender
+from hebrew_numbers import ConstructState, GrammaticalGender, InvalidNumberError
+
+# fmt: off
+NUMBERS_TO_TEST = [
+    0, 1, 2, 3, 10, 11, 12, 13, 20, 21, 22, 23, 100, 101, 110, 111, 122, 200,
+    222, 333, 1000, 2000, 3000, 3333, 33333, 333333, 1000000, 3333333, 33333333,
+    1000000000, 3333333333,
+    -1, -999, -1000000000000
+]
+# fmt: on
 
 
-def remove_nikud(s: str) -> str:
-    return re.sub("[\u0591-\u05bd\u05bf-\u05C7]+", "", s)
+def return_errors(f, args, kwargs=None, valid_exceptions=None):
+    kwargs = kwargs or {}
+    try:
+        return f(*args, **kwargs)
+    except Exception as e:
+        if valid_exceptions and isinstance(e, valid_exceptions):
+            return repr(e)
+        raise
 
 
 @pytest.mark.parametrize(
-    ("n", "s"),
-    [
-        (0, "אפס"),
-        (1, "אחת"),
-        (2, "שתיים"),
-        (3, "שלוש"),
-        (10, "עשר"),
-        (11, "אחת־עשרה"),
-        (12, "שתים־עשרה"),
-        (13, "שלוש־עשרה"),
-        (20, "עשרים"),
-        (21, "עשרים ואחת"),
-        (22, "עשרים ושתיים"),
-        (23, "עשרים ושלוש"),
-        (100, "מאה"),
-        (101, "מאה ואחת"),
-        (110, "מאה ועשר"),
-        (111, "מאה ואחת־עשרה"),
-        (122, "מאה עשרים ושתיים"),
-        (200, "מאתיים"),
-        (222, "מאתיים עשרים ושתיים"),
-        (333, "שלוש מאות שלושים ושלוש"),
-        (1000, "אלף"),
-        (2000, "אלפיים"),
-        (3000, "שלושת אלפים"),
-        (3333, "שלושת אלפים שלוש מאות שלושים ושלוש"),
-        (33333, "שלושים ושלושה אלף שלוש מאות שלושים ושלוש"),
-        (333333, "שלוש מאות שלושים ושלושה אלף שלוש מאות שלושים ושלוש"),
-        (1000000, "מיליון"),
-        (3333333, "שלושה מיליון שלוש מאות שלושים ושלושה אלף שלוש מאות שלושים ושלוש"),
-        (
-            33333333,
-            "שלושים ושלושה מיליון שלוש מאות שלושים ושלושה אלף שלוש מאות שלושים ושלוש",
-        ),
-        (1000000000, "מיליארד"),
-        (
-            3333333333,
-            "שלושה מיליארד שלוש מאות "
-            "שלושים ושלושה מיליון שלוש מאות שלושים ושלושה אלף שלוש מאות שלושים ושלוש",
-        ),
-    ],
+    "gender", [GrammaticalGender.FEMININE, GrammaticalGender.MASCULINE]
 )
-def test_cardinal_number_feminine_absolute(n: int, s: str):
-    assert (
-        remove_nikud(
-            hebrew_numbers.cardinal_number(
-                n, GrammaticalGender.FEMININE, ConstructState.ABSOLUTE
-            )
+@pytest.mark.parametrize(
+    "construct", [ConstructState.ABSOLUTE, ConstructState.CONSTRUCT]
+)
+def test_cardinal_number(
+    data_regression: DataRegressionFixture,
+    gender: GrammaticalGender,
+    construct: ConstructState,
+) -> None:
+    data = {
+        n: return_errors(
+            hebrew_numbers.cardinal_number,
+            (n, gender, construct),
+            valid_exceptions=InvalidNumberError,
         )
-        == s
-    )
+        for n in NUMBERS_TO_TEST
+    }
+    data_regression.check(data)
 
 
-@pytest.mark.parametrize(
-    ("n", "s"),
-    [
-        (0, "אפס"),
-        (1, "אחד"),
-        (2, "שניים"),
-        (3, "שלושה"),
-        (10, "עשרה"),
-        (11, "אחד־עשר"),
-        (12, "שנים־עשר"),
-        (13, "שלושה־עשר"),
-        (20, "עשרים"),
-        (21, "עשרים ואחד"),
-        (22, "עשרים ושניים"),
-        (23, "עשרים ושלושה"),
-        (100, "מאה"),
-        (101, "מאה ואחד"),
-        (110, "מאה ועשרה"),
-        (111, "מאה ואחד־עשר"),
-        (122, "מאה עשרים ושניים"),
-        (200, "מאתיים"),
-        (222, "מאתיים עשרים ושניים"),
-        (333, "שלוש מאות שלושים ושלושה"),
-        (1000, "אלף"),
-        (2000, "אלפיים"),
-        (3000, "שלושת אלפים"),
-        (3333, "שלושת אלפים שלוש מאות שלושים ושלושה"),
-        (33333, "שלושים ושלושה אלף שלוש מאות שלושים ושלושה"),
-        (333333, "שלוש מאות שלושים ושלושה אלף שלוש מאות שלושים ושלושה"),
-        (1000000, "מיליון"),
-        (3333333, "שלושה מיליון שלוש מאות שלושים ושלושה אלף שלוש מאות שלושים ושלושה"),
-        (
-            33333333,
-            "שלושים ושלושה מיליון שלוש מאות שלושים ושלושה אלף שלוש מאות שלושים ושלושה",
-        ),
-        (1000000000, "מיליארד"),
-        (
-            3333333333,
-            "שלושה מיליארד שלוש מאות "
-            "שלושים ושלושה מיליון שלוש מאות שלושים ושלושה אלף שלוש מאות שלושים ושלושה",
-        ),
-    ],
-)
-def test_cardinal_number_masculine_absolute(n: int, s: str):
-    assert (
-        remove_nikud(
-            hebrew_numbers.cardinal_number(
-                n, GrammaticalGender.MASCULINE, ConstructState.ABSOLUTE
-            )
+def test_indefinite_number(data_regression: DataRegressionFixture) -> None:
+    data = {
+        n: return_errors(
+            hebrew_numbers.indefinite_number,
+            (n,),
+            valid_exceptions=InvalidNumberError,
         )
-        == s
-    )
+        for n in NUMBERS_TO_TEST
+    }
+    data_regression.check(data)
 
 
 @pytest.mark.parametrize(
-    ("n", "s"),
-    [
-        (1, "אחת"),
-        (2, "שתי"),
-        (3, "שלוש"),
-        (10, "עשר"),
-        (11, "אחת־עשרה"),
-        (12, "שתים־עשרה"),
-        (13, "שלוש־עשרה"),
-        (20, "עשרים"),
-        (21, "עשרים ואחת"),
-        (22, "עשרים ושתיים"),
-        (23, "עשרים ושלוש"),
-        (100, "מאה"),
-        (101, "מאה ואחת"),
-        (110, "מאה ועשר"),
-        (111, "מאה ואחת־עשרה"),
-        (122, "מאה עשרים ושתיים"),
-        (200, "מאתיים"),
-        (222, "מאתיים עשרים ושתיים"),
-        (333, "שלוש מאות שלושים ושלוש"),
-        (1000, "אלף"),
-        (2000, "אלפיים"),
-        (3000, "שלושת אלפים"),
-        (3333, "שלושת אלפים שלוש מאות שלושים ושלוש"),
-        (33333, "שלושים ושלושה אלף שלוש מאות שלושים ושלוש"),
-        (333333, "שלוש מאות שלושים ושלושה אלף שלוש מאות שלושים ושלוש"),
-        (1000000, "מיליון"),
-        (3333333, "שלושה מיליון שלוש מאות שלושים ושלושה אלף שלוש מאות שלושים ושלוש"),
-        (
-            33333333,
-            "שלושים ושלושה מיליון שלוש מאות שלושים ושלושה אלף שלוש מאות שלושים ושלוש",
-        ),
-        (1000000000, "מיליארד"),
-        (
-            3333333333,
-            "שלושה מיליארד שלוש מאות "
-            "שלושים ושלושה מיליון שלוש מאות שלושים ושלושה אלף שלוש מאות שלושים ושלוש",
-        ),
-    ],
+    "gender", [GrammaticalGender.FEMININE, GrammaticalGender.MASCULINE]
 )
-def test_cardinal_number_feminine_construct(n: int, s: str):
-    assert (
-        remove_nikud(
-            hebrew_numbers.cardinal_number(
-                n, GrammaticalGender.FEMININE, ConstructState.CONSTRUCT
-            )
+def test_ordinal_number(
+    data_regression: DataRegressionFixture, gender: GrammaticalGender
+) -> None:
+    data = {
+        n: return_errors(
+            hebrew_numbers.ordinal_number,
+            (n, gender),
+            valid_exceptions=InvalidNumberError,
         )
-        == s
-    )
+        for n in NUMBERS_TO_TEST
+    }
+    data_regression.check(data)
 
 
 @pytest.mark.parametrize(
-    ("n", "s"),
-    [
-        (1, "אחד"),
-        (2, "שני"),
-        (3, "שלושת"),
-        (10, "עשרת"),
-        (11, "אחד־עשר"),
-        (12, "שנים־עשר"),
-        (13, "שלושה־עשר"),
-        (20, "עשרים"),
-        (21, "עשרים ואחד"),
-        (22, "עשרים ושניים"),
-        (23, "עשרים ושלושה"),
-        (100, "מאה"),
-        (101, "מאה ואחד"),
-        (110, "מאה ועשרה"),
-        (111, "מאה ואחד־עשר"),
-        (122, "מאה עשרים ושניים"),
-        (200, "מאתיים"),
-        (222, "מאתיים עשרים ושניים"),
-        (333, "שלוש מאות שלושים ושלושה"),
-        (1000, "אלף"),
-        (2000, "אלפיים"),
-        (3000, "שלושת אלפים"),
-        (3333, "שלושת אלפים שלוש מאות שלושים ושלושה"),
-        (33333, "שלושים ושלושה אלף שלוש מאות שלושים ושלושה"),
-        (333333, "שלוש מאות שלושים ושלושה אלף שלוש מאות שלושים ושלושה"),
-        (1000000, "מיליון"),
-        (3333333, "שלושה מיליון שלוש מאות שלושים ושלושה אלף שלוש מאות שלושים ושלושה"),
-        (
-            33333333,
-            "שלושים ושלושה מיליון שלוש מאות שלושים ושלושה אלף שלוש מאות שלושים ושלושה",
-        ),
-        (1000000000, "מיליארד"),
-        (
-            3333333333,
-            "שלושה מיליארד שלוש מאות "
-            "שלושים ושלושה מיליון שלוש מאות שלושים ושלושה אלף שלוש מאות שלושים ושלושה",
-        ),
-    ],
+    "gender", [GrammaticalGender.FEMININE, GrammaticalGender.MASCULINE]
 )
-def test_cardinal_number_masculine_construct(n: int, s: str):
-    assert (
-        remove_nikud(
-            hebrew_numbers.cardinal_number(
-                n, GrammaticalGender.MASCULINE, ConstructState.CONSTRUCT
-            )
+@pytest.mark.parametrize("definite", [False, True])
+def test_count_prefix(
+    data_regression: DataRegressionFixture, gender: GrammaticalGender, definite: bool
+) -> None:
+    data = {
+        n: return_errors(
+            hebrew_numbers.count_prefix,
+            (n, gender),
+            {"is_definite_noun": definite},
+            valid_exceptions=InvalidNumberError,
         )
-        == s
-    )
+        for n in NUMBERS_TO_TEST
+    }
+    data_regression.check(data)
 
 
 @pytest.mark.parametrize(
-    ("n", "s"),
-    [
-        (0, "אפס"),
-        (-1, "מינוס אחת"),
-        (1, "אחת"),
-        (2, "שתיים"),
-        (3, "שלוש"),
-        (10, "עשר"),
-        (100, "מאה"),
-        (1000, "אלף"),
-        (1000000, "מיליון"),
-        (1000000000, "מיליארד"),
-        (1000000000000, "טריליון"),
-        (-1000000000000, "מינוס טריליון"),
-        (-999, "מינוס תשע מאות תשעים ותשע"),
-    ],
+    "gender", [GrammaticalGender.FEMININE, GrammaticalGender.MASCULINE]
 )
-def test_indefinite_number(n: int, s: str):
-    assert remove_nikud(hebrew_numbers.indefinite_number(n)) == s
-
-
-@pytest.mark.parametrize(
-    ("n", "s"),
-    [
-        (1, "ראשונה"),
-        (2, "שנייה"),
-        (3, "שלישית"),
-        (10, "עשירית"),
-        (11, "אחת־עשרה"),
-        (12, "שתים־עשרה"),
-        (13, "שלוש־עשרה"),
-        (20, "עשרים"),
-        (21, "עשרים ואחת"),
-    ],
-)
-def test_ordinal_number_feminine(n: int, s: str):
-    assert (
-        remove_nikud(hebrew_numbers.ordinal_number(n, GrammaticalGender.FEMININE)) == s
-    )
-    assert remove_nikud(hebrew_numbers.ordinal_number_feminine(n)) == s
-
-
-@pytest.mark.parametrize(
-    ("n", "s"),
-    [
-        (1, "ראשון"),
-        (2, "שני"),
-        (3, "שלישי"),
-        (10, "עשירי"),
-        (11, "אחד־עשר"),
-        (12, "שנים־עשר"),
-        (13, "שלושה־עשר"),
-        (20, "עשרים"),
-        (21, "עשרים ואחד"),
-    ],
-)
-def test_ordinal_number_masculine(n: int, s: str):
-    assert (
-        remove_nikud(hebrew_numbers.ordinal_number(n, GrammaticalGender.MASCULINE)) == s
-    )
-    assert remove_nikud(hebrew_numbers.ordinal_number_masculine(n)) == s
-
-
-@pytest.mark.parametrize(
-    ("n", "singular", "plural", "is_masculine", "is_definite_noun", "s"),
-    [
-        (1, "ילד", "ילדים", True, False, "ילד אחד"),
-        (2, "ילד", "ילדים", True, False, "שני ילדים"),
-        (3, "ילד", "ילדים", True, False, "שלושה ילדים"),
-        (10, "ילד", "ילדים", True, False, "עשרה ילדים"),
-        (20, "ילד", "ילדים", True, False, "עשרים ילדים"),
-        (1, "ילדה", "ילדות", False, False, "ילדה אחת"),
-        (2, "ילדה", "ילדות", False, False, "שתי ילדות"),
-        (3, "ילדה", "ילדות", False, False, "שלוש ילדות"),
-        (10, "ילדה", "ילדות", False, False, "עשר ילדות"),
-        (20, "ילדה", "ילדות", False, False, "עשרים ילדות"),
-        (1, "הילד", "הילדים", True, True, "הילד האחד"),
-        (2, "הילד", "הילדים", True, True, "שני הילדים"),
-        (3, "הילד", "הילדים", True, True, "שלושת הילדים"),
-        (10, "הילד", "הילדים", True, True, "עשרת הילדים"),
-        (20, "הילד", "הילדים", True, True, "עשרים הילדים"),
-        (1, "הילדה", "הילדות", False, True, "הילדה האחת"),
-        (2, "הילדה", "הילדות", False, True, "שתי הילדות"),
-        (3, "הילדה", "הילדות", False, True, "שלוש הילדות"),
-        (10, "הילדה", "הילדות", False, True, "עשר הילדות"),
-        (20, "הילדה", "הילדות", False, True, "עשרים הילדות"),
-    ],
-)
-def test_count_noun(  # noqa: PLR0913
-    n: int,
-    singular: str,
-    plural: str,
-    is_masculine: bool,  # noqa: FBT001
-    is_definite_noun: bool,  # noqa: FBT001
-    s: str,
-):
-    assert (
-        remove_nikud(
-            hebrew_numbers.count_noun(
-                n,
-                singular,
-                plural,
-                (
-                    GrammaticalGender.MASCULINE
-                    if is_masculine
-                    else GrammaticalGender.FEMININE
-                ),
-                is_definite_noun=is_definite_noun,
-            )
+@pytest.mark.parametrize("definite", [False, True])
+def test_count_noun(
+    data_regression: DataRegressionFixture, gender: GrammaticalGender, definite: bool
+) -> None:
+    singular_form = "ילד" if gender == "m" else "ילדה"
+    plural_form = "ילדים" if gender == "m" else "ילדות"
+    if definite:
+        singular_form = "ה" + singular_form
+        plural_form = "ה" + plural_form
+    data = {
+        n: return_errors(
+            hebrew_numbers.count_noun,
+            (n, singular_form, plural_form, gender),
+            {"is_definite_noun": definite},
+            valid_exceptions=InvalidNumberError,
         )
-        == s
-    )
+        for n in NUMBERS_TO_TEST
+    }
+    data_regression.check(data)
