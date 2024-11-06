@@ -150,7 +150,7 @@ def _translate_to_20(
             (GrammaticalGender.MASCULINE, ConstructState.ABSOLUTE): "עשרה",
             (GrammaticalGender.MASCULINE, ConstructState.CONSTRUCT): "עשרת",
         }[grammatical_gender, construct_state]
-    # GRAMMAR RULE: weird exceptions for 11 and 12
+    # GRAMMAR RULE: weird exceptions for 11, 12, 17, 19
     if n == 11:  # noqa: PLR2004
         n_str = _translate_one_digit(
             n % 10, grammatical_gender, ConstructState.CONSTRUCT
@@ -160,7 +160,12 @@ def _translate_to_20(
             GrammaticalGender.FEMININE: "שתים",
             GrammaticalGender.MASCULINE: "שנים",
         }[grammatical_gender]
+    elif grammatical_gender == GrammaticalGender.FEMININE and n == 7:  # noqa: PLR2004
+        n_str = "שְבע"
+    elif grammatical_gender == GrammaticalGender.FEMININE and n == 9:  # noqa: PLR2004
+        n_str = "תְשע"
     else:
+        # GRAMMAR RULE: other than that, use construct form for feminine and absolute form for masculine
         n_str = _translate_one_digit(
             n % 10,
             grammatical_gender,
