@@ -4,14 +4,31 @@ from pytest_regressions.data_regression import DataRegressionFixture
 import hebrew_numbers
 from hebrew_numbers import ConstructState, GrammaticalGender, InvalidNumberError
 
-# fmt: off
-NUMBERS_TO_TEST = [
-    0, 1, 2, 3, 10, 11, 12, 13, 20, 21, 22, 23, 100, 101, 110, 111, 122, 200,
-    222, 333, 1000, 2000, 3000, 3333, 33333, 333333, 1000000, 3333333, 33333333,
-    1000000000, 3333333333,
-    -1, -999, -1000000000000
-]
-# fmt: on
+NUMBERS_TO_TEST = sorted(
+    {
+        -1,
+        -999,
+        -1_000_000_000_000,
+        *range(0, 201, 1),
+        *range(0, 1001, 100),
+        *range(0, 20001, 1000),
+        *range(0, 100001, 10000),
+        *range(0, 1000001, 100000),
+        *range(0, 20000001, 1000000),
+        *range(0, 100000001, 10000000),
+        *range(0, 2000000001, 100000000),
+        *range(0, 100, 11),
+        *range(0, 1000, 111),
+        *range(0, 10000, 1111),
+        *range(0, 100000, 11111),
+        *range(0, 1000000, 111111),
+        *range(0, 10000000, 1111111),
+        *range(0, 100000000, 11111111),
+        *range(0, 1000000000, 111111111),
+        *range(0, 10000000000, 1111111111),
+        *[10**n for n in range(30)],
+    }
+)
 
 
 def return_errors(f, args, kwargs=None, valid_exceptions=None):
