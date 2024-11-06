@@ -107,6 +107,7 @@ allow-dict-calls-with-keyword-arguments = true
   "S101",     # flake8-bandit/assert
   "D1",       # pydocstyle/undocumented-*
   "ANN201",   # flake8-annotations/return-type
+  "FBT",      # flake8-boolean-trap
 ]
 
 
