@@ -429,10 +429,7 @@ def ordinal_number(n: int, gender: GrammaticalGender | str) -> str:
 
 
 def count_prefix(
-    n: int,
-    gender: GrammaticalGender | str,
-    *,
-    is_definite_noun: bool = False,
+    n: int, gender: GrammaticalGender | str, *, is_definite_noun: bool = False
 ) -> str:
     """
     Generate a Hebrew cardinal number (מספר מונה) suitable as a prefix before a noun.
@@ -518,9 +515,7 @@ def count_noun(
     grammatical_gender = GrammaticalGender.from_string(gender)
     if n == 1:
         n_str = ("ה" if is_definite_noun else "") + cardinal_number(
-            n,
-            grammatical_gender,
-            ConstructState.ABSOLUTE,
+            n, grammatical_gender, ConstructState.ABSOLUTE
         )
         return f"{singular_form} {n_str}"
     n_str = count_prefix(n, grammatical_gender, is_definite_noun=is_definite_noun)
@@ -540,14 +535,10 @@ cardinal_number_feminine = functools.partial(
     count_prefix, gender=GrammaticalGender.FEMININE
 )
 cardinal_number_masculine_definite = functools.partial(
-    count_prefix,
-    gender=GrammaticalGender.MASCULINE,
-    is_definite_noun=True,
+    count_prefix, gender=GrammaticalGender.MASCULINE, is_definite_noun=True
 )
 cardinal_number_feminine_definite = functools.partial(
-    count_prefix,
-    gender=GrammaticalGender.FEMININE,
-    is_definite_noun=True,
+    count_prefix, gender=GrammaticalGender.FEMININE, is_definite_noun=True
 )
 count_noun_masculine = functools.partial(count_noun, gender=GrammaticalGender.MASCULINE)
 count_noun_feminine = functools.partial(count_noun, gender=GrammaticalGender.FEMININE)
