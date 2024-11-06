@@ -43,14 +43,17 @@ class ConstructState(enum.Enum):
 
     """
 
-    ABSOLUTE = False
-    CONSTRUCT = True
+    ABSOLUTE = "absolute"
+    CONSTRUCT = "construct"
 
     @classmethod
     def from_boolean(cls, val: "bool | ConstructState") -> "ConstructState":
         if isinstance(val, bool):
             return ConstructState.CONSTRUCT if val else ConstructState.ABSOLUTE
         return val
+
+    def __str__(self) -> str:
+        return self.value
 
 
 def _join_words(
