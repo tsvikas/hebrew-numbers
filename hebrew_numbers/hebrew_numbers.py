@@ -444,7 +444,10 @@ def ordinal_number(n: int, gender: GrammaticalGender | str) -> str:
 
 
 def count_prefix(
-    n: int, gender: GrammaticalGender | str, *, is_definite_noun: bool = False
+    n: int,
+    gender: GrammaticalGender | str,
+    *,
+    definite: bool = False,
 ) -> str:
     """
     Generate a Hebrew cardinal number (מספר מונה) suitable as a prefix before a noun.
@@ -456,17 +459,17 @@ def count_prefix(
 
     >>> count_prefix(2, GrammaticalGender.FEMININE)
     'שתי'
-    >>> count_prefix(3, GrammaticalGender.FEMININE, is_definite_noun=False)
+    >>> count_prefix(3, GrammaticalGender.FEMININE, definite=False)
     'שָלוש'
-    >>> count_prefix(3, GrammaticalGender.FEMININE, is_definite_noun=True)
+    >>> count_prefix(3, GrammaticalGender.FEMININE, definite=True)
     'שְלוש'
     >>> count_prefix(11, GrammaticalGender.FEMININE)
     'אחת־עשרה'
     >>> count_prefix(2, GrammaticalGender.MASCULINE)
     'שני'
-    >>> count_prefix(3, GrammaticalGender.MASCULINE, is_definite_noun=False)
+    >>> count_prefix(3, GrammaticalGender.MASCULINE, definite=False)
     'שלושה'
-    >>> count_prefix(3, GrammaticalGender.MASCULINE, is_definite_noun=True)
+    >>> count_prefix(3, GrammaticalGender.MASCULINE, definite=True)
     'שלושת'
     >>> count_prefix(11, GrammaticalGender.MASCULINE)
     'אַחַד־עשר'
@@ -485,7 +488,7 @@ def count_prefix(
     # GRAMMAR RULE: for numbers between 3 and 10, use construct form for definite nouns
     else:
         construct_state = (
-            ConstructState.CONSTRUCT if is_definite_noun else ConstructState.ABSOLUTE
+            ConstructState.CONSTRUCT if definite else ConstructState.ABSOLUTE
         )
     return cardinal_number(n, grammatical_gender, construct_state)
 
@@ -496,7 +499,7 @@ def count_noun(
     plural_form: str,
     gender: GrammaticalGender | str,
     *,
-    is_definite_noun: bool = False,
+    definite: bool = False,
 ) -> str:
     """
     Generate a Hebrew phrase for counting a noun, handling singular and plural forms.
@@ -505,28 +508,28 @@ def count_noun(
     and definiteness.
     Supports positive integers up to 10^21.
 
-    >>> count_noun(1, "ילד", "ילדים", GrammaticalGender.MASCULINE, is_definite_noun=False)
+    >>> count_noun(1, "ילד", "ילדים", GrammaticalGender.MASCULINE, definite=False)
     'ילד אֶחָד'
-    >>> count_noun(1, "הילד", "הילדים", GrammaticalGender.MASCULINE, is_definite_noun=True)
+    >>> count_noun(1, "הילד", "הילדים", GrammaticalGender.MASCULINE, definite=True)
     'הילד האֶחָד'
-    >>> count_noun(1, "ילדה", "ילדות", GrammaticalGender.FEMININE, is_definite_noun=False)
+    >>> count_noun(1, "ילדה", "ילדות", GrammaticalGender.FEMININE, definite=False)
     'ילדה אחת'
-    >>> count_noun(1, "הילדה", "הילדות", GrammaticalGender.FEMININE, is_definite_noun=True)
+    >>> count_noun(1, "הילדה", "הילדות", GrammaticalGender.FEMININE, definite=True)
     'הילדה האחת'
-    >>> count_noun(3, "ילד", "ילדים", GrammaticalGender.MASCULINE, is_definite_noun=False)
+    >>> count_noun(3, "ילד", "ילדים", GrammaticalGender.MASCULINE, definite=False)
     'שלושה ילדים'
-    >>> count_noun(3, "הילד", "הילדים", GrammaticalGender.MASCULINE, is_definite_noun=True)
+    >>> count_noun(3, "הילד", "הילדים", GrammaticalGender.MASCULINE, definite=True)
     'שלושת הילדים'
-    >>> count_noun(3, "ילדה", "ילדות", GrammaticalGender.FEMININE, is_definite_noun=False)
+    >>> count_noun(3, "ילדה", "ילדות", GrammaticalGender.FEMININE, definite=False)
     'שָלוש ילדות'
-    >>> count_noun(3, "הילדה", "הילדות", GrammaticalGender.FEMININE, is_definite_noun=True)
+    >>> count_noun(3, "הילדה", "הילדות", GrammaticalGender.FEMININE, definite=True)
     'שְלוש הילדות'
     """
     grammatical_gender = GrammaticalGender.from_string(gender)
     if n == 1:
-        n_str = ("ה" if is_definite_noun else "") + cardinal_number(
+        n_str = ("ה" if definite else "") + cardinal_number(
             n, grammatical_gender, ConstructState.ABSOLUTE
         )
         return f"{singular_form} {n_str}"
-    n_str = count_prefix(n, grammatical_gender, is_definite_noun=is_definite_noun)
+    n_str = count_prefix(n, grammatical_gender, definite=definite)
     return f"{n_str} {plural_form}"

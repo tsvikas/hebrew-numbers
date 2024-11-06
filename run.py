@@ -17,7 +17,7 @@ def count_female(n: int) -> str:
 
 
 def count_female_definite(n: int) -> str:
-    return hebrew_numbers.count_noun(n, "הילדה", "הילדות", "f", is_definite_noun=True)
+    return hebrew_numbers.count_noun(n, "הילדה", "הילדות", "f", definite=True)
 
 
 def count_male(n: int) -> str:
@@ -25,7 +25,7 @@ def count_male(n: int) -> str:
 
 
 def count_male_definite(n: int) -> str:
-    return hebrew_numbers.count_noun(n, "הילד", "הילדים", "m", is_definite_noun=True)
+    return hebrew_numbers.count_noun(n, "הילד", "הילדים", "m", definite=True)
 
 
 def create_csv(numbers: Iterable[int]) -> str:

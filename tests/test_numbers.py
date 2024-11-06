@@ -103,7 +103,7 @@ def test_count_prefix(
         n: return_errors(
             hebrew_numbers.count_prefix,
             (n, gender),
-            {"is_definite_noun": definite},
+            {"definite": definite},
             valid_exceptions=InvalidNumberError,
         )
         for n in NUMBERS_TO_TEST
@@ -133,7 +133,7 @@ def test_count_noun(
         n: return_errors(
             hebrew_numbers.count_noun,
             (n, singular_form, plural_form, gender),
-            {"is_definite_noun": definite},
+            {"definite": definite},
             valid_exceptions=InvalidNumberError,
         )
         for n in NUMBERS_TO_TEST
