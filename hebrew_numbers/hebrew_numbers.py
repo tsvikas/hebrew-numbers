@@ -40,11 +40,13 @@ class ConstructState(enum.Enum):
     Attributes:
         ABSOLUTE: Absolute form (צורת הנפרד), e.g., "שלושה ילדים".
         CONSTRUCT: Construct form (צורת הנסמך), e.g., "שלושת הילדים".
+        CONSTRUCT79: Construct form of 7 in [17, 700] and 9 in [19, 900].
 
     """
 
     ABSOLUTE = "absolute"
     CONSTRUCT = "construct"
+    CONSTRUCT79 = "construct79"
 
     @classmethod
     def from_boolean(cls, val: "bool | ConstructState") -> "ConstructState":
@@ -85,6 +87,15 @@ def _translate_one_digit(
     """Translate a single digit (1-9) into the corresponding Hebrew word."""
     if not 1 <= n <= 9:  # noqa: PLR2004
         raise ValueError("The number must be an integer between 1 and 9")
+    if (
+        construct_state == ConstructState.CONSTRUCT79
+        and grammatical_gender == GrammaticalGender.FEMININE
+    ):
+        try:
+            return {7: "שְבע", 9: "תְשע"}[n]
+        except KeyError:
+            construct_state = ConstructState.CONSTRUCT
+
     numbers = {
         (GrammaticalGender.FEMININE, ConstructState.ABSOLUTE): {
             1: "אחת",
@@ -149,7 +160,7 @@ def _translate_to_20(
             (GrammaticalGender.MASCULINE, ConstructState.ABSOLUTE): "עשרה",
             (GrammaticalGender.MASCULINE, ConstructState.CONSTRUCT): "עשרת",
         }[grammatical_gender, construct_state]
-    # GRAMMAR RULE: weird exceptions for 11, 12, 17, 19
+    # GRAMMAR RULE: weird exceptions for 11, 12
     if n == 11:  # noqa: PLR2004
         n_str = _translate_one_digit(
             n % 10, grammatical_gender, ConstructState.CONSTRUCT
@@ -159,17 +170,13 @@ def _translate_to_20(
             GrammaticalGender.FEMININE: "שתים",
             GrammaticalGender.MASCULINE: "שנים",
         }[grammatical_gender]
-    elif grammatical_gender == GrammaticalGender.FEMININE and n == 7:  # noqa: PLR2004
-        n_str = "שְבע"
-    elif grammatical_gender == GrammaticalGender.FEMININE and n == 9:  # noqa: PLR2004
-        n_str = "תְשע"
     else:
         # GRAMMAR RULE: other than that, use construct form for feminine and absolute form for masculine
         n_str = _translate_one_digit(
             n % 10,
             grammatical_gender,
             {
-                GrammaticalGender.FEMININE: ConstructState.CONSTRUCT,
+                GrammaticalGender.FEMININE: ConstructState.CONSTRUCT79,
                 GrammaticalGender.MASCULINE: ConstructState.ABSOLUTE,
             }[grammatical_gender],
         )
