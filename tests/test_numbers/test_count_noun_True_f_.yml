@@ -1,7 +1,7 @@
--1000000000000: InvalidNumberError('The number must be non-negative')
--999: InvalidNumberError('The number must be non-negative')
--1: InvalidNumberError('The number must be non-negative')
-0: InvalidNumberError('Zero does not have a construct form')
+-1000000000000: InvalidNumberError('The number must be positive')
+-999: InvalidNumberError('The number must be positive')
+-1: InvalidNumberError('The number must be positive')
+0: InvalidNumberError('The number must be positive')
 1: הילדה האחת
 2: שתי הילדות
 3: שְלוש הילדות

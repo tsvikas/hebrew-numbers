@@ -241,10 +241,8 @@ def cardinal_number(  # noqa: C901
     This function respects grammatical gender (masculine, feminine) and construct state
     (absolute, construct).
 
-    Supports non-negative integers up to 10^21.
+    Supports positive integers up to 10^21.
 
-    >>> cardinal_number(0, GrammaticalGender.FEMININE, ConstructState.ABSOLUTE)
-    'אפס'
     >>> cardinal_number(1234, GrammaticalGender.FEMININE, ConstructState.ABSOLUTE)
     'אלף מאתיים שלושים וארבע'
     >>> cardinal_number(3, GrammaticalGender.FEMININE, ConstructState.CONSTRUCT)
@@ -262,12 +260,8 @@ def cardinal_number(  # noqa: C901
     construct_state = ConstructState.from_boolean(construct)
     if n >= 1_000_000_000_000_000_000 * 1000:
         raise InvalidNumberError("Numbers must be below 10^21")
-    if n < 0:
-        raise InvalidNumberError("Negative numbers do not have a valid representation")
-    if n == 0:
-        if construct_state == ConstructState.CONSTRUCT:
-            raise InvalidNumberError("Zero does not have a construct form")
-        return "אפס"
+    if n <= 0:
+        raise InvalidNumberError("Number must be positive")
 
     def add_suffix(n: int, suffix: str, grammatical_gender: GrammaticalGender) -> str:
         if n == 0:
@@ -371,6 +365,8 @@ def indefinite_number(n: int) -> str:
     >>> indefinite_number(1_001_001_001_001_000_000)
     'קווינטיליון קוודריליון טריליון מיליארד ומיליון'
     """
+    if n == 0:
+        return "אפס"
     if n < 0:
         n_str = cardinal_number(-n, GrammaticalGender.FEMININE, ConstructState.ABSOLUTE)
         return f"מינוס {n_str}"
@@ -442,11 +438,9 @@ def count_prefix(
 
     Chooses the correct construct state based on whether the noun is definite or
     indefinite (שם עצם מיודע/לא מיודע).
-    Supports non-negative integers up to 10^21.
+    Supports positive integers up to 10^21.
     Does not support `n = 1`, as a singular item is not using a prefix.
 
-    >>> count_prefix(0, GrammaticalGender.FEMININE)
-    'אפס'
     >>> count_prefix(2, GrammaticalGender.FEMININE)
     'שתי'
     >>> count_prefix(3, GrammaticalGender.FEMININE, is_definite_noun=False)
@@ -465,8 +459,8 @@ def count_prefix(
     'אַחַד־עשר'
     """
     grammatical_gender = GrammaticalGender.from_string(gender)
-    if n < 0:
-        raise InvalidNumberError("The number must be non-negative")
+    if n <= 0:
+        raise InvalidNumberError("The number must be positive")
     if n == 1:
         raise InvalidNumberError("The value '1' cannot be used as a prefix for a noun")
     # GRAMMAR RULE: always using construct form for 2
@@ -496,12 +490,8 @@ def count_noun(
 
     Chooses the appropriate form based on `n` and adjusts for grammatical gender
     and definiteness.
-    Supports non-negative integers up to 10^21.
+    Supports positive integers up to 10^21.
 
-    >>> count_noun(0, "ילד", "ילדים", GrammaticalGender.MASCULINE, is_definite_noun=False)
-    'אפס ילדים'
-    >>> count_noun(0, "ילדה", "ילדות", GrammaticalGender.FEMININE, is_definite_noun=False)
-    'אפס ילדות'
     >>> count_noun(1, "ילד", "ילדים", GrammaticalGender.MASCULINE, is_definite_noun=False)
     'ילד אֶחָד'
     >>> count_noun(1, "הילד", "הילדים", GrammaticalGender.MASCULINE, is_definite_noun=True)

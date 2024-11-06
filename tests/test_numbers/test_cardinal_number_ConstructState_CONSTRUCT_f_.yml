@@ -1,7 +1,7 @@
--1000000000000: InvalidNumberError('Negative numbers do not have a valid representation')
--999: InvalidNumberError('Negative numbers do not have a valid representation')
--1: InvalidNumberError('Negative numbers do not have a valid representation')
-0: InvalidNumberError('Zero does not have a construct form')
+-1000000000000: InvalidNumberError('Number must be positive')
+-999: InvalidNumberError('Number must be positive')
+-1: InvalidNumberError('Number must be positive')
+0: InvalidNumberError('Number must be positive')
 1: אחת
 2: שתי
 3: שְלוש
