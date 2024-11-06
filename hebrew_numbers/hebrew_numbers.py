@@ -87,6 +87,7 @@ def _translate_one_digit(
     """Translate a single digit (1-9) into the corresponding Hebrew word."""
     if not 1 <= n <= 9:  # noqa: PLR2004
         raise ValueError("The number must be an integer between 1 and 9")
+    # GRAMMAR RULE: there is a special construct form used for feminine 17, 19, 700, 900
     if (
         construct_state == ConstructState.CONSTRUCT79
         and grammatical_gender == GrammaticalGender.FEMININE
@@ -160,12 +161,13 @@ def _translate_to_20(
             (GrammaticalGender.MASCULINE, ConstructState.ABSOLUTE): "עשרה",
             (GrammaticalGender.MASCULINE, ConstructState.CONSTRUCT): "עשרת",
         }[grammatical_gender, construct_state]
-    # GRAMMAR RULE: weird exceptions for 11, 12
     if n == 11:  # noqa: PLR2004
+        # GRAMMAR RULE: 11 uses the construct form in feminine and masculine
         n_str = _translate_one_digit(
             n % 10, grammatical_gender, ConstructState.CONSTRUCT
         )
     elif n == 12:  # noqa: PLR2004
+        # GRAMMAR RULE: 12 uses a unique form
         n_str = {
             GrammaticalGender.FEMININE: "שתים",
             GrammaticalGender.MASCULINE: "שנים",
