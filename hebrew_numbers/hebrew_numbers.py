@@ -207,7 +207,7 @@ def _decompose_hundreds(
         # GRAMMAR RULE: construct_state is always used for hundreds
         hundreds_word = (
             _translate_one_digit(
-                hundreds_digit, GrammaticalGender.FEMININE, ConstructState.CONSTRUCT
+                hundreds_digit, GrammaticalGender.FEMININE, ConstructState.CONSTRUCT79
             )
             + " מאות"
         )
