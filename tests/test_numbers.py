@@ -101,8 +101,14 @@ def test_count_prefix(
 def test_count_noun(
     data_regression: DataRegressionFixture, gender: GrammaticalGender, definite: bool
 ) -> None:
-    singular_form = "ילד" if gender == "m" else "ילדה"
-    plural_form = "ילדים" if gender == "m" else "ילדות"
+    singular_form = {
+        GrammaticalGender.MASCULINE: "ילד",
+        GrammaticalGender.FEMININE: "ילדה",
+    }[gender]
+    plural_form = {
+        GrammaticalGender.MASCULINE: "ילדים",
+        GrammaticalGender.FEMININE: "ילדות",
+    }[gender]
     if definite:
         singular_form = "ה" + singular_form
         plural_form = "ה" + plural_form

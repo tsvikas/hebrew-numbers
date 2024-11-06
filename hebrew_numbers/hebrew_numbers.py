@@ -5,7 +5,7 @@ class InvalidNumberError(Exception):
     """Exception raised when a number cannot be represented."""
 
 
-class GrammaticalGender(enum.StrEnum):
+class GrammaticalGender(enum.Enum):
     """
     Represents grammatical gender (מין דקדוקי).
 
@@ -28,6 +28,9 @@ class GrammaticalGender(enum.StrEnum):
         if "feminine".startswith(s) or "female".startswith(s) or "נקבה".startswith(s):
             return cls.FEMININE
         raise ValueError(f"Invalid gender: {s}")
+
+    def __str__(self) -> str:
+        return self.value
 
 
 class ConstructState(enum.Enum):
