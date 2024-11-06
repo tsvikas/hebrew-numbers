@@ -44,6 +44,12 @@ class ConstructState(enum.Enum):
     ABSOLUTE = False
     CONSTRUCT = True
 
+    @classmethod
+    def from_boolean(cls, val: "bool | ConstructState") -> "ConstructState":
+        if isinstance(val, bool):
+            return ConstructState.CONSTRUCT if val else ConstructState.ABSOLUTE
+        return val
+
 
 def _join_words(
     words: list[str], sep: str = " ", last_sep: str = " ו"  # noqa: RUF001
@@ -228,7 +234,7 @@ def _decompose_hundreds(
 
 
 def cardinal_number(  # noqa: C901
-    n: int, gender: GrammaticalGender | str, construct_state: ConstructState
+    n: int, gender: GrammaticalGender | str, construct: ConstructState | bool
 ) -> str:
     """
     Translate a positive integer into Hebrew words as a cardinal number (מספר מונה).
@@ -254,6 +260,7 @@ def cardinal_number(  # noqa: C901
     'קווינטיליון קוודריליון טריליון מיליארד ומיליון'
     """
     grammatical_gender = GrammaticalGender.from_string(gender)
+    construct_state = ConstructState.from_boolean(construct)
     if n >= 1_000_000_000_000_000_000 * 1000:
         raise InvalidNumberError("Numbers must be below 10^21")
     if n < 0:
