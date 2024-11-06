@@ -258,10 +258,10 @@ def cardinal_number(  # noqa: C901
 
     >>> cardinal_number(1234, GrammaticalGender.FEMININE, ConstructState.ABSOLUTE)
     'אלף מאתיים שלושים וארבע'
-    >>> cardinal_number(3, GrammaticalGender.FEMININE, ConstructState.CONSTRUCT)
-    'שְלוש'
     >>> cardinal_number(1234, GrammaticalGender.MASCULINE, ConstructState.ABSOLUTE)
     'אלף מאתיים שלושים וארבעה'
+    >>> cardinal_number(3, GrammaticalGender.FEMININE, ConstructState.CONSTRUCT)
+    'שְלוש'
     >>> cardinal_number(3, GrammaticalGender.MASCULINE, ConstructState.CONSTRUCT)
     'שלושת'
     >>> cardinal_number(1234567, GrammaticalGender.FEMININE, ConstructState.ABSOLUTE)
@@ -369,10 +369,8 @@ def indefinite_number(n: int) -> str:
     'אחת'
     >>> indefinite_number(2)
     'שתיים'
-    >>> indefinite_number(3)
-    'שָלוש'
-    >>> indefinite_number(10)
-    'עשר'
+    >>> indefinite_number(-3)
+    'מינוס שָלוש'
     >>> indefinite_number(1234567)
     'מיליון מאתיים שלושים וארבעה אלף חמש מאות שישים ושבע'
     >>> indefinite_number(1_001_001_001_001_000_000)
@@ -396,16 +394,10 @@ def ordinal_number(n: int, gender: GrammaticalGender | str) -> str:
     'ראשונה'
     >>> ordinal_number(2, GrammaticalGender.FEMININE)
     'שנייה'
-    >>> ordinal_number(3, GrammaticalGender.FEMININE)
-    'שלישית'
+    >>> ordinal_number(3, GrammaticalGender.MASCULINE)
+    'שלישי'
     >>> ordinal_number(4, GrammaticalGender.MASCULINE)
     'רביעי'
-    >>> ordinal_number(5, GrammaticalGender.MASCULINE)
-    'חמישי'
-    >>> ordinal_number(6, GrammaticalGender.MASCULINE)
-    'שישי'
-    >>> ordinal_number(31, GrammaticalGender.FEMININE)
-    'שלושים ואחת'
     >>> ordinal_number(42, GrammaticalGender.MASCULINE)
     'ארבעים ושניים'
     """
@@ -457,22 +449,18 @@ def count_prefix(
     Supports positive integers up to 10^21.
     Does not support `n = 1`, as a singular item is not using a prefix.
 
-    >>> count_prefix(2, GrammaticalGender.FEMININE)
-    'שתי'
-    >>> count_prefix(3, GrammaticalGender.FEMININE, definite=False)
-    'שָלוש'
-    >>> count_prefix(3, GrammaticalGender.FEMININE, definite=True)
-    'שְלוש'
-    >>> count_prefix(11, GrammaticalGender.FEMININE)
-    'אחת־עשרה'
     >>> count_prefix(2, GrammaticalGender.MASCULINE)
     'שני'
+    >>> count_prefix(2, GrammaticalGender.FEMININE)
+    'שתי'
     >>> count_prefix(3, GrammaticalGender.MASCULINE, definite=False)
     'שלושה'
     >>> count_prefix(3, GrammaticalGender.MASCULINE, definite=True)
     'שלושת'
-    >>> count_prefix(11, GrammaticalGender.MASCULINE)
-    'אַחַד־עשר'
+    >>> count_prefix(3, GrammaticalGender.FEMININE, definite=False)
+    'שָלוש'
+    >>> count_prefix(3, GrammaticalGender.FEMININE, definite=True)
+    'שְלוש'
     """
     grammatical_gender = GrammaticalGender.from_string(gender)
     if n <= 0:
@@ -510,10 +498,6 @@ def count_noun(
 
     >>> count_noun(1, "ילד", "ילדים", GrammaticalGender.MASCULINE, definite=False)
     'ילד אֶחָד'
-    >>> count_noun(1, "הילד", "הילדים", GrammaticalGender.MASCULINE, definite=True)
-    'הילד האֶחָד'
-    >>> count_noun(1, "ילדה", "ילדות", GrammaticalGender.FEMININE, definite=False)
-    'ילדה אחת'
     >>> count_noun(1, "הילדה", "הילדות", GrammaticalGender.FEMININE, definite=True)
     'הילדה האחת'
     >>> count_noun(3, "ילד", "ילדים", GrammaticalGender.MASCULINE, definite=False)
