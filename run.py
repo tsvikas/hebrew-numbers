@@ -13,35 +13,19 @@ def maybe_str(func, i):
 
 
 def count_female(n: int) -> str:
-    return hebrew_numbers.count_noun(
-        n, "ילדה", "ילדות", hebrew_numbers.GrammaticalGender.FEMININE
-    )
+    return hebrew_numbers.count_noun(n, "ילדה", "ילדות", "f")
 
 
 def count_female_definite(n: int) -> str:
-    return hebrew_numbers.count_noun(
-        n,
-        "הילדה",
-        "הילדות",
-        hebrew_numbers.GrammaticalGender.FEMININE,
-        is_definite_noun=True,
-    )
+    return hebrew_numbers.count_noun(n, "הילדה", "הילדות", "f", is_definite_noun=True)
 
 
 def count_male(n: int) -> str:
-    return hebrew_numbers.count_noun(
-        n, "ילד", "ילדים", hebrew_numbers.GrammaticalGender.MASCULINE
-    )
+    return hebrew_numbers.count_noun(n, "ילד", "ילדים", "m")
 
 
 def count_male_definite(n: int) -> str:
-    return hebrew_numbers.count_noun(
-        n,
-        "הילד",
-        "הילדים",
-        hebrew_numbers.GrammaticalGender.MASCULINE,
-        is_definite_noun=True,
-    )
+    return hebrew_numbers.count_noun(n, "הילד", "הילדים", "m", is_definite_noun=True)
 
 
 def create_csv(numbers: Iterable[int]) -> str:
