@@ -32,19 +32,19 @@ def create_csv(numbers: Iterable[int]) -> str:
     funcs = {
         "indefinite_number": hebrew_numbers.indefinite_number,
         "cardinal_number_feminine": functools.partial(
-            hebrew_numbers.count_prefix, gender="f", is_definite_noun=False
+            hebrew_numbers.cardinal_number, gender="f", construct=False
         ),
-        "cardinal_number_feminine_definite": functools.partial(
-            hebrew_numbers.count_prefix, gender="f", is_definite_noun=True
+        "cardinal_number_feminine_construct": functools.partial(
+            hebrew_numbers.cardinal_number, gender="f", construct=True
         ),
         "ordinal_number_feminine": functools.partial(
             hebrew_numbers.ordinal_number, gender="f"
         ),
         "cardinal_number_masculine": functools.partial(
-            hebrew_numbers.count_prefix, gender="m", is_definite_noun=False
+            hebrew_numbers.cardinal_number, gender="m", construct=False
         ),
-        "cardinal_number_masculine_definite": functools.partial(
-            hebrew_numbers.count_prefix, gender="m", is_definite_noun=True
+        "cardinal_number_masculine_construct": functools.partial(
+            hebrew_numbers.cardinal_number, gender="m", construct=True
         ),
         "ordinal_number_masculine": functools.partial(
             hebrew_numbers.ordinal_number, gender="m"
@@ -84,7 +84,11 @@ def create_csv(numbers: Iterable[int]) -> str:
         ]
     )
     writer.writerow(
-        ["נסמך/מיודע"] + ["כן" if "_definite" in name else "" for name in funcs]
+        ["נסמך/מיודע"]
+        + [
+            "כן" if "_definite" in name or "_construct" in name else ""
+            for name in funcs
+        ]
     )
 
     for i in numbers:
