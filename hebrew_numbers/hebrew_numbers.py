@@ -283,10 +283,15 @@ def cardinal_number(  # noqa: C901
             return ""
         if n == 1:
             return suffix
-        # GRAMMAR RULE: construct_state is not used for 10^6 and above
-        n_str = _join_words(
-            _decompose_hundreds(n, grammatical_gender, ConstructState.ABSOLUTE)
-        )
+        # GRAMMAR RULE: construct_state is not used for 10^6 and above, except for 2
+        if n == 2:  # noqa: PLR2004
+            n_str = _join_words(
+                _decompose_hundreds(n, grammatical_gender, ConstructState.CONSTRUCT)
+            )
+        else:
+            n_str = _join_words(
+                _decompose_hundreds(n, grammatical_gender, ConstructState.ABSOLUTE)
+            )
         return f"{n_str} {suffix}"
 
     quintillions = n // 1_000_000_000_000_000_000 % 1000
