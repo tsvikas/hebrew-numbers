@@ -15,9 +15,9 @@ __all__ = [
     "ConstructState",
     "GrammaticalGender",
     "InvalidNumberError",
-    "count_prefix",
-    "count_noun",
-    "indefinite_number",
     "cardinal_number",
+    "count_noun",
+    "count_prefix",
+    "indefinite_number",
     "ordinal_number",
 ]
