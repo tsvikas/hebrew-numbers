@@ -62,3 +62,8 @@ repos:
     rev: 1.8.0
     hooks:
       - id: poetry-check
+ci:
+  skip:
+    - poe-format
+    - poe-lint
+    - poe-test
