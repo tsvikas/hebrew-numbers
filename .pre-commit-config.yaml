@@ -35,29 +35,29 @@ repos:
       - id: forbid-tabs
   - repo: local
     hooks:
-    # black/ruff-isort using poe
-    - id: poe-format
-      name: poe-the-poet format
-      entry: poe format
-      stages: [pre-commit, pre-merge-commit, pre-push, manual]
-      language: system
-      require_serial: true
-      types_or: [python, pyi, jupyter]
-    # ruff/mypy using poe
-    - id: poe-lint
-      name: poe-the-poet lint
-      entry: poe lint
-      language: system
-      types_or: [python, pyi]
-      require_serial: true
-    # pytest using poe
-    - id: poe-test
-      name: poe-the-poet test
-      entry: poe test
-      stages: [pre-commit, pre-merge-commit, pre-push, manual]
-      language: system
-      pass_filenames: false
-      always_run: true
+      # black/ruff-isort using poe
+      - id: poe-format
+        name: poe-the-poet format
+        entry: poe format
+        stages: [pre-commit, pre-merge-commit, pre-push, manual]
+        language: system
+        require_serial: true
+        types_or: [python, pyi, jupyter]
+      # ruff/mypy using poe
+      - id: poe-lint
+        name: poe-the-poet lint
+        entry: poe lint
+        language: system
+        types_or: [python, pyi]
+        require_serial: true
+      # pytest using poe
+      - id: poe-test
+        name: poe-the-poet test
+        entry: poe test
+        stages: [pre-commit, pre-merge-commit, pre-push, manual]
+        language: system
+        pass_filenames: false
+        always_run: true
   - repo: https://github.com/python-poetry/poetry
     rev: 2.0.1
     hooks:
