@@ -175,7 +175,8 @@ def _translate_to_20(
             GrammaticalGender.MASCULINE: "שנים",
         }[grammatical_gender]
     else:
-        # GRAMMAR RULE: other than that, use construct form for feminine and absolute form for masculine
+        # GRAMMAR RULE: other than that, use construct form for feminine and
+        # absolute form for masculine
         n_str = _translate_one_digit(
             n % 10,
             grammatical_gender,
@@ -268,7 +269,11 @@ def cardinal_number(  # noqa: C901
     'שלושת'
     >>> cardinal_number(1234567, GrammaticalGender.FEMININE, ConstructState.ABSOLUTE)
     'מיליון מאתיים שלושים וארבעה אלף חמש מאות שישים ושבע'
-    >>> cardinal_number(1_001_001_001_001_000_000, GrammaticalGender.FEMININE, ConstructState.ABSOLUTE)
+    >>> cardinal_number(
+    ...     1_001_001_001_001_000_000,
+    ...     GrammaticalGender.FEMININE,
+    ...     ConstructState.ABSOLUTE,
+    ... )
     'קווינטיליון קוודריליון טריליון מיליארד ומיליון'
     """
     grammatical_gender = GrammaticalGender.from_string(gender)
