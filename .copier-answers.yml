@@ -1,0 +1,16 @@
+# Changes here will be overwritten by Copier; NEVER EDIT MANUALLY
+_commit: v0.11.2-78-gaecd709
+_src_path: gh:tsvikas/python-template
+format_tool: black
+get_package_version_from_vcs: true
+github_user: tsvikas
+has_cli: false
+jupyter_files: forbid
+license: MIT
+package_description: Convert numbers to Hebrew.
+package_name: hebrew_numbers
+project_name: hebrew-numbers
+python_minor: 9
+user_email: tsvikas@gmail.com
+user_name: Tsvika Shapira
+year: 2025

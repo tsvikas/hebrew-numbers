@@ -1,7 +1,26 @@
-hebrew_numbers
-==========
+# hebrew-numbers
+
+[![Tests][tests-badge]][tests-link]
+[![Documentation Status][rtd-badge]][rtd-link]
+
+[![PyPI version][pypi-version]][pypi-link]
+[![Conda-Forge][conda-badge]][conda-link]
+[![PyPI platforms][pypi-platforms]][pypi-link]
+
+[![uv][uv-badge]][uv-link]
+[![Ruff][ruff-badge]][ruff-link]
+[![Black][black-badge]][black-link]
+
+[![GitHub Discussion][github-discussions-badge]][github-discussions-link]
+[![PRs Welcome][prs-welcome-badge]][prs-welcome-link]
+[![Total downloads][pepy-badge]][pepy-link]
+
+Made using [tsvikas/python-template](http://github.com/tsvikas/python-template)
+
 ## Usage
+
 ### מספר מונה
+
 ```
 >>> cardinal_number(1234, "F", construct=False)
 'אלף מאתיים שלושים וארבע'
@@ -14,6 +33,7 @@ hebrew_numbers
 ```
 
 ### מספר סתמי
+
 ```
 >>> indefinite_number(-3)
 'מינוס שָלוש'
@@ -22,6 +42,7 @@ hebrew_numbers
 ```
 
 ### מספר סודר
+
 ```
 >>> ordinal_number(1, "M")
 'ראשון'
@@ -30,6 +51,7 @@ hebrew_numbers
 ```
 
 ### מספר מונה ושם עצם
+
 ```
 >>> count_noun(1, "ילד", "ילדים", "M", definite=False)
 'ילד אֶחָד'
@@ -54,14 +76,52 @@ hebrew_numbers
 ```
 
 ## Development
-* install git, python3.12, poetry, poethepoet.
-* git clone this repo
-* create a venv using `poetry env use python3.12; poetry install`
-* enable pre-commit checks with `poetry run pre-commit install`
-* use `poe check` to verify code quality
+
+- install [git][install-git], [uv][install-uv].
+- git clone this repo
+- run `uv run just prepare`
+
+## Code formatting
+
+- use `uv run black .` to format code
+- use
+  `git ls-files -z -- '*.md' '*.rst' '*.tex' '*.py' | xargs -0 uv run blacken-docs`
+  to format docs
+
+## Code quality
+
+- use `uv run ruff check .` to verify code quality
+- use `uv run mypy` to verify check typing
+- use `uv run pytest` to run tests
 
 ## Build
-* install poetry-dynamic-versioning[plugin]
-* use `poe version` to see the current version
-* use `poe tag vX.Y.Z` to add a git tag. you still need to push it.
-* use `poetry build` to build
+
+- run formatting, linting, and tests.
+- optionally, use `uv run dunamai from git` to see the current version
+- use
+  `VER="vX.Y.Z" && git tag -a "$VER" -m "version $VER" -e && git push origin tag "$VER"`
+- use `uv build` to build
+
+[black-badge]: https://img.shields.io/badge/code%20style-black-000000.svg
+[black-link]: https://github.com/psf/black
+[conda-badge]: https://img.shields.io/conda/vn/conda-forge/hebrew-numbers
+[conda-link]: https://github.com/conda-forge/hebrew-numbers-feedstock
+[github-discussions-badge]: https://img.shields.io/static/v1?label=Discussions&message=Ask&color=blue&logo=github
+[github-discussions-link]: https://github.com/tsvikas/hebrew-numbers/discussions
+[install-git]: https://git-scm.com/book/en/v2/Getting-Started-Installing-Git
+[install-uv]: https://docs.astral.sh/uv/getting-started/installation/
+[pepy-badge]: https://static.pepy.tech/badge/hebrew-numbers
+[pepy-link]: https://pepy.tech/project/hebrew-numbers
+[prs-welcome-badge]: https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square
+[prs-welcome-link]: http://makeapullrequest.com
+[pypi-link]: https://pypi.org/project/hebrew-numbers/
+[pypi-platforms]: https://img.shields.io/pypi/pyversions/hebrew-numbers
+[pypi-version]: https://img.shields.io/pypi/v/hebrew-numbers
+[rtd-badge]: https://readthedocs.org/projects/hebrew-numbers/badge/?version=latest
+[rtd-link]: https://hebrew-numbers.readthedocs.io/en/latest/?badge=latest
+[ruff-badge]: https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/astral-sh/ruff/main/assets/badge/v2.json
+[ruff-link]: https://github.com/astral-sh/ruff
+[tests-badge]: https://github.com/tsvikas/hebrew-numbers/actions/workflows/lint_and_test.yml/badge.svg
+[tests-link]: https://github.com/tsvikas/hebrew-numbers/actions/workflows/lint_and_test.yml
+[uv-badge]: https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/astral-sh/uv/main/assets/badge/v0.json
+[uv-link]: https://github.com/astral-sh/uv
