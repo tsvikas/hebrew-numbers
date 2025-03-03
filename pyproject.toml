@@ -181,7 +181,6 @@ select = [
 ]
 ignore = [
   # remove me when possible?
-  "ANN",
   "D",
   "FBT001",
   # needed only in large codebases

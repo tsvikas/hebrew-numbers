@@ -1,12 +1,12 @@
 import csv
 import functools
-from collections.abc import Iterable
+from collections.abc import Callable, Iterable
 
 import hebrew_numbers
 from fib import fib
 
 
-def maybe_str(func, i):
+def maybe_str(func: Callable[[int], str], i: int) -> str:
     try:
         return str(func(i))
     except hebrew_numbers.InvalidNumberError:
@@ -29,7 +29,7 @@ def count_male_definite(n: int) -> str:
     return hebrew_numbers.count_noun(n, "הילד", "הילדים", "m", definite=True)
 
 
-NUMBER_FORMS_FEMININE = {
+NUMBER_FORMS_FEMININE: dict[str, Callable[[int], str]] = {
     "indefinite_number": hebrew_numbers.indefinite_number,
     "cardinal_number_feminine_absolute": functools.partial(
         hebrew_numbers.cardinal_number, gender="f", construct=False
@@ -49,7 +49,7 @@ NUMBER_FORMS_FEMININE = {
     "count_female_indefinite_example": count_female,
     "count_female_definite_example": count_female_definite,
 }
-NUMBER_FORMS_MASCULINE = {
+NUMBER_FORMS_MASCULINE: dict[str, Callable[[int], str]] = {
     "cardinal_number_masculine_absolute": functools.partial(
         hebrew_numbers.cardinal_number, gender="m", construct=False
     ),
