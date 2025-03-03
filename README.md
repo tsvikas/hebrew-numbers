@@ -17,6 +17,12 @@
 
 Made using [tsvikas/python-template](http://github.com/tsvikas/python-template)
 
+## Overview
+
+This library provides a comprehensive solution for working with Hebrew numbers in various contexts.
+Hebrew has unique and complex rules for number representation that vary based on gender, definiteness, and usage context.
+This library aims to simplify these complexities by providing intuitive functions for converting numerical values to their proper Hebrew textual representation.
+
 ## Usage
 
 ### Indefinite Number -- מספר סתמי
