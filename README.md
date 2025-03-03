@@ -21,7 +21,7 @@ Made using [tsvikas/python-template](http://github.com/tsvikas/python-template)
 
 ### מספר מונה
 
-```
+```pycon
 >>> cardinal_number(1234, "F", construct=False)
 'אלף מאתיים שלושים וארבע'
 >>> cardinal_number(1234, "M", construct=False)
@@ -34,7 +34,7 @@ Made using [tsvikas/python-template](http://github.com/tsvikas/python-template)
 
 ### מספר סתמי
 
-```
+```pycon
 >>> indefinite_number(-3)
 'מינוס שָלוש'
 >>> indefinite_number(1234567)
@@ -43,7 +43,7 @@ Made using [tsvikas/python-template](http://github.com/tsvikas/python-template)
 
 ### מספר סודר
 
-```
+```pycon
 >>> ordinal_number(1, "M")
 'ראשון'
 >>> ordinal_number(2, "F")
@@ -52,7 +52,7 @@ Made using [tsvikas/python-template](http://github.com/tsvikas/python-template)
 
 ### מספר מונה ושם עצם
 
-```
+```pycon
 >>> count_noun(1, "ילד", "ילדים", "M", definite=False)
 'ילד אֶחָד'
 >>> count_noun(1, "הילדה", "הילדות", "F", definite=True)
