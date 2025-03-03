@@ -21,6 +21,8 @@ Made using [tsvikas/python-template](http://github.com/tsvikas/python-template)
 
 ### Indefinite Number -- מספר סתמי
 
+When counting without specific nouns, but rather in a general sense, we use the indefinite number.
+
 ```pycon
 >>> [indefinite_number(n) for n in [1, 2, 3]]
 ['אחת', 'שתיים', 'שָלוש']
@@ -34,6 +36,7 @@ Made using [tsvikas/python-template](http://github.com/tsvikas/python-template)
 
 ### Ordinal Number -- מספר סודר
 
+A number that describes the position of an object in a series is called an ordinal number.
 This number can be masculine (זכר) or feminine (נקבה).
 
 ```pycon
@@ -74,6 +77,12 @@ If you know the gender and construct state, you can the number itself with `card
 | 1      | אֶחָד                                        | אַחַד                                       | אחת                                        | אחת                                       |
 | 2      | שניים                                      | שני                                       | שתיים                                      | שתי                                       |
 | 3      | שלושה                                      | שלושת                                     | שָלוש                                       | שְלוש                                      |
+
+##### Notes
+
+- The indefinite number is the feminine-absolute form.
+- The form of the number following "פי" (times/multiplied by) to be in the masculine-absolute form: פי שניים, פי שלושה, פי ארבעה.
+- Use the masculine-absolute form to indicate the days of the month: אחד בכסלו, עשרה בטבת, אחד באפריל, שניים ביוני.
 
 ## Development
 
