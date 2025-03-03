@@ -1,8 +1,15 @@
+from __future__ import annotations
+
+from typing import TYPE_CHECKING, Any, Callable
+
 import pytest
-from pytest_regressions.data_regression import DataRegressionFixture
 
 import hebrew_numbers
 from hebrew_numbers import ConstructState, GrammaticalGender, InvalidNumberError
+
+if TYPE_CHECKING:
+    from pytest_regressions.data_regression import DataRegressionFixture
+
 
 NUMBERS_TO_TEST = sorted(
     {
@@ -31,7 +38,12 @@ NUMBERS_TO_TEST = sorted(
 )
 
 
-def return_errors(f, args, kwargs=None, valid_exceptions=None):
+def return_errors(  # type: ignore[explicit-any]
+    f: Callable[..., str],
+    args: tuple[Any, ...],
+    kwargs: dict[str, Any] | None = None,
+    valid_exceptions: tuple[type[Exception]] | type[Exception] | None = None,
+) -> str:
     kwargs = kwargs or {}
     try:
         return f(*args, **kwargs)

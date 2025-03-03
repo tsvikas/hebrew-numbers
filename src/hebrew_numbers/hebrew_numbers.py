@@ -2,6 +2,8 @@ from __future__ import annotations
 
 import enum
 
+import typing_extensions as typing
+
 
 class InvalidNumberError(Exception):
     """Exception raised when a number cannot be represented."""
@@ -31,6 +33,7 @@ class GrammaticalGender(enum.Enum):
             return cls.FEMININE
         raise ValueError(f"Invalid gender: {s}")
 
+    @typing.override
     def __str__(self) -> str:
         return self.value
 
@@ -56,6 +59,7 @@ class ConstructState(enum.Enum):
             return ConstructState.CONSTRUCT if val else ConstructState.ABSOLUTE
         return val
 
+    @typing.override
     def __str__(self) -> str:
         return self.value
 

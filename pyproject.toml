@@ -39,6 +39,7 @@ classifiers = [
   "Typing :: Typed",
 ]
 dependencies = [
+    "typing-extensions>=4",
 ]
 
 [project.optional-dependencies]
