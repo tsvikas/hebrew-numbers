@@ -4,7 +4,6 @@
 [![Documentation Status][rtd-badge]][rtd-link]
 
 [![PyPI version][pypi-version]][pypi-link]
-[![Conda-Forge][conda-badge]][conda-link]
 [![PyPI platforms][pypi-platforms]][pypi-link]
 
 [![uv][uv-badge]][uv-link]
@@ -119,8 +118,6 @@ If you know the gender and construct state, you can the number itself with `card
 
 [black-badge]: https://img.shields.io/badge/code%20style-black-000000.svg
 [black-link]: https://github.com/psf/black
-[conda-badge]: https://img.shields.io/conda/vn/conda-forge/hebrew-numbers
-[conda-link]: https://github.com/conda-forge/hebrew-numbers-feedstock
 [github-discussions-badge]: https://img.shields.io/static/v1?label=Discussions&message=Ask&color=blue&logo=github
 [github-discussions-link]: https://github.com/tsvikas/hebrew-numbers/discussions
 [install-git]: https://git-scm.com/book/en/v2/Getting-Started-Installing-Git
