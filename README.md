@@ -22,10 +22,14 @@ Made using [tsvikas/python-template](http://github.com/tsvikas/python-template)
 ### Indefinite Number -- מספר סתמי
 
 ```pycon
+>>> [indefinite_number(n) for n in [1, 2, 3]]
+['אחת', 'שתיים', 'שָלוש']
+>>> indefinite_number(0)
+'אפס'
 >>> indefinite_number(-3)
 'מינוס שָלוש'
->>> indefinite_number(1234567)
-'מיליון מאתיים שלושים וארבעה אלף חמש מאות שישים ושבע'
+>>> indefinite_number(1234567890)
+'מיליארד מאתיים שלושים וארבעה מיליון חמש מאות שישים ושבעה אלף שמונֶה מאות ותשעים'
 ```
 
 ### Ordinal Number -- מספר סודר
@@ -33,52 +37,43 @@ Made using [tsvikas/python-template](http://github.com/tsvikas/python-template)
 This number can be masculine (זכר) or feminine (נקבה).
 
 ```pycon
->>> ordinal_number(1, "M")
-'ראשון'
->>> ordinal_number(2, "F")
-'שנייה'
+>>> [ordinal_number(n, "M") for n in [1, 2, 3]]
+['ראשון', 'שני', 'שלישי']
+>>> [ordinal_number(n, "F") for n in [1, 2, 3]]
+['ראשונה', 'שנייה', 'שלישית']
 ```
 
 ### Cardinal Number -- מספר מונה
 
-This number can be masculine (זכר) or feminine (נקבה).
-This number can be absolute (נפרד) or construct (נסמך).
+#### Usage with noun
 
-```pycon
->>> cardinal_number(1234, "F", construct=False)
-'אלף מאתיים שלושים וארבע'
->>> cardinal_number(1234, "M", construct=False)
-'אלף מאתיים שלושים וארבעה'
->>> cardinal_number(3, "F", construct=True)
-'שְלוש'
->>> cardinal_number(3, "M", construct=True)
-'שלושת'
-```
+Cardinal numbers are used to indicate quantities. Their form depends on the following factors:
 
-### מספר מונה ושם עצם
+- The gender of the noun (masculine or feminine).
+- Whether the noun is definite (מיודע) or indefinite (סתמי).
 
-```pycon
->>> count_noun(1, "ילד", "ילדים", "M", definite=False)
-'ילד אֶחָד'
->>> count_noun(1, "הילדה", "הילדות", "F", definite=True)
-'הילדה האחת'
->>> count_prefix(3, "M", definite=False)
-'שלושה'
->>> count_noun(3, "ילד", "ילדים", "M", definite=False)
-'שלושה ילדים'
->>> count_prefix(3, "F", definite=False)
-'שָלוש'
->>> count_noun(3, "ילדה", "ילדות", "F", definite=False)
-'שָלוש ילדות'
->>> count_prefix(3, "M", definite=True)
-'שלושת'
->>> count_noun(3, "הילד", "הילדים", "M", definite=True)
-'שלושת הילדים'
->>> count_prefix(3, "F", definite=True)
-'שְלוש'
->>> count_noun(3, "הילדה", "הילדות", "F", definite=True)
-'שְלוש הילדות'
-```
+To specify a quantity with a noun, use `count_noun(n, singular_form, plural_form, gender, definite)`.
+
+| Number | Masculine, Indefinite                                | Masculine, Definite                                   | Feminine, Indefinite                                  | Feminine, Definite                                     |
+| ------ | ---------------------------------------------------- | ----------------------------------------------------- | ----------------------------------------------------- | ------------------------------------------------------ |
+| `n`    | `count_noun(n, "ילד", "ילדים", "M", definite=False)` | `count_noun(n, "הילד", "הילדים", "M", definite=True)` | `count_noun(n, "ילדה", "ילדות", "F", definite=False)` | `count_noun(n, "הילדה", "הילדות", "F", definite=True)` |
+| 1      | ילד אֶחָד                                              | הילד האֶחָד                                             | ילדה אחת                                              | הילדה האחת                                             |
+| 2      | שני ילדים                                            | שני הילדים                                            | שתי ילדות                                             | שתי הילדות                                             |
+| 3      | שלושה ילדים                                          | שלושת הילדים                                          | שָלוש ילדות                                            | שְלוש הילדות                                            |
+
+If you only need the numerical prefix, use `count_prefix(n, gender, definite)`.
+
+#### Absolute and Construct Forms
+
+The number itself can be masculine (זכר) or feminine (נקבה), and absolute (נפרד) or construct (נסמך).
+If you know the gender and construct state, you can the number itself with `cardinal_number(n, gender, construct)`
+
+| Number | Masculine, Absolute                        | Masculine, Construct                      | Feminine, Absolute                         | Feminine, Construct                       |
+| ------ | ------------------------------------------ | ----------------------------------------- | ------------------------------------------ | ----------------------------------------- |
+| `n`    | `cardinal_number(n, "M", construct=False)` | `cardinal_number(n, "M", construct=True)` | `cardinal_number(n, "F", construct=False)` | `cardinal_number(n, "F", construct=True)` |
+| 1      | אֶחָד                                        | אַחַד                                       | אחת                                        | אחת                                       |
+| 2      | שניים                                      | שני                                       | שתיים                                      | שתי                                       |
+| 3      | שלושה                                      | שלושת                                     | שָלוש                                       | שְלוש                                      |
 
 ## Development
 
