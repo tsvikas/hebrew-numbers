@@ -2,19 +2,17 @@
 
 [![Tests][tests-badge]][tests-link]
 [![Documentation Status][rtd-badge]][rtd-link]
-
-[![PyPI version][pypi-version]][pypi-link]
-[![PyPI platforms][pypi-platforms]][pypi-link]
-
 [![uv][uv-badge]][uv-link]
 [![Ruff][ruff-badge]][ruff-link]
 [![Black][black-badge]][black-link]
 
+[![PyPI version][pypi-version]][pypi-link]
+[![PyPI platforms][pypi-platforms]][pypi-link]
+
+[![Made Using tsvikas/python-template][template-badge]][template-link]
 [![GitHub Discussion][github-discussions-badge]][github-discussions-link]
 [![PRs Welcome][prs-welcome-badge]][prs-welcome-link]
 [![Total downloads][pepy-badge]][pepy-link]
-
-[![Made Using tsvikas/python-template][template-badge]][template-link]
 
 ## Overview
 
