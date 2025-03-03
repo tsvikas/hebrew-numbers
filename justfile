@@ -29,7 +29,7 @@ check:
   uv run pre-commit run --all-files
 
 format:
-  uv run ruff check --select I001 --fix
+  uv run ruff check --select I001 --fix --show-fixes
   uv run black .
 
 lint:

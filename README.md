@@ -15,7 +15,7 @@
 [![PRs Welcome][prs-welcome-badge]][prs-welcome-link]
 [![Total downloads][pepy-badge]][pepy-link]
 
-Made using [tsvikas/python-template](http://github.com/tsvikas/python-template)
+[![Made Using tsvikas/python-template][template-badge]][template-link]
 
 ## Overview
 
@@ -127,7 +127,7 @@ If you know the gender and construct state, you can the number itself with `card
 [install-uv]: https://docs.astral.sh/uv/getting-started/installation/
 [pepy-badge]: https://static.pepy.tech/badge/hebrew-numbers
 [pepy-link]: https://pepy.tech/project/hebrew-numbers
-[prs-welcome-badge]: https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square
+[prs-welcome-badge]: https://img.shields.io/badge/PRs-welcome-brightgreen.svg
 [prs-welcome-link]: http://makeapullrequest.com
 [pypi-link]: https://pypi.org/project/hebrew-numbers/
 [pypi-platforms]: https://img.shields.io/pypi/pyversions/hebrew-numbers
@@ -136,6 +136,8 @@ If you know the gender and construct state, you can the number itself with `card
 [rtd-link]: https://hebrew-numbers.readthedocs.io/en/latest/?badge=latest
 [ruff-badge]: https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/astral-sh/ruff/main/assets/badge/v2.json
 [ruff-link]: https://github.com/astral-sh/ruff
+[template-badge]: https://img.shields.io/badge/%F0%9F%9A%80_Made_Using-tsvikas%2Fpython--template-gold
+[template-link]: https://github.com/tsvikas/python-template
 [tests-badge]: https://github.com/tsvikas/hebrew-numbers/actions/workflows/ci.yml/badge.svg
 [tests-link]: https://github.com/tsvikas/hebrew-numbers/actions/workflows/ci.yml
 [uv-badge]: https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/astral-sh/uv/main/assets/badge/v0.json

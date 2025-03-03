@@ -22,8 +22,6 @@ classifiers = [
   # i.e.: Environment, Framework, Intended Audience, Topic
   # TODO: update the development status
   "Development Status :: 1 - Planning",
-  # license
-  "License :: OSI Approved :: MIT License",
   # target os
   "Operating System :: OS Independent",
   # python versions
