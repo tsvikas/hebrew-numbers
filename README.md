@@ -19,19 +19,6 @@ Made using [tsvikas/python-template](http://github.com/tsvikas/python-template)
 
 ## Usage
 
-### Cardinal Number -- מספר מונה
-
-```pycon
->>> cardinal_number(1234, "F", construct=False)
-'אלף מאתיים שלושים וארבע'
->>> cardinal_number(1234, "M", construct=False)
-'אלף מאתיים שלושים וארבעה'
->>> cardinal_number(3, "F", construct=True)
-'שְלוש'
->>> cardinal_number(3, "M", construct=True)
-'שלושת'
-```
-
 ### Indefinite Number -- מספר סתמי
 
 ```pycon
@@ -43,11 +30,29 @@ Made using [tsvikas/python-template](http://github.com/tsvikas/python-template)
 
 ### Ordinal Number -- מספר סודר
 
+This number can be masculine (זכר) or feminine (נקבה).
+
 ```pycon
 >>> ordinal_number(1, "M")
 'ראשון'
 >>> ordinal_number(2, "F")
 'שנייה'
+```
+
+### Cardinal Number -- מספר מונה
+
+This number can be masculine (זכר) or feminine (נקבה).
+This number can be absolute (נפרד) or construct (נסמך).
+
+```pycon
+>>> cardinal_number(1234, "F", construct=False)
+'אלף מאתיים שלושים וארבע'
+>>> cardinal_number(1234, "M", construct=False)
+'אלף מאתיים שלושים וארבעה'
+>>> cardinal_number(3, "F", construct=True)
+'שְלוש'
+>>> cardinal_number(3, "M", construct=True)
+'שלושת'
 ```
 
 ### מספר מונה ושם עצם
