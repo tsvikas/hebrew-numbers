@@ -121,7 +121,7 @@ Made using [tsvikas/python-template](http://github.com/tsvikas/python-template)
 [rtd-link]: https://hebrew-numbers.readthedocs.io/en/latest/?badge=latest
 [ruff-badge]: https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/astral-sh/ruff/main/assets/badge/v2.json
 [ruff-link]: https://github.com/astral-sh/ruff
-[tests-badge]: https://github.com/tsvikas/hebrew-numbers/actions/workflows/lint_and_test.yml/badge.svg
-[tests-link]: https://github.com/tsvikas/hebrew-numbers/actions/workflows/lint_and_test.yml
+[tests-badge]: https://github.com/tsvikas/hebrew-numbers/actions/workflows/ci.yml/badge.svg
+[tests-link]: https://github.com/tsvikas/hebrew-numbers/actions/workflows/ci.yml
 [uv-badge]: https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/astral-sh/uv/main/assets/badge/v0.json
 [uv-link]: https://github.com/astral-sh/uv
