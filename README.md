@@ -19,7 +19,7 @@ Made using [tsvikas/python-template](http://github.com/tsvikas/python-template)
 
 ## Usage
 
-### מספר מונה
+### Cardinal Number -- מספר מונה
 
 ```pycon
 >>> cardinal_number(1234, "F", construct=False)
@@ -32,7 +32,7 @@ Made using [tsvikas/python-template](http://github.com/tsvikas/python-template)
 'שלושת'
 ```
 
-### מספר סתמי
+### Indefinite Number -- מספר סתמי
 
 ```pycon
 >>> indefinite_number(-3)
@@ -41,7 +41,7 @@ Made using [tsvikas/python-template](http://github.com/tsvikas/python-template)
 'מיליון מאתיים שלושים וארבעה אלף חמש מאות שישים ושבע'
 ```
 
-### מספר סודר
+### Ordinal Number -- מספר סודר
 
 ```pycon
 >>> ordinal_number(1, "M")
