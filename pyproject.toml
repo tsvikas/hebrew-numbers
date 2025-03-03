@@ -181,7 +181,6 @@ select = [
 ]
 ignore = [
   # remove me when possible?
-  "D",
   "FBT001",
   # needed only in large codebases
   "TD002",    # flake8-todos/missing-todo-author
@@ -229,6 +228,9 @@ flake8-comprehensions.allow-dict-calls-with-keyword-arguments = true
   "PLR2004",  # PyLint-Refactor/magic-value-comparison
   "S101",     # flake8-bandit/assert
   "D1",       # pydocstyle/undocumented-*
+]
+"*.py" = [
+  "D",
 ]
 
 

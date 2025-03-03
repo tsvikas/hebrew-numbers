@@ -1,3 +1,8 @@
+"""hebrew-numbers: Convert numbers to Hebrew.
+
+Copyright (c) 2025 Tsvika Shapira. All rights reserved.
+"""
+
 from __future__ import annotations
 
 import enum
@@ -10,8 +15,7 @@ class InvalidNumberError(Exception):
 
 
 class GrammaticalGender(enum.Enum):
-    """
-    Represents grammatical gender (מין דקדוקי).
+    """Represents grammatical gender (מין דקדוקי).
 
     Attributes:
         FEMININE: Feminine form (צורת הנקבה), e.g., "שלוש ילדות".
@@ -24,6 +28,7 @@ class GrammaticalGender(enum.Enum):
 
     @classmethod
     def from_string(cls, s: str | GrammaticalGender) -> GrammaticalGender:
+        """Convert from string to enum."""
         if isinstance(s, GrammaticalGender):
             return s
         s = s.lower()
@@ -39,8 +44,7 @@ class GrammaticalGender(enum.Enum):
 
 
 class ConstructState(enum.Enum):
-    """
-    Represents the construct state (צורת נסמך) in grammar.
+    """Represents the construct state (צורת נסמך) in grammar.
 
     Attributes:
         ABSOLUTE: Absolute form (צורת הנפרד), e.g., "שלושה ילדים".
@@ -55,6 +59,7 @@ class ConstructState(enum.Enum):
 
     @classmethod
     def from_boolean(cls, val: bool | ConstructState) -> ConstructState:
+        """Convert from boolean to enum."""
         if isinstance(val, bool):
             return ConstructState.CONSTRUCT if val else ConstructState.ABSOLUTE
         return val
@@ -67,8 +72,7 @@ class ConstructState(enum.Enum):
 def _join_words(
     words: list[str], sep: str = " ", last_sep: str = " ו"  # noqa: RUF001
 ) -> str:
-    """
-    Combine all words in the list into a single string.
+    """Combine all words in the list into a single string.
 
     Words are separated by `sep`, with the final pair separated by `last_sep`.
 
@@ -198,8 +202,7 @@ def _translate_to_20(
 def _decompose_hundreds(
     n: int, grammatical_gender: GrammaticalGender, construct_state: ConstructState
 ) -> list[str]:
-    """
-    Translate a number from 1 to 999 into a list of Hebrew words.
+    """Translate a number from 1 to 999 into a list of Hebrew words.
 
     Words represent the hundreds, tens, and units.
     """
@@ -255,8 +258,7 @@ def _decompose_hundreds(
 def cardinal_number(  # noqa: C901
     n: int, gender: GrammaticalGender | str, construct: ConstructState | bool
 ) -> str:
-    """
-    Translate a positive integer into Hebrew words as a cardinal number (מספר מונה).
+    """Translate a positive integer into Hebrew words as a cardinal number (מספר מונה).
 
     This function respects grammatical gender (masculine, feminine) and construct state
     (absolute, construct).
@@ -373,8 +375,7 @@ def cardinal_number(  # noqa: C901
 
 
 def indefinite_number(n: int) -> str:
-    """
-    Create a string representing an indefinite number (מספר סתמי).
+    """Create a string representing an indefinite number (מספר סתמי).
 
     For negative numbers, the string will include a "minus" prefix (מינוס).
     Supports integers up to 10^21.
@@ -401,8 +402,7 @@ def indefinite_number(n: int) -> str:
 
 
 def ordinal_number(n: int, gender: GrammaticalGender | str) -> str:
-    """
-    Create a string representing an ordinal number (מספר סודר).
+    """Create a string representing an ordinal number (מספר סודר).
 
     Supports positive integers up to 10^21.
 
@@ -457,8 +457,7 @@ def count_prefix(
     *,
     definite: bool = False,
 ) -> str:
-    """
-    Generate a Hebrew cardinal number (מספר מונה) suitable as a prefix before a noun.
+    """Generate a Hebrew cardinal number (מספר מונה) suitable as a prefix before a noun.
 
     Chooses the correct construct state based on whether the noun is definite or
     indefinite (שם עצם מיודע/לא מיודע).
@@ -505,8 +504,7 @@ def count_noun(
     *,
     definite: bool = False,
 ) -> str:
-    """
-    Generate a Hebrew phrase for counting a noun, handling singular and plural forms.
+    """Generate a Hebrew phrase for counting a noun, handling singular and plural forms.
 
     Chooses the appropriate form based on `n` and adjusts for grammatical gender
     and definiteness.
