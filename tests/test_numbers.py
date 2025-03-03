@@ -109,7 +109,9 @@ def test_ordinal_number(
 )
 @pytest.mark.parametrize("definite", [False, True])
 def test_count_prefix(
-    data_regression: DataRegressionFixture, gender: GrammaticalGender, definite: bool
+    data_regression: DataRegressionFixture,
+    gender: GrammaticalGender,
+    definite: bool,  # noqa: FBT001
 ) -> None:
     data = {
         n: return_errors(
@@ -128,7 +130,9 @@ def test_count_prefix(
 )
 @pytest.mark.parametrize("definite", [False, True])
 def test_count_noun(
-    data_regression: DataRegressionFixture, gender: GrammaticalGender, definite: bool
+    data_regression: DataRegressionFixture,
+    gender: GrammaticalGender,
+    definite: bool,  # noqa: FBT001
 ) -> None:
     singular_form = {
         GrammaticalGender.MASCULINE: "ילד",
