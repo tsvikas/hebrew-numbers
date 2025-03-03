@@ -96,20 +96,20 @@ If you know the gender and construct state, you can the number itself with `card
 - git clone this repo
 - run `uv run just prepare`
 
-## Code formatting
+### Code formatting
 
 - use `uv run black .` to format code
 - use
   `git ls-files -z -- '*.md' '*.rst' '*.tex' '*.py' | xargs -0 uv run blacken-docs`
   to format docs
 
-## Code quality
+### Code quality
 
 - use `uv run ruff check .` to verify code quality
 - use `uv run mypy` to verify check typing
 - use `uv run pytest` to run tests
 
-## Build
+### Build
 
 - run formatting, linting, and tests.
 - optionally, use `uv run dunamai from git` to see the current version
