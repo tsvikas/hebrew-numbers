@@ -21,6 +21,18 @@ This library aims to simplify these complexities by providing intuitive function
 
 ## Usage
 
+Install the package using pip, or with a dependency manager like uv.
+
+```bash
+pip install hebrew-numbers
+```
+
+Import the package in your code:
+
+```python
+import hebrew_numbers
+```
+
 ### Indefinite Number -- מספר סתמי
 
 When counting without specific nouns, but rather in a general sense, we use the indefinite number.
