@@ -1,5 +1,5 @@
 # Changes here will be overwritten by Copier; NEVER EDIT MANUALLY
-_commit: v0.11.2-102-g20ba8ce
+_commit: v0.11.2-118-g346836b
 _src_path: gh:tsvikas/python-template
 format_tool: black
 get_package_version_from_vcs: true

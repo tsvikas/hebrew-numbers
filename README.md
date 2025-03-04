@@ -120,7 +120,6 @@ If you know the gender and construct state, you can the number itself with `card
 ### Build
 
 - run formatting, linting, and tests.
-- optionally, use `uv run dunamai from git` to see the current version
 - use
   `VER="vX.Y.Z" && git tag -a "$VER" -m "version $VER" -e && git push origin tag "$VER"`
 - use `uv build` to build
