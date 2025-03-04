@@ -1,5 +1,5 @@
 # Changes here will be overwritten by Copier; NEVER EDIT MANUALLY
-_commit: v0.12.0
+_commit: v0.13.1
 _src_path: gh:tsvikas/python-template
 format_tool: black
 get_package_version_from_vcs: true
@@ -10,7 +10,7 @@ license: MIT
 package_description: Convert numbers to Hebrew.
 package_name: hebrew_numbers
 project_name: hebrew-numbers
-python_minor: 9
+python_min: 9
 user_email: tsvikas@gmail.com
 user_name: Tsvika Shapira
 year: 2025
