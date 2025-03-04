@@ -5,8 +5,8 @@
 [![uv][uv-badge]][uv-link]
 [![Ruff][ruff-badge]][ruff-link]
 [![Black][black-badge]][black-link]
-[![PyPI version][pypi-version]][pypi-link]
-[![PyPI platforms][pypi-platforms]][pypi-link]
+[![PyPI version][pypi-version-badge]][pypi-link]
+[![PyPI platforms][pypi-platforms-badge]][pypi-link]
 \
 [![Made Using tsvikas/python-template][template-badge]][template-link]
 [![GitHub Discussion][github-discussions-badge]][github-discussions-link]
@@ -119,13 +119,13 @@ If you know the gender and construct state, you can the number itself with `card
 [github-discussions-link]: https://github.com/tsvikas/hebrew-numbers/discussions
 [install-git]: https://git-scm.com/book/en/v2/Getting-Started-Installing-Git
 [install-uv]: https://docs.astral.sh/uv/getting-started/installation/
-[pepy-badge]: https://static.pepy.tech/badge/hebrew-numbers
+[pepy-badge]: https://img.shields.io/pepy/dt/hebrew-numbers
 [pepy-link]: https://pepy.tech/project/hebrew-numbers
 [prs-welcome-badge]: https://img.shields.io/badge/PRs-welcome-brightgreen.svg
 [prs-welcome-link]: http://makeapullrequest.com
 [pypi-link]: https://pypi.org/project/hebrew-numbers/
-[pypi-platforms]: https://img.shields.io/pypi/pyversions/hebrew-numbers
-[pypi-version]: https://img.shields.io/pypi/v/hebrew-numbers
+[pypi-platforms-badge]: https://img.shields.io/pypi/pyversions/hebrew-numbers
+[pypi-version-badge]: https://img.shields.io/pypi/v/hebrew-numbers
 [rtd-badge]: https://readthedocs.org/projects/hebrew-numbers/badge/?version=latest
 [rtd-link]: https://hebrew-numbers.readthedocs.io/en/latest/?badge=latest
 [ruff-badge]: https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/astral-sh/ruff/main/assets/badge/v2.json
