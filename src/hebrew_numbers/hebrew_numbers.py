@@ -6,8 +6,12 @@ Copyright (c) 2025 Tsvika Shapira. All rights reserved.
 from __future__ import annotations
 
 import enum
+import sys
 
-import typing_extensions as typing
+if sys.version_info >= (3, 12):
+    import typing
+else:
+    import typing_extensions as typing
 
 
 class InvalidNumberError(Exception):

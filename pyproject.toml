@@ -37,7 +37,7 @@ classifiers = [
   "Typing :: Typed",
 ]
 dependencies = [
-    "typing-extensions>=4",
+    "typing-extensions>=4.5.0; python_version < '3.12'",
 ]
 
 [project.optional-dependencies]
