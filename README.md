@@ -5,13 +5,14 @@
 [![uv][uv-badge]][uv-link]
 [![Ruff][ruff-badge]][ruff-link]
 [![Black][black-badge]][black-link]
+\
 [![PyPI version][pypi-version-badge]][pypi-link]
 [![PyPI platforms][pypi-platforms-badge]][pypi-link]
+[![Total downloads][pepy-badge]][pepy-link]
 \
 [![Made Using tsvikas/python-template][template-badge]][template-link]
 [![GitHub Discussion][github-discussions-badge]][github-discussions-link]
 [![PRs Welcome][prs-welcome-badge]][prs-welcome-link]
-[![Total downloads][pepy-badge]][pepy-link]
 
 ## Overview
 
@@ -21,13 +22,13 @@ This library aims to simplify these complexities by providing intuitive function
 
 ## Usage
 
-Install the package using pip, or with a dependency manager like uv.
+Install the package using pip, or with a dependency manager like uv:
 
 ```bash
 pip install hebrew-numbers
 ```
 
-Import the package in your code:
+and import the package in your code:
 
 ```python
 import hebrew_numbers
@@ -101,21 +102,16 @@ If you know the gender and construct state, you can the number itself with `card
 ## Development
 
 - install [git][install-git], [uv][install-uv].
-- git clone this repo
+- git clone this repo: `git clone tsvikas/hebrew-numbers.git`
 - run `uv run just prepare`
-
-### Code formatting
-
-- use `uv run black .` to format code
-- use
-  `git ls-files -z -- '*.md' '*.rst' '*.tex' '*.py' | xargs -0 uv run blacken-docs`
-  to format docs
 
 ### Code quality
 
-- use `uv run ruff check .` to verify code quality
-- use `uv run mypy` to verify check typing
-- use `uv run pytest` to run tests
+- use `uv run just format` to format the code.
+- use `uv run just lint` to see linting errors.
+- use `uv run just test` to see run tests.
+- use `uv run just check` to run all the checks (format, lint, test, and pre-commit).
+- Run a specific tool directly, with `uv run pytest`/`ruff`/`mypy`/`black`/...
 
 ### Build
 

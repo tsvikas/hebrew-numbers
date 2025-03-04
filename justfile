@@ -41,6 +41,8 @@ check:
 format:
   uv run ruff check --select I001 --fix
   uv run black .
+  uv run pre-commit run --all-files blacken-docs
+  uv run pre-commit run --all-files mdformat
 
 lint:
   uv run ruff check
