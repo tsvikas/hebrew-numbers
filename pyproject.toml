@@ -70,6 +70,11 @@ dev = [
   "pre-commit ~=4.0",
   "black ~=25.0",  # also update GHA version
   "ruff ~=0.9.0",
+  ## used for debug
+  "icecream >=2",
+  "snoop >=0.3",
+  ## used for REPL
+  "ipython >=8",
 ]
 test = [
   "pytest ~=8.0",
@@ -226,14 +231,4 @@ flake8-comprehensions.allow-dict-calls-with-keyword-arguments = true
 [tool.pylint]
 py-version = "3.9"
 ignore-paths = [".*/_version.py"]
-# CHECK those options:
 reports.output-format = "colorized"
-similarities.ignore-imports = "yes"
-messages_control.disable = [
-  "design",
-  "fixme",
-  "line-too-long",
-  "missing-module-docstring",
-  "missing-function-docstring",
-  "wrong-import-position",
-]

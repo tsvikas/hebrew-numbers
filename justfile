@@ -17,36 +17,45 @@ update-deps:
   uv sync --upgrade
   uv run pre-commit autoupdate -j "$(nproc)"
 
-# Initialize the project after cloning
+# Setup the project. Needed after cloning
 prepare:
   uv run pre-commit install
 
-# Run code quality checks, than push
 check-and-push:
   @just check
   git push
 
-# Format and check code
 format-and-check:
   @just format
   @just check
 
-# Run all code quality checks and tests
+# Run all code quality checks and tests, except pylint
 check:
   # only pytest and mypy are not in the pre-commit hooks
   uv run pytest
   uv run mypy
   uv run pre-commit run --all-files
 
+# Format code and files
 format:
-  uv run ruff check --select I001 --fix
+  just isort
   uv run black .
   uv run pre-commit run --all-files blacken-docs
   uv run pre-commit run --all-files mdformat
 
+# Sort imports (using ruff)
+isort:
+  uv run ruff check --select I001 --fix
+
+# Run linters: ruff and mypy
 lint:
   uv run ruff check
   uv run mypy
 
+# Run Pylint, might be slow
+pylint:
+  uv run --with pylint pylint src
+
+# Run tests with pytest
 test:
   uv run pytest
