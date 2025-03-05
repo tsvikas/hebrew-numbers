@@ -309,24 +309,22 @@ def cardinal_number(  # noqa: C901
             )
         return f"{n_str} {suffix}"
 
+    words = []
+
     quintillions = n // 1_000_000_000_000_000_000 % 1000
-    quintillions_word = add_suffix(
-        quintillions, "קווינטיליון", GrammaticalGender.MASCULINE
-    )
+    words.append(add_suffix(quintillions, "קווינטיליון", GrammaticalGender.MASCULINE))
 
     quadrillions = n // 1_000_000_000_000_000 % 1000
-    quadrillions_word = add_suffix(
-        quadrillions, "קוודריליון", GrammaticalGender.MASCULINE
-    )
+    words.append(add_suffix(quadrillions, "קוודריליון", GrammaticalGender.MASCULINE))
 
     trillions = n // 1_000_000_000_000 % 1000
-    trillions_word = add_suffix(trillions, "טריליון", GrammaticalGender.MASCULINE)
+    words.append(add_suffix(trillions, "טריליון", GrammaticalGender.MASCULINE))
 
     billions = n // 1_000_000_000 % 1000
-    billions_word = add_suffix(billions, "מיליארד", GrammaticalGender.MASCULINE)
+    words.append(add_suffix(billions, "מיליארד", GrammaticalGender.MASCULINE))
 
     millions = n // 1_000_000 % 1000
-    millions_word = add_suffix(millions, "מיליון", GrammaticalGender.MASCULINE)
+    words.append(add_suffix(millions, "מיליון", GrammaticalGender.MASCULINE))
 
     thousands = n // 1_000 % 1000
     if thousands == 0:
@@ -354,6 +352,7 @@ def cardinal_number(  # noqa: C901
             )
             + " אלף"
         )
+    words.append(thousands_word)
 
     last_digits = n % 1_000
     if last_digits == 0:
@@ -365,16 +364,8 @@ def cardinal_number(  # noqa: C901
             grammatical_gender,
             construct_state if n < 1000 else ConstructState.ABSOLUTE,  # noqa: PLR2004
         )
+    words.extend(last_digits_words)
 
-    words = [
-        quintillions_word,
-        quadrillions_word,
-        trillions_word,
-        billions_word,
-        millions_word,
-        thousands_word,
-        *last_digits_words,
-    ]
     return _join_words(words)
 
 
