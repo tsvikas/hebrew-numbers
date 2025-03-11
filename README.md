@@ -101,24 +101,19 @@ If you know the gender and construct state, you can the number itself with `card
 
 ## Development
 
+### Getting started
+
 - install [git][install-git], [uv][install-uv].
 - git clone this repo: `git clone tsvikas/hebrew-numbers.git`
 - run `uv run just prepare`
 
-### Code quality
+### Tests and code quality
 
 - use `uv run just format` to format the code.
 - use `uv run just lint` to see linting errors.
-- use `uv run just test` to see run tests.
+- use `uv run just test` to run tests.
 - use `uv run just check` to run all the checks (format, lint, test, and pre-commit).
 - Run a specific tool directly, with `uv run pytest`/`ruff`/`mypy`/`black`/...
-
-### Build
-
-- run formatting, linting, and tests.
-- use
-  `VER="vX.Y.Z" && git tag -a "$VER" -m "version $VER" -e && git push origin tag "$VER"`
-- use `uv build` to build
 
 [black-badge]: https://img.shields.io/badge/code%20style-black-000000.svg
 [black-link]: https://github.com/psf/black

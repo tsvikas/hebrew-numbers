@@ -1,4 +1,4 @@
-default:
+list-tasks:
   @just --list
 
 # Initialize a new project
@@ -31,10 +31,9 @@ format-and-check:
 
 # Run all code quality checks and tests, except pylint
 check:
-  # only pytest and mypy are not in the pre-commit hooks
   uv run pytest
   uv run mypy
-  uv run pre-commit run --all-files
+  uv run pre-commit run --all-files --show-diff-on-failure
 
 # Format code and files
 format:
@@ -58,4 +57,10 @@ pylint:
 
 # Run tests with pytest
 test:
-  uv run pytest
+  uv run --exact pytest
+
+# add a new version tag and push it
+tag version commit="HEAD": check
+  # TODO: check the commit and not the current state.
+  git tag -a v{{ version }} -m "Release v{{ version }}" {{ commit }}
+  git push --tags

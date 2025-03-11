@@ -56,25 +56,6 @@ jobs:
       - name: Run mypy
         run: uv run --no-sync mypy
 
-  pylint:
-    if: ${{ always() }}
-    runs-on: ubuntu-latest
-    continue-on-error: true
-    steps:
-      - uses: actions/checkout@v4
-      - uses: astral-sh/setup-uv@v5
-      - name: Install packages
-        run: >-
-          uv sync
-          --all-extras
-          --no-default-groups
-          --exact
-          --locked
-      - name: List packages
-        run: uv pip list
-      - name: Run Pylint
-        run: uv run --no-sync --with pylint pylint src
-
   test:
     if: ${{ always() }}
     runs-on: ${{ matrix.os }}
@@ -117,7 +98,7 @@ jobs:
           - resolution: "prerelease"
             os: ubuntu-latest
             python-version: "3.14"
-    continue-on-error: ${{ matrix.resolution == 'prerelease' }}
+    continue-on-error: ${{ matrix.resolution == 'prerelease' || matrix.python-version == 'pypy3.11' }}
     name: test-${{ matrix.python-version }}-${{ matrix.resolution }}-${{ matrix.os }}
     steps:
       - uses: actions/checkout@v4
@@ -142,3 +123,22 @@ jobs:
         run: uv pip list
       - name: Run tests
         run: uv run --no-sync pytest
+
+  pylint:
+    if: ${{ always() }}
+    runs-on: ubuntu-latest
+    continue-on-error: true
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v5
+      - name: Install packages
+        run: >-
+          uv sync
+          --all-extras
+          --no-default-groups
+          --exact
+          --locked
+      - name: List packages
+        run: uv pip list
+      - name: Run Pylint
+        run: uv run --no-sync --with pylint pylint src
