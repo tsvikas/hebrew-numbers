@@ -1,7 +1,6 @@
 # hebrew-numbers
 
 [![Tests][tests-badge]][tests-link]
-[![Documentation Status][rtd-badge]][rtd-link]
 [![uv][uv-badge]][uv-link]
 [![Ruff][ruff-badge]][ruff-link]
 [![Black][black-badge]][black-link]
@@ -115,6 +114,17 @@ If you know the gender and construct state, you can the number itself with `card
 - use `uv run just check` to run all the checks (format, lint, test, and pre-commit).
 - Run a specific tool directly, with `uv run pytest`/`ruff`/`mypy`/`black`/...
 
+<!---
+Badges to add, when needed:
+[![Documentation Status][rtd-badge]][rtd-link]
+[![codecov][codecov-badge]][codecov-link]
+
+[codecov-badge]: https://codecov.io/gh/tsvikas/hebrew-numbers/graph/badge.svg
+[codecov-link]: https://codecov.io/gh/tsvikas/hebrew-numbers
+[rtd-badge]: https://readthedocs.org/projects/hebrew-numbers/badge/?version=latest
+[rtd-link]: https://hebrew-numbers.readthedocs.io/en/latest/?badge=latest
+-->
+
 [black-badge]: https://img.shields.io/badge/code%20style-black-000000.svg
 [black-link]: https://github.com/psf/black
 [github-discussions-badge]: https://img.shields.io/static/v1?label=Discussions&message=Ask&color=blue&logo=github
@@ -128,8 +138,6 @@ If you know the gender and construct state, you can the number itself with `card
 [pypi-link]: https://pypi.org/project/hebrew-numbers/
 [pypi-platforms-badge]: https://img.shields.io/pypi/pyversions/hebrew-numbers
 [pypi-version-badge]: https://img.shields.io/pypi/v/hebrew-numbers
-[rtd-badge]: https://readthedocs.org/projects/hebrew-numbers/badge/?version=latest
-[rtd-link]: https://hebrew-numbers.readthedocs.io/en/latest/?badge=latest
 [ruff-badge]: https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/astral-sh/ruff/main/assets/badge/v2.json
 [ruff-link]: https://github.com/astral-sh/ruff
 [template-badge]: https://img.shields.io/badge/%F0%9F%9A%80_Made_Using-tsvikas%2Fpython--template-gold

@@ -12,13 +12,12 @@ ci:
   autoupdate_schedule: quarterly
 
 repos:
-  # Python / pre-commit package versions
+  # Sync Python and  pre-commit package versions
   # pyproject.toml -> uv.lock
   - repo: https://github.com/astral-sh/uv-pre-commit
     rev: 0.6.4
     hooks:
       - id: uv-lock
-  # uv.lock -> .pre-commit-config.yaml
   # .pre-commit-config.yaml -> .pre-commit-config.yaml
   - repo: https://github.com/pre-commit/sync-pre-commit-deps
     rev: v0.0.3
