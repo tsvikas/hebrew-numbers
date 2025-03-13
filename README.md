@@ -4,6 +4,7 @@
 [![uv][uv-badge]][uv-link]
 [![Ruff][ruff-badge]][ruff-link]
 [![Black][black-badge]][black-link]
+[![codecov][codecov-badge]][codecov-link]
 \
 [![PyPI version][pypi-version-badge]][pypi-link]
 [![PyPI platforms][pypi-platforms-badge]][pypi-link]
@@ -117,16 +118,15 @@ If you know the gender and construct state, you can the number itself with `card
 <!---
 Badges to add, when needed:
 [![Documentation Status][rtd-badge]][rtd-link]
-[![codecov][codecov-badge]][codecov-link]
 
-[codecov-badge]: https://codecov.io/gh/tsvikas/hebrew-numbers/graph/badge.svg
-[codecov-link]: https://codecov.io/gh/tsvikas/hebrew-numbers
 [rtd-badge]: https://readthedocs.org/projects/hebrew-numbers/badge/?version=latest
 [rtd-link]: https://hebrew-numbers.readthedocs.io/en/latest/?badge=latest
 -->
 
 [black-badge]: https://img.shields.io/badge/code%20style-black-000000.svg
 [black-link]: https://github.com/psf/black
+[codecov-badge]: https://codecov.io/gh/tsvikas/hebrew-numbers/graph/badge.svg
+[codecov-link]: https://codecov.io/gh/tsvikas/hebrew-numbers
 [github-discussions-badge]: https://img.shields.io/static/v1?label=Discussions&message=Ask&color=blue&logo=github
 [github-discussions-link]: https://github.com/tsvikas/hebrew-numbers/discussions
 [install-git]: https://git-scm.com/book/en/v2/Getting-Started-Installing-Git
