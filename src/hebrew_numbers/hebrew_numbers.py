@@ -62,7 +62,7 @@ class ConstructState(enum.Enum):
     CONSTRUCT79 = "construct79"
 
     @classmethod
-    def from_boolean(cls, val: bool | ConstructState) -> ConstructState:
+    def from_boolean(cls, val: bool | ConstructState) -> ConstructState:  # noqa: FBT001
         """Convert from boolean to enum."""
         if isinstance(val, bool):
             return ConstructState.CONSTRUCT if val else ConstructState.ABSOLUTE
@@ -260,7 +260,10 @@ def _decompose_hundreds(
 
 
 def cardinal_number(  # noqa: C901
-    n: int, gender: GrammaticalGender | str, construct: ConstructState | bool
+    n: int,
+    gender: GrammaticalGender | str,
+    construct: ConstructState | bool,  # noqa: FBT001
+    # TODO: remove support for construct of type bool  # noqa: FIX002
 ) -> str:
     """Translate a positive integer into Hebrew words as a cardinal number (מספר מונה).
 
