@@ -20,7 +20,7 @@ This library provides a comprehensive solution for working with Hebrew numbers i
 Hebrew has unique and complex rules for number representation that vary based on gender, definiteness, and usage context.
 This library aims to simplify these complexities by providing intuitive functions for converting numerical values to their proper Hebrew textual representation.
 
-## Usage
+## Install
 
 Install the package using pip, or with a dependency manager like uv:
 
@@ -28,7 +28,9 @@ Install the package using pip, or with a dependency manager like uv:
 pip install hebrew-numbers
 ```
 
-and import the package in your code:
+## Usage
+
+Import the package in your code:
 
 ```python
 import hebrew_numbers
@@ -104,7 +106,9 @@ If you know the gender and construct state, you can the number itself with `card
 ### Getting started
 
 - install [git][install-git], [uv][install-uv].
-- git clone this repo: `git clone tsvikas/hebrew-numbers.git`
+- git clone this repo:
+  `git clone https://github.com/tsvikas/hebrew-numbers.git`
+  or `gh repo clone tsvikas/hebrew-numbers.git`
 - run `uv run just prepare`
 
 ### Tests and code quality
@@ -113,10 +117,10 @@ If you know the gender and construct state, you can the number itself with `card
 - use `uv run just lint` to see linting errors.
 - use `uv run just test` to run tests.
 - use `uv run just check` to run all the checks (format, lint, test, and pre-commit).
-- Run a specific tool directly, with `uv run pytest`/`ruff`/`mypy`/`black`/...
+- Run a specific tool directly, with
+  `uv run pytest`/`ruff`/`mypy`/`black`/`pre-commit`/...
 
-<!---
-Badges to add, when needed:
+<!--- Badges to add after adding RTD documentation
 [![Documentation Status][rtd-badge]][rtd-link]
 
 [rtd-badge]: https://readthedocs.org/projects/hebrew-numbers/badge/?version=latest
