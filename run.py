@@ -32,10 +32,14 @@ def count_male_definite(n: int) -> str:
 NUMBER_FORMS_FEMININE: dict[str, Callable[[int], str]] = {
     "indefinite_number": hebrew_numbers.indefinite_number,
     "cardinal_number_feminine_absolute": functools.partial(
-        hebrew_numbers.cardinal_number, gender="f", construct=False
+        hebrew_numbers.cardinal_number,
+        gender="f",
+        construct=hebrew_numbers.ConstructState.ABSOLUTE,
     ),
     "cardinal_number_feminine_construct": functools.partial(
-        hebrew_numbers.cardinal_number, gender="f", construct=True
+        hebrew_numbers.cardinal_number,
+        gender="f",
+        construct=hebrew_numbers.ConstructState.CONSTRUCT,
     ),
     "ordinal_number_feminine": functools.partial(
         hebrew_numbers.ordinal_number, gender="f"
@@ -51,10 +55,14 @@ NUMBER_FORMS_FEMININE: dict[str, Callable[[int], str]] = {
 }
 NUMBER_FORMS_MASCULINE: dict[str, Callable[[int], str]] = {
     "cardinal_number_masculine_absolute": functools.partial(
-        hebrew_numbers.cardinal_number, gender="m", construct=False
+        hebrew_numbers.cardinal_number,
+        gender="m",
+        construct=hebrew_numbers.ConstructState.ABSOLUTE,
     ),
     "cardinal_number_masculine_construct": functools.partial(
-        hebrew_numbers.cardinal_number, gender="m", construct=True
+        hebrew_numbers.cardinal_number,
+        gender="m",
+        construct=hebrew_numbers.ConstructState.CONSTRUCT,
     ),
     "ordinal_number_masculine": functools.partial(
         hebrew_numbers.ordinal_number, gender="m"
