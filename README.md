@@ -22,7 +22,7 @@ This library aims to simplify these complexities by providing intuitive function
 
 ## Install
 
-Install the package using pip, or with a dependency manager like uv:
+Install the package using pip (or uv, poetry, etc.):
 
 ```bash
 pip install hebrew-numbers
@@ -30,10 +30,8 @@ pip install hebrew-numbers
 
 ## Usage
 
-Import the package in your code:
-
-```python
-import hebrew_numbers
+```pycon
+>>> import hebrew_numbers
 ```
 
 ### Indefinite Number -- מספר סתמי
@@ -119,13 +117,6 @@ If you know the gender and construct state, you can the number itself with `card
 - use `uv run just check` to run all the checks (format, lint, test, and pre-commit).
 - Run a specific tool directly, with
   `uv run pytest`/`ruff`/`mypy`/`black`/`pre-commit`/...
-
-<!--- Badges to add after adding RTD documentation
-[![Documentation Status][rtd-badge]][rtd-link]
-
-[rtd-badge]: https://readthedocs.org/projects/hebrew-numbers/badge/?version=latest
-[rtd-link]: https://hebrew-numbers.readthedocs.io/en/latest/?badge=latest
--->
 
 [black-badge]: https://img.shields.io/badge/code%20style-black-000000.svg
 [black-link]: https://github.com/psf/black
