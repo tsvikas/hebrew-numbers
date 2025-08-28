@@ -99,24 +99,10 @@ If you know the gender and construct state, you can the number itself with `card
 - The form of the number following "פי" (times/multiplied by) to be in the masculine-absolute form: פי שניים, פי שלושה, פי ארבעה.
 - Use the masculine-absolute form to indicate the days of the month: אחד בכסלו, עשרה בטבת, אחד באפריל, שניים ביוני.
 
-## Development
+## Contributing
 
-### Getting started
-
-- install [git][install-git], [uv][install-uv].
-- git clone this repo:
-  `git clone https://github.com/tsvikas/hebrew-numbers.git`
-  or `gh repo clone tsvikas/hebrew-numbers.git`
-- run `uv run just prepare`
-
-### Tests and code quality
-
-- use `uv run just format` to format the code.
-- use `uv run just lint` to see linting errors.
-- use `uv run just test` to run tests.
-- use `uv run just check` to run all the checks (format, lint, test, and pre-commit).
-- Run a specific tool directly, with
-  `uv run pytest`/`ruff`/`mypy`/`black`/`pre-commit`/...
+Interested in contributing?
+See [CONTRIBUTING.md](CONTRIBUTING.md) for development setup and guideline.
 
 [black-badge]: https://img.shields.io/badge/code%20style-black-000000.svg
 [black-link]: https://github.com/psf/black
@@ -124,12 +110,10 @@ If you know the gender and construct state, you can the number itself with `card
 [codecov-link]: https://codecov.io/gh/tsvikas/hebrew-numbers
 [github-discussions-badge]: https://img.shields.io/static/v1?label=Discussions&message=Ask&color=blue&logo=github
 [github-discussions-link]: https://github.com/tsvikas/hebrew-numbers/discussions
-[install-git]: https://git-scm.com/book/en/v2/Getting-Started-Installing-Git
-[install-uv]: https://docs.astral.sh/uv/getting-started/installation/
 [pepy-badge]: https://img.shields.io/pepy/dt/hebrew-numbers
 [pepy-link]: https://pepy.tech/project/hebrew-numbers
 [prs-welcome-badge]: https://img.shields.io/badge/PRs-welcome-brightgreen.svg
-[prs-welcome-link]: http://makeapullrequest.com
+[prs-welcome-link]: https://opensource.guide/how-to-contribute/
 [pypi-link]: https://pypi.org/project/hebrew-numbers/
 [pypi-platforms-badge]: https://img.shields.io/pypi/pyversions/hebrew-numbers
 [pypi-version-badge]: https://img.shields.io/pypi/v/hebrew-numbers
