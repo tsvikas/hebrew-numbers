@@ -80,12 +80,13 @@ def _join_words(
 
     Words are separated by `sep`, with the final pair separated by `last_sep`.
 
-    >>> _join_words(["מאה", "עשרים", "שלוש"])
-    'מאה עשרים ושלוש'
-    >>> _join_words(["מאה", "עשרים", ""])
-    'מאה ועשרים'
-    >>> _join_words(["מאה"])
-    'מאה'
+    Examples:
+        >>> _join_words(["מאה", "עשרים", "שלוש"])
+        'מאה עשרים ושלוש'
+        >>> _join_words(["מאה", "עשרים", ""])
+        'מאה ועשרים'
+        >>> _join_words(["מאה"])
+        'מאה'
     """
     words = [w for w in words if w]
     if not words:
@@ -271,22 +272,23 @@ def cardinal_number(  # noqa: C901
 
     Supports positive integers up to 10^21.
 
-    >>> cardinal_number(1234, GrammaticalGender.FEMININE, ConstructState.ABSOLUTE)
-    'אלף מאתיים שלושים וארבע'
-    >>> cardinal_number(1234, GrammaticalGender.MASCULINE, ConstructState.ABSOLUTE)
-    'אלף מאתיים שלושים וארבעה'
-    >>> cardinal_number(3, GrammaticalGender.FEMININE, ConstructState.CONSTRUCT)
-    'שְלוש'
-    >>> cardinal_number(3, GrammaticalGender.MASCULINE, ConstructState.CONSTRUCT)
-    'שלושת'
-    >>> cardinal_number(1234567, GrammaticalGender.FEMININE, ConstructState.ABSOLUTE)
-    'מיליון מאתיים שלושים וארבעה אלף חמש מאות שישים ושבע'
-    >>> cardinal_number(
-    ...     1_001_001_001_001_000_000,
-    ...     GrammaticalGender.FEMININE,
-    ...     ConstructState.ABSOLUTE,
-    ... )
-    'קווינטיליון קוודריליון טריליון מיליארד ומיליון'
+    Examples:
+        >>> cardinal_number(1234, GrammaticalGender.FEMININE, ConstructState.ABSOLUTE)
+        'אלף מאתיים שלושים וארבע'
+        >>> cardinal_number(1234, GrammaticalGender.MASCULINE, ConstructState.ABSOLUTE)
+        'אלף מאתיים שלושים וארבעה'
+        >>> cardinal_number(3, GrammaticalGender.FEMININE, ConstructState.CONSTRUCT)
+        'שְלוש'
+        >>> cardinal_number(3, GrammaticalGender.MASCULINE, ConstructState.CONSTRUCT)
+        'שלושת'
+        >>> cardinal_number(1234567, "f", True)
+        'מיליון מאתיים שלושים וארבעה אלף חמש מאות שישים ושבע'
+        >>> cardinal_number(
+        ...     1_001_001_001_001_000_000,
+        ...     GrammaticalGender.FEMININE,
+        ...     ConstructState.ABSOLUTE,
+        ... )
+        'קווינטיליון קוודריליון טריליון מיליארד ומיליון'
     """
     grammatical_gender = GrammaticalGender.from_string(gender)
     construct_state = ConstructState.from_boolean(construct)
@@ -377,18 +379,19 @@ def indefinite_number(n: int) -> str:
     For negative numbers, the string will include a "minus" prefix (מינוס).
     Supports integers up to 10^21.
 
-    >>> indefinite_number(0)
-    'אפס'
-    >>> indefinite_number(1)
-    'אחת'
-    >>> indefinite_number(2)
-    'שתיים'
-    >>> indefinite_number(-3)
-    'מינוס שָלוש'
-    >>> indefinite_number(1234567)
-    'מיליון מאתיים שלושים וארבעה אלף חמש מאות שישים ושבע'
-    >>> indefinite_number(1_001_001_001_001_000_000)
-    'קווינטיליון קוודריליון טריליון מיליארד ומיליון'
+    Examples:
+        >>> indefinite_number(0)
+        'אפס'
+        >>> indefinite_number(1)
+        'אחת'
+        >>> indefinite_number(2)
+        'שתיים'
+        >>> indefinite_number(-3)
+        'מינוס שָלוש'
+        >>> indefinite_number(1234567)
+        'מיליון מאתיים שלושים וארבעה אלף חמש מאות שישים ושבע'
+        >>> indefinite_number(1_001_001_001_001_000_000)
+        'קווינטיליון קוודריליון טריליון מיליארד ומיליון'
     """
     if n == 0:
         return "אפס"
@@ -403,16 +406,17 @@ def ordinal_number(n: int, gender: GrammaticalGender | str) -> str:
 
     Supports positive integers up to 10^21.
 
-    >>> ordinal_number(1, GrammaticalGender.FEMININE)
-    'ראשונה'
-    >>> ordinal_number(2, GrammaticalGender.FEMININE)
-    'שנייה'
-    >>> ordinal_number(3, GrammaticalGender.MASCULINE)
-    'שלישי'
-    >>> ordinal_number(4, GrammaticalGender.MASCULINE)
-    'רביעי'
-    >>> ordinal_number(42, GrammaticalGender.MASCULINE)
-    'ארבעים ושניים'
+    Examples:
+        >>> ordinal_number(1, GrammaticalGender.FEMININE)
+        'ראשונה'
+        >>> ordinal_number(2, GrammaticalGender.FEMININE)
+        'שנייה'
+        >>> ordinal_number(3, GrammaticalGender.MASCULINE)
+        'שלישי'
+        >>> ordinal_number(4, GrammaticalGender.MASCULINE)
+        'רביעי'
+        >>> ordinal_number(42, GrammaticalGender.MASCULINE)
+        'ארבעים ושניים'
     """
     grammatical_gender = GrammaticalGender.from_string(gender)
     if n <= 0:
@@ -461,18 +465,19 @@ def count_prefix(
     Supports positive integers up to 10^21.
     Does not support `n = 1`, as a singular item is not using a prefix.
 
-    >>> count_prefix(2, GrammaticalGender.MASCULINE)
-    'שני'
-    >>> count_prefix(2, GrammaticalGender.FEMININE)
-    'שתי'
-    >>> count_prefix(3, GrammaticalGender.MASCULINE, definite=False)
-    'שלושה'
-    >>> count_prefix(3, GrammaticalGender.MASCULINE, definite=True)
-    'שלושת'
-    >>> count_prefix(3, GrammaticalGender.FEMININE, definite=False)
-    'שָלוש'
-    >>> count_prefix(3, GrammaticalGender.FEMININE, definite=True)
-    'שְלוש'
+    Examples:
+        >>> count_prefix(2, GrammaticalGender.MASCULINE)
+        'שני'
+        >>> count_prefix(2, GrammaticalGender.FEMININE)
+        'שתי'
+        >>> count_prefix(3, GrammaticalGender.MASCULINE, definite=False)
+        'שלושה'
+        >>> count_prefix(3, GrammaticalGender.MASCULINE, definite=True)
+        'שלושת'
+        >>> count_prefix(3, GrammaticalGender.FEMININE, definite=False)
+        'שָלוש'
+        >>> count_prefix(3, GrammaticalGender.FEMININE, definite=True)
+        'שְלוש'
     """
     grammatical_gender = GrammaticalGender.from_string(gender)
     if n <= 0:
@@ -507,18 +512,19 @@ def count_noun(
     and definiteness.
     Supports positive integers up to 10^21.
 
-    >>> count_noun(1, "ילד", "ילדים", GrammaticalGender.MASCULINE, definite=False)
-    'ילד אֶחָד'
-    >>> count_noun(1, "הילדה", "הילדות", GrammaticalGender.FEMININE, definite=True)
-    'הילדה האחת'
-    >>> count_noun(3, "ילד", "ילדים", GrammaticalGender.MASCULINE, definite=False)
-    'שלושה ילדים'
-    >>> count_noun(3, "הילד", "הילדים", GrammaticalGender.MASCULINE, definite=True)
-    'שלושת הילדים'
-    >>> count_noun(3, "ילדה", "ילדות", GrammaticalGender.FEMININE, definite=False)
-    'שָלוש ילדות'
-    >>> count_noun(3, "הילדה", "הילדות", GrammaticalGender.FEMININE, definite=True)
-    'שְלוש הילדות'
+    Examples:
+        >>> count_noun(1, "ילד", "ילדים", GrammaticalGender.MASCULINE, definite=False)
+        'ילד אֶחָד'
+        >>> count_noun(1, "הילדה", "הילדות", GrammaticalGender.FEMININE, definite=True)
+        'הילדה האחת'
+        >>> count_noun(3, "ילד", "ילדים", GrammaticalGender.MASCULINE, definite=False)
+        'שלושה ילדים'
+        >>> count_noun(3, "הילד", "הילדים", GrammaticalGender.MASCULINE, definite=True)
+        'שלושת הילדים'
+        >>> count_noun(3, "ילדה", "ילדות", GrammaticalGender.FEMININE, definite=False)
+        'שָלוש ילדות'
+        >>> count_noun(3, "הילדה", "הילדות", GrammaticalGender.FEMININE, definite=True)
+        'שְלוש הילדות'
     """
     grammatical_gender = GrammaticalGender.from_string(gender)
     if n == 1:
