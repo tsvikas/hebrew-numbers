@@ -46,6 +46,10 @@ _version.py
 venv/
 .venv/
 
+# mkdocs documentation
+/site
+/docs/reference
+
 # development tools
 .mypy_cache/
 .ruff_cache/
