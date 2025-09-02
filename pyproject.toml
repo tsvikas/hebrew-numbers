@@ -10,7 +10,6 @@ description = "Convert numbers to Hebrew."
 license = "MIT"
 license-files = ["LICEN[CS]E.*"]
 readme = "README.md"
-requires-python = ">=3.9"
 authors = [
   {name = "Tsvika Shapira", email = "tsvikas@gmail.com"}
 ]
@@ -32,21 +31,21 @@ classifiers = [
   "Topic :: Software Development :: Libraries",
   "Typing :: Typed",
 ]
+# urls.homepage = "https://hebrew-numbers.readthedocs.io"
+urls.source = "https://github.com/tsvikas/hebrew-numbers"
+urls.changelog = "https://github.com/tsvikas/hebrew-numbers/blob/main/CHANGELOG.md"
+# urls.releasenotes = "https://github.com/tsvikas/hebrew-numbers/releases"
+# urls.documentation = "https://hebrew-numbers.readthedocs.io"
+urls.issues = "https://github.com/tsvikas/hebrew-numbers/issues"
+# urls.funding = "https://github.com/sponsors/tsvikas"
+
+requires-python = ">=3.9"
 dependencies = [
     "typing-extensions>=4.5.0; python_version < '3.12'",
 ]
 
 [project.optional-dependencies]
 # optional_name = ["some_package >=1.0"]
-
-[project.urls]
-# homepage = "https://hebrew-numbers.readthedocs.io"
-source = "https://github.com/tsvikas/hebrew-numbers"
-changelog = "https://github.com/tsvikas/hebrew-numbers/blob/main/CHANGELOG.md"
-# releasenotes = "https://github.com/tsvikas/hebrew-numbers/releases"
-# documentation = "https://hebrew-numbers.readthedocs.io"
-issues = "https://github.com/tsvikas/hebrew-numbers/issues"
-# funding = "https://github.com/sponsors/tsvikas"
 
 [project.scripts]
 # hebrew-numbers = "hebrew_numbers.cli:app"
