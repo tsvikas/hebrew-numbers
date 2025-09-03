@@ -163,16 +163,20 @@ For Hebrew-speaking developers, the extension also provides Hebrew-named filters
 >>> template = env.from_string("{{ 15000 | כמות('ז') }}")
 >>> template.render()
 'חמישה־עשר אלף'
+>>> # Hebrew boolean values for מיודע parameter
+>>> template = env.from_string("{{ 3 | כמות_של('המחברת', 'המחברות', 'נ', מיודע='כן') }}")
+>>> template.render()
+'שְלוש המחברות'
 
 ```
 
-| Hebrew Filter                           | English Equivalent  | Description        | Example                                                 |
-| --------------------------------------- | ------------------- | ------------------ | ------------------------------------------------------- |
-| `כמות_של(יחיד, רבים, מין, מיודע=False)` | `hebrew_count`      | Count nouns        | `{{ 5 \| כמות_של('ספר', 'ספרים', 'ז') }}` → חמישה ספרים |
-| `כמות(מין, מיודע=False)`                | `hebrew_prefix`     | Number prefix only | `{{ 5 \| כמות('ז') }}` → חמישה                          |
-| `מספר_סודר(מין)`                        | `hebrew_ordinal`    | Ordinal number     | `{{ 5 \| מספר_סודר('ז') }}` → חמישי                     |
-| `מספר_סתמי`                             | `hebrew_indefinite` | Indefinite number  | `{{ 5 \| מספר_סתמי }}` → חמש                            |
-| `מספר_מונה(מין, מצב='נפרד')`            | `hebrew_cardinal`   | Cardinal number    | `{{ 5 \| מספר_מונה('ז', 'נסמך') }}` → חמשת              |
+| Hebrew Filter                          | English Equivalent  | Description        | Example                                                 |
+| -------------------------------------- | ------------------- | ------------------ | ------------------------------------------------------- |
+| `כמות_של(יחיד, רבים, מין, מיודע='לא')` | `hebrew_count`      | Count nouns        | `{{ 5 \| כמות_של('ספר', 'ספרים', 'ז') }}` → חמישה ספרים |
+| `כמות(מין, מיודע='לא')`                | `hebrew_prefix`     | Number prefix only | `{{ 5 \| כמות('ז') }}` → חמישה                          |
+| `מספר_סודר(מין)`                       | `hebrew_ordinal`    | Ordinal number     | `{{ 5 \| מספר_סודר('ז') }}` → חמישי                     |
+| `מספר_סתמי`                            | `hebrew_indefinite` | Indefinite number  | `{{ 5 \| מספר_סתמי }}` → חמש                            |
+| `מספר_מונה(מין, מצב='נפרד')`           | `hebrew_cardinal`   | Cardinal number    | `{{ 5 \| מספר_מונה('ז', 'נסמך') }}` → חמשת              |
 
 #### Hebrew Parameters
 
@@ -182,7 +186,7 @@ Hebrew filters accept Hebrew parameter names:
   - Masculine: `'ז'`, `'זכר'`, `'זכרי'`
   - Feminine: `'נ'`, `'נקבה'`, `'נקבי'`
 - **מצב (Construct State)**: `'נפרד'` (absolute), `'נסמך'` (construct)
-- **מיודע (Definite)**: `True` (definite), `False` (indefinite)
+- **מיודע (Definite)**: `'כן'` (definite), `'לא'` (indefinite), or `True`/`False`
 
 ## Contributing
 
