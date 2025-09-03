@@ -408,6 +408,11 @@ dependencies = [
     { name = "typing-extensions", marker = "python_full_version < '3.12'" },
 ]
 
+[package.optional-dependencies]
+jinja = [
+    { name = "jinja2" },
+]
+
 [package.dev-dependencies]
 dev = [
     { name = "black" },
@@ -443,7 +448,11 @@ typing = [
 ]
 
 [package.metadata]
-requires-dist = [{ name = "typing-extensions", marker = "python_full_version < '3.12'", specifier = ">=4.5.0" }]
+requires-dist = [
+    { name = "jinja2", marker = "extra == 'jinja'", specifier = ">=3.0.0" },
+    { name = "typing-extensions", marker = "python_full_version < '3.12'", specifier = ">=4.5.0" },
+]
+provides-extras = ["jinja"]
 
 [package.metadata.requires-dev]
 dev = [

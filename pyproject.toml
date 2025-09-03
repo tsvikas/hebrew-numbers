@@ -45,7 +45,7 @@ dependencies = [
 ]
 
 [project.optional-dependencies]
-# optional_name = ["some_package >=1.0"]
+jinja = ["jinja2 >=3.0.0"]
 
 [project.scripts]
 # hebrew-numbers = "hebrew_numbers.cli:app"
