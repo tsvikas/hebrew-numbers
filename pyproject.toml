@@ -227,6 +227,7 @@ flake8-comprehensions.allow-dict-calls-with-keyword-arguments = true
 "src/hebrew_numbers/_version.py" = [
   "ALL",
 ]
+"scripts/*.py" = ["INP001", "T20"]
 "!tests/test_*.py" = [
   "PT",       # flake8-pytest-style
 ]
