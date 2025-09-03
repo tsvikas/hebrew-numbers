@@ -1,6 +1,6 @@
 """hebrew-numbers: Convert numbers to Hebrew.
 
-Copyright (c) 2025 Tsvika Shapira. All rights reserved.
+© 2025 Tsvika Shapira. Some rights reserved.
 """
 
 from __future__ import annotations
@@ -99,7 +99,19 @@ def _join_words(
 def _translate_one_digit(
     n: int, grammatical_gender: GrammaticalGender, construct_state: ConstructState
 ) -> str:
-    """Translate a single digit (1-9) into the corresponding Hebrew word."""
+    """Translate a single digit (1-9) into the corresponding Hebrew word.
+
+    Args:
+        n: Integer between 1 and 9.
+        grammatical_gender: Gender for the Hebrew word.
+        construct_state: State determining the word form.
+
+    Returns:
+        Hebrew word representation of the digit.
+
+    Raises:
+        ValueError: If n is not between 1 and 9.
+    """
     if not 1 <= n <= 9:  # noqa: PLR2004
         raise ValueError("The number must be an integer between 1 and 9")
     # GRAMMAR RULE: there is a special construct form used for feminine 17, 19, 700, 900
@@ -164,7 +176,19 @@ def _translate_one_digit(
 def _translate_to_20(
     n: int, grammatical_gender: GrammaticalGender, construct_state: ConstructState
 ) -> str:
-    """Translate a number from 1 to 19 into the corresponding Hebrew word."""
+    """Translate a number from 1 to 19 into the corresponding Hebrew word.
+
+    Args:
+        n: Integer between 1 and 19.
+        grammatical_gender: Gender for the Hebrew word.
+        construct_state: State determining the word form.
+
+    Returns:
+        Hebrew word representation of the number.
+
+    Raises:
+        ValueError: If n is not between 1 and 19.
+    """
     if not 1 <= n <= 19:  # noqa: PLR2004
         raise ValueError("The number must be between 1 and 19")
     if n < 10:  # noqa: PLR2004
@@ -210,6 +234,17 @@ def _decompose_hundreds(
     """Translate a number from 1 to 999 into a list of Hebrew words.
 
     Words represent the hundreds, tens, and units.
+
+    Args:
+        n: Integer between 1 and 999.
+        grammatical_gender: Gender for the Hebrew words.
+        construct_state: State determining the word form.
+
+    Returns:
+        List of Hebrew words representing hundreds, tens, and units.
+
+    Raises:
+        ValueError: If n is not between 1 and 999.
     """
     if not 1 <= n <= 999:  # noqa: PLR2004
         raise ValueError("The number must be between 1 and 999")
