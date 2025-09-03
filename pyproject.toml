@@ -13,7 +13,18 @@ readme = "README.md"
 authors = [
   {name = "Tsvika Shapira", email = "tsvikas@gmail.com"}
 ]
-keywords = []
+keywords = [
+  "hebrew",
+  "numbers",
+  "localization",
+  "i18n",
+  "language",
+  "nlp",
+  "linguistics",
+  "grammar",
+  "conversion",
+  "jinja2",
+]
 classifiers = [
   "Development Status :: 4 - Beta",
   "Natural Language :: Hebrew",
