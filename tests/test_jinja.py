@@ -11,6 +11,7 @@ from jinja2 import Environment
 from hebrew_numbers import InvalidNumberError
 from hebrew_numbers.jinja import (
     HebrewNumbersExtension,
+    _map_hebrew_boolean,
     hebrew_cardinal_filter,
     hebrew_count_filter,
     hebrew_indefinite_filter,
@@ -255,3 +256,13 @@ class TestTemplateEdgeCases:
         template = env.from_string("{{ 42 | hebrew_indefinite | upper }}")
         result = template.render()
         assert result == "ארבעים ושתיים"  # Hebrew text doesn't change with upper()
+
+
+class TestHebrewBooleanMapErrors:
+    """Test _map_hebrew_boolean error handling."""
+
+    def test_hebrew_boolean_invalid_value(self) -> None:
+        """Test _map_hebrew_boolean with invalid value."""
+        # This tests lines 98-101 in jinja.py
+        with pytest.raises(ValueError, match="Invalid Hebrew boolean value: 'invalid'"):
+            _map_hebrew_boolean("invalid")

@@ -5,7 +5,13 @@ from typing import TYPE_CHECKING, Any, Callable
 import pytest
 
 import hebrew_numbers
-from hebrew_numbers import ConstructState, GrammaticalGender, InvalidNumberError
+from hebrew_numbers import (
+    ConstructState,
+    GrammaticalGender,
+    InvalidNumberError,
+    cardinal_number,
+)
+from hebrew_numbers.hebrew_numbers import _join_words
 
 if TYPE_CHECKING:
     from pytest_regressions.data_regression import DataRegressionFixture
@@ -202,3 +208,49 @@ def test_over_10(gender: GrammaticalGender) -> None:
                 valid_exceptions=InvalidNumberError,
             )
         )
+
+
+class TestConstructStateFromBoolean:
+    """Test ConstructState.from_boolean method edge cases."""
+
+    def test_from_boolean_with_construct_state_enum(self) -> None:
+        """Test passing ConstructState enum directly returns same value."""
+        # This tests the else clause in from_boolean (line 68)
+        result = ConstructState.from_boolean(ConstructState.ABSOLUTE)
+        assert result == ConstructState.ABSOLUTE
+
+        result = ConstructState.from_boolean(ConstructState.CONSTRUCT)
+        assert result == ConstructState.CONSTRUCT
+
+
+class TestJoinWordsEdgeCases:
+    """Test _join_words function with edge cases."""
+
+    def test_join_empty_words_list(self) -> None:
+        """Test that empty words list raises ValueError."""
+        # This tests line 93 in hebrew_numbers.py
+        with pytest.raises(
+            ValueError, match="must contain at least one non-empty string"
+        ):
+            _join_words([])
+
+    def test_join_only_empty_strings(self) -> None:
+        """Test that list with only empty strings raises ValueError."""
+        # This also tests line 93 in hebrew_numbers.py
+        with pytest.raises(
+            ValueError, match="must contain at least one non-empty string"
+        ):
+            _join_words(["", "", ""])
+
+
+class TestCardinalNumberEdgeCases:
+    """Test cardinal_number function with invalid inputs."""
+
+    def test_cardinal_number_invalid_range(self) -> None:
+        """Test cardinal_number with numbers outside valid range."""
+        # Test zero (line 333 in hebrew_numbers.py)
+        with pytest.raises(InvalidNumberError, match="Number must be positive"):
+            cardinal_number(0, GrammaticalGender.MASCULINE, ConstructState.ABSOLUTE)
+
+        with pytest.raises(InvalidNumberError, match="Number must be positive"):
+            cardinal_number(-1, GrammaticalGender.MASCULINE, ConstructState.ABSOLUTE)
