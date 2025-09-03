@@ -263,7 +263,7 @@ def _decompose_hundreds(
 def cardinal_number(  # noqa: C901
     n: int,
     gender: GrammaticalGender | str,
-    construct: ConstructState,
+    construct: ConstructState | bool,  # noqa: FBT001
 ) -> str:
     """Translate a positive integer into Hebrew words as a cardinal number (מספר מונה).
 
