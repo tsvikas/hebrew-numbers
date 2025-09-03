@@ -4,6 +4,8 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+## [v0.2.0] - 2025-01-16
+
 ### Added
 
 - Jinja2 extension for Hebrew number conversion with bilingual filter support
