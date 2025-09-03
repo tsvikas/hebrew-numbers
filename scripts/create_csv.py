@@ -1,3 +1,10 @@
+"""Script to generate CSV data with Hebrew number forms for testing and documentation.
+
+This script creates a comprehensive CSV table showing various Hebrew number forms
+including cardinal, ordinal, and counting examples in both masculine and feminine
+genders across different grammatical states.
+"""
+
 import csv
 import functools
 from collections.abc import Callable, Iterable
@@ -7,6 +14,15 @@ from fib import fib
 
 
 def maybe_str(func: Callable[[int], str], i: int) -> str:
+    """Safely convert a number using a function, returning empty string on error.
+
+    Args:
+        func: Function to convert the integer to string
+        i: Integer to convert
+
+    Returns:
+        String representation or empty string if conversion fails
+    """
     try:
         return str(func(i))
     except hebrew_numbers.InvalidNumberError:
@@ -14,18 +30,50 @@ def maybe_str(func: Callable[[int], str], i: int) -> str:
 
 
 def count_female(n: int) -> str:
+    """Generate counting phrase for feminine noun example (girl/girls).
+
+    Args:
+        n: Number to count
+
+    Returns:
+        Hebrew counting phrase with feminine noun
+    """
     return hebrew_numbers.count_noun(n, "ילדה", "ילדות", "f")
 
 
 def count_female_definite(n: int) -> str:
+    """Generate definite counting phrase for feminine noun example (the girl/girls).
+
+    Args:
+        n: Number to count
+
+    Returns:
+        Hebrew counting phrase with definite feminine noun
+    """
     return hebrew_numbers.count_noun(n, "הילדה", "הילדות", "f", definite=True)
 
 
 def count_male(n: int) -> str:
+    """Generate counting phrase for masculine noun example (boy/boys).
+
+    Args:
+        n: Number to count
+
+    Returns:
+        Hebrew counting phrase with masculine noun
+    """
     return hebrew_numbers.count_noun(n, "ילד", "ילדים", "m")
 
 
 def count_male_definite(n: int) -> str:
+    """Generate definite counting phrase for masculine noun example (the boy/boys).
+
+    Args:
+        n: Number to count
+
+    Returns:
+        Hebrew counting phrase with definite masculine noun
+    """
     return hebrew_numbers.count_noun(n, "הילד", "הילדים", "m", definite=True)
 
 
@@ -79,6 +127,14 @@ NUMBER_FORMS_MASCULINE: dict[str, Callable[[int], str]] = {
 
 
 def create_csv(numbers: Iterable[int]) -> str:
+    """Create CSV data with Hebrew number forms for given numbers.
+
+    Args:
+        numbers: Iterable of integers to generate Hebrew forms for
+
+    Returns:
+        CSV formatted string with headers and number forms
+    """
     output = io.StringIO()
     writer = csv.writer(output)
     writer.writerow(
@@ -154,4 +210,4 @@ if __name__ == "__main__":
         }
     ) + list(fib(200, max_n))
     output = create_csv(numbers)
-    print(output)  # noqa: T201
+    print(output)
