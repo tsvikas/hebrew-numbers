@@ -30,20 +30,12 @@ pip install hebrew-numbers
 
 ## Usage
 
-```pycon
->>> from hebrew_numbers import (
-...     indefinite_number,
-...     ordinal_number,
-...     count_noun,
-...     cardinal_number,
-... )
-```
-
 ### Indefinite Number -- מספר סתמי
 
 When counting without specific nouns, but rather in a general sense, we use the indefinite number.
 
 ```pycon
+>>> from hebrew_numbers import indefinite_number
 >>> [indefinite_number(n) for n in [1, 2, 3]]
 ['אחת', 'שתיים', 'שָלוש']
 >>> indefinite_number(0)
@@ -52,6 +44,7 @@ When counting without specific nouns, but rather in a general sense, we use the 
 'מינוס שָלוש'
 >>> indefinite_number(1234567890)
 'מיליארד מאתיים שלושים וארבעה מיליון חמש מאות שישים ושבעה אלף שמונֶה מאות ותשעים'
+
 ```
 
 ### Ordinal Number -- מספר סודר
@@ -60,10 +53,12 @@ A number that describes the position of an object in a series is called an ordin
 This number can be masculine (זכר) or feminine (נקבה).
 
 ```pycon
+>>> from hebrew_numbers import ordinal_number
 >>> [ordinal_number(n, "M") for n in [1, 2, 3]]
 ['ראשון', 'שני', 'שלישי']
 >>> [ordinal_number(n, "F") for n in [1, 2, 3]]
 ['ראשונה', 'שנייה', 'שלישית']
+
 ```
 
 ### Cardinal Number -- מספר מונה
