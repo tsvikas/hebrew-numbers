@@ -9,8 +9,9 @@ import csv
 import functools
 from collections.abc import Callable, Iterable
 
-import hebrew_numbers
 from fib import fib
+
+import hebrew_numbers
 
 
 def maybe_str(func: Callable[[int], str], i: int) -> str:
