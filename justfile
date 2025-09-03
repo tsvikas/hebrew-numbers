@@ -66,7 +66,7 @@ pylint:
 
 # Run tests with pytest
 test:
-  uv run --exact pytest
+  uv run --all-extras --exact pytest
 
 # add a new version tag
 tag version commit="HEAD": (_assert-legal-version version)
