@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file.
 
+## [Unreleased]
+
+### Added
+
+- Jinja2 extension for Hebrew number conversion with bilingual filter support
+- English-named filters: `hebrew_indefinite`, `hebrew_cardinal`, `hebrew_ordinal`, `hebrew_count`, `hebrew_prefix`
+- Hebrew-named filters: `מספר_סתמי`, `מספר_מונה`, `מספר_סודר`, `כמות_של`, `כמות` - enabling fully Hebrew template syntax for improved readability
+- Support for Hebrew parameter values (`'כן'`/`'לא'` for booleans, `'ז'`/`'נ'` for gender, `'נפרד'`/`'נסמך'` for construct state)
+- Optional jinja2 installation via `hebrew-numbers[jinja]` extra
+
 ## [v0.1.1] - 2025-01-16
 
 ### Changed
