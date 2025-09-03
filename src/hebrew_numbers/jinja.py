@@ -3,6 +3,8 @@
 © 2025 Tsvika Shapira. Some rights reserved.
 """
 
+# ruff: noqa: N803, PLC2401
+
 from __future__ import annotations
 
 from typing import TYPE_CHECKING
@@ -28,6 +30,46 @@ from .hebrew_numbers import (
     indefinite_number,
     ordinal_number,
 )
+
+
+def _map_hebrew_gender(מין: str) -> GrammaticalGender:
+    """Map Hebrew gender terms to English enum.
+
+    Args:
+        מין: Hebrew gender term ('ז', 'זכר', 'זכרי', 'נ', 'נקבה', 'נקבי')
+
+    Returns:
+        GrammaticalGender enum
+    """
+    gender_map = {
+        "ז": "masculine",
+        "זכר": "masculine",
+        "זכרי": "masculine",
+        "נ": "feminine",
+        "נקבה": "feminine",
+        "נקבי": "feminine",
+    }
+
+    english_gender = gender_map.get(מין, מין)
+    return GrammaticalGender.from_string(english_gender)
+
+
+def _map_hebrew_construct(מצב: str) -> ConstructState:
+    """Map Hebrew construct state terms to English enum.
+
+    Args:
+        מצב: Hebrew construct state ('נפרד' for absolute, 'נסמך' for construct)
+
+    Returns:
+        ConstructState enum
+    """
+    construct_map = {
+        "נפרד": "absolute",
+        "נסמך": "construct",
+    }
+
+    english_construct = construct_map.get(מצב, מצב)
+    return ConstructState(english_construct)
 
 
 def hebrew_indefinite_filter(value: int) -> str:
@@ -152,6 +194,84 @@ def hebrew_prefix_filter(
     return count_prefix(value, gender_enum, definite=definite)
 
 
+def hebrew_cardinal_filter_hebrew_params(
+    value: int,
+    מין: str,
+    מצב: str = "נפרד",
+) -> str:
+    """Convert number to cardinal Hebrew representation (Hebrew parameter names).
+
+    Args:
+        value: Number to convert.
+        מין: Gender ('ז', 'זכר', 'זכרי', 'נ', 'נקבה', 'נקבי').
+        מצב: State ('נפרד' for absolute, 'נסמך' for construct).
+
+    Returns:
+        Hebrew cardinal number.
+    """
+    gender_enum = _map_hebrew_gender(מין)
+    construct_enum = _map_hebrew_construct(מצב)
+    return cardinal_number(value, gender_enum, construct_enum)
+
+
+def hebrew_ordinal_filter_hebrew_params(value: int, מין: str) -> str:
+    """Convert number to ordinal Hebrew representation (Hebrew parameter names).
+
+    Args:
+        value: Number to convert.
+        מין: Gender ('ז', 'זכר', 'זכרי', 'נ', 'נקבה', 'נקבי').
+
+    Returns:
+        Hebrew ordinal number.
+    """
+    gender_enum = _map_hebrew_gender(מין)
+    return ordinal_number(value, gender_enum)
+
+
+def hebrew_count_filter_hebrew_params(
+    value: int,
+    יחיד: str,
+    רבים: str,
+    מין: str,
+    *,
+    מיודע: bool = False,
+) -> str:
+    """Count nouns with proper Hebrew grammar (Hebrew parameter names).
+
+    Args:
+        value: Number to count.
+        יחיד: Singular form of the noun.
+        רבים: Plural form of the noun.
+        מין: Gender ('ז', 'זכר', 'זכרי', 'נ', 'נקבה', 'נקבי').
+        מיודע: Whether to use definite article.
+
+    Returns:
+        Hebrew text with counted noun.
+    """
+    gender_enum = _map_hebrew_gender(מין)
+    return count_noun(value, יחיד, רבים, gender_enum, definite=מיודע)
+
+
+def hebrew_prefix_filter_hebrew_params(
+    value: int,
+    מין: str,
+    *,
+    מיודע: bool = False,
+) -> str:
+    """Get Hebrew number prefix for counting (Hebrew parameter names).
+
+    Args:
+        value: Number for prefix.
+        מין: Gender ('ז', 'זכר', 'זכרי', 'נ', 'נקבה', 'נקבי').
+        מיודע: Whether to use definite form.
+
+    Returns:
+        Hebrew number prefix.
+    """
+    gender_enum = _map_hebrew_gender(מין)
+    return count_prefix(value, gender_enum, definite=מיודע)
+
+
 class HebrewNumbersExtension(Extension):
     """Jinja2 extension that adds Hebrew number conversion filters.
 
@@ -174,18 +294,30 @@ class HebrewNumbersExtension(Extension):
             environment: The Jinja2 environment to extend.
         """
         super().__init__(environment)
+        # English filter names
         environment.filters["hebrew_indefinite"] = hebrew_indefinite_filter
         environment.filters["hebrew_cardinal"] = hebrew_cardinal_filter
         environment.filters["hebrew_ordinal"] = hebrew_ordinal_filter
         environment.filters["hebrew_count"] = hebrew_count_filter
         environment.filters["hebrew_prefix"] = hebrew_prefix_filter
 
+        # Hebrew filter names with Hebrew parameters
+        environment.filters["מספר_סתמי"] = hebrew_indefinite_filter
+        environment.filters["מספר_מונה"] = hebrew_cardinal_filter_hebrew_params
+        environment.filters["מספר_סודר"] = hebrew_ordinal_filter_hebrew_params
+        environment.filters["כמות_של"] = hebrew_count_filter_hebrew_params
+        environment.filters["כמות"] = hebrew_prefix_filter_hebrew_params
+
 
 __all__ = [
     "HebrewNumbersExtension",
     "hebrew_cardinal_filter",
+    "hebrew_cardinal_filter_hebrew_params",
     "hebrew_count_filter",
+    "hebrew_count_filter_hebrew_params",
     "hebrew_indefinite_filter",
     "hebrew_ordinal_filter",
+    "hebrew_ordinal_filter_hebrew_params",
     "hebrew_prefix_filter",
+    "hebrew_prefix_filter_hebrew_params",
 ]
