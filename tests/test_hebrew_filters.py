@@ -41,6 +41,17 @@ def test_hebrew_filters() -> None:
     result = template.render()
     assert result == "שְלוש מחברות"
 
+    # Test Hebrew boolean values for מיודע
+    template = env.from_string(
+        "{{ 3 | כמות_של('המחברת', 'המחברות', 'נ', מיודע='כן') }}"
+    )
+    result = template.render()
+    assert result == "שְלוש המחברות"
+
+    template = env.from_string("{{ 5 | כמות_של('ספר', 'ספרים', 'ז', מיודע='לא') }}")
+    result = template.render()
+    assert result == "חמישה ספרים"
+
     # Test כמות (prefix with Hebrew params)
     template = env.from_string("{{ 7 | כמות('נ') }}")
     result = template.render()
@@ -49,6 +60,15 @@ def test_hebrew_filters() -> None:
     template = env.from_string("{{ 4 | כמות('ז', מיודע=True) }}")
     result = template.render()
     assert result == "ארבעת"
+
+    # Test Hebrew boolean values for כמות
+    template = env.from_string("{{ 4 | כמות('ז', מיודע='כן') }}")
+    result = template.render()
+    assert result == "ארבעת"
+
+    template = env.from_string("{{ 7 | כמות('נ', מיודע='לא') }}")
+    result = template.render()
+    assert result == "שבע"
 
 
 if __name__ == "__main__":

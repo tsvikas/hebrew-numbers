@@ -72,6 +72,35 @@ def _map_hebrew_construct(מצב: str) -> ConstructState:
     return ConstructState(english_construct)
 
 
+def _map_hebrew_boolean(value: bool | str) -> bool:  # noqa: FBT001
+    """Map Hebrew boolean terms to Python bool.
+
+    Args:
+        value: Hebrew boolean term ('כן', 'לא') or Python bool
+
+    Returns:
+        Python boolean
+
+    Raises:
+        ValueError: If string value is not a valid Hebrew boolean term
+    """
+    if isinstance(value, bool):
+        return value
+
+    boolean_map = {
+        "כן": True,
+        "לא": False,
+    }
+
+    if value in boolean_map:
+        return boolean_map[value]
+
+    msg = (
+        f"Invalid Hebrew boolean value: {value!r}. Expected 'כן', 'לא', True, or False"
+    )
+    raise ValueError(msg)
+
+
 def hebrew_indefinite_filter(value: int) -> str:
     """Convert number to indefinite Hebrew representation.
 
@@ -234,7 +263,7 @@ def hebrew_count_filter_hebrew_params(
     רבים: str,
     מין: str,
     *,
-    מיודע: bool = False,
+    מיודע: bool | str = False,
 ) -> str:
     """Count nouns with proper Hebrew grammar (Hebrew parameter names).
 
@@ -243,33 +272,35 @@ def hebrew_count_filter_hebrew_params(
         יחיד: Singular form of the noun.
         רבים: Plural form of the noun.
         מין: Gender ('ז', 'זכר', 'זכרי', 'נ', 'נקבה', 'נקבי').
-        מיודע: Whether to use definite article.
+        מיודע: Whether to use definite article ('כן'/'לא' or True/False).
 
     Returns:
         Hebrew text with counted noun.
     """
     gender_enum = _map_hebrew_gender(מין)
-    return count_noun(value, יחיד, רבים, gender_enum, definite=מיודע)
+    definite_bool = _map_hebrew_boolean(מיודע)
+    return count_noun(value, יחיד, רבים, gender_enum, definite=definite_bool)
 
 
 def hebrew_prefix_filter_hebrew_params(
     value: int,
     מין: str,
     *,
-    מיודע: bool = False,
+    מיודע: bool | str = False,
 ) -> str:
     """Get Hebrew number prefix for counting (Hebrew parameter names).
 
     Args:
         value: Number for prefix.
         מין: Gender ('ז', 'זכר', 'זכרי', 'נ', 'נקבה', 'נקבי').
-        מיודע: Whether to use definite form.
+        מיודע: Whether to use definite form ('כן'/'לא' or True/False).
 
     Returns:
         Hebrew number prefix.
     """
     gender_enum = _map_hebrew_gender(מין)
-    return count_prefix(value, gender_enum, definite=מיודע)
+    definite_bool = _map_hebrew_boolean(מיודע)
+    return count_prefix(value, gender_enum, definite=definite_bool)
 
 
 class HebrewNumbersExtension(Extension):
