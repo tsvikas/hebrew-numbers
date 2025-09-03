@@ -16,9 +16,9 @@
 
 ## Overview
 
-This library provides a comprehensive solution for working with Hebrew numbers in various contexts.
-Hebrew has unique and complex rules for number representation that vary based on gender, definiteness, and usage context.
-This library aims to simplify these complexities by providing intuitive functions for converting numerical values to their proper Hebrew textual representation.
+This library provides a solution for working with Hebrew numbers in various contexts.
+Hebrew has unique rules for number representation that vary based on gender, definiteness, and usage context.
+This library simplify these complexities by providing functions for converting numerical values to their proper Hebrew textual representation.
 
 ## Install
 
@@ -31,7 +31,12 @@ pip install hebrew-numbers
 ## Usage
 
 ```pycon
->>> import hebrew_numbers
+>>> from hebrew_numbers import (
+...     indefinite_number,
+...     ordinal_number,
+...     count_noun,
+...     cardinal_number,
+... )
 ```
 
 ### Indefinite Number -- מספר סתמי
@@ -78,6 +83,7 @@ To specify a quantity with a noun, use `count_noun(n, singular_form, plural_form
 | 1      | ילד אֶחָד                                              | הילד האֶחָד                                             | ילדה אחת                                              | הילדה האחת                                             |
 | 2      | שני ילדים                                            | שני הילדים                                            | שתי ילדות                                             | שתי הילדות                                             |
 | 3      | שלושה ילדים                                          | שלושת הילדים                                          | שָלוש ילדות                                            | שְלוש הילדות                                            |
+| 22     | עשרים ושניים ילדים                                   | עשרים ושניים הילדים                                   | עשרים ושתיים ילדות                                    | עשרים ושתיים הילדות                                    |
 
 If you only need the numerical prefix, use `count_prefix(n, gender, definite)`.
 
@@ -92,6 +98,7 @@ If you know the gender and construct state, you can the number itself with `card
 | 1      | אֶחָד                                        | אַחַד                                       | אחת                                        | אחת                                       |
 | 2      | שניים                                      | שני                                       | שתיים                                      | שתי                                       |
 | 3      | שלושה                                      | שלושת                                     | שָלוש                                       | שְלוש                                      |
+| 22     | עשרים ושניים                               | עשרים ושניים                              | עשרים ושתיים                               | עשרים ושתיים                              |
 
 ##### Notes
 
