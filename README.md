@@ -101,6 +101,53 @@ If you know the gender and construct state, you can the number itself with `card
 - The form of the number following "פי" (times/multiplied by) to be in the masculine-absolute form: פי שניים, פי שלושה, פי ארבעה.
 - Use the masculine-absolute form to indicate the days of the month: אחד בכסלו, עשרה בטבת, אחד באפריל, שניים ביוני.
 
+## Jinja2 Templates
+
+The library includes a Jinja2 extension for using Hebrew numbers in templates.
+
+### Installation
+
+Install with Jinja2 support:
+
+```bash
+pip install hebrew-numbers[jinja]
+```
+
+### Usage
+
+```pycon
+>>> from jinja2 import Environment
+>>> from hebrew_numbers.jinja import HebrewNumbersExtension
+>>> env = Environment(extensions=[HebrewNumbersExtension])
+>>> template = env.from_string("מקום {{ 1 | hebrew_ordinal('masculine') }}")
+>>> template.render()
+'מקום ראשון'
+>>> template = env.from_string("{{ 5300 | hebrew_count('מניה', 'מניות', 'f') }}")
+>>> template.render()
+'חמשת אלפים ושְלוש מאות מניות'
+>>> template = env.from_string("{{ 15000 | hebrew_prefix('m') }}")
+>>> template.render()
+'חמישה־עשר אלף'
+
+```
+
+### Available Filters
+
+| Filter                                                   | Description                     | Example                                                              |
+| -------------------------------------------------------- | ------------------------------- | -------------------------------------------------------------------- |
+| `hebrew_count(singular, plural, gender, definite=False)` | Count nouns                     | `{{ 5 \| hebrew_count('ספר', 'ספרים', 'masculine') }}` → חמישה ספרים |
+| `hebrew_prefix(gender, definite=False)`                  | Number prefix only              | `{{ 5 \| hebrew_prefix('m') }}` → חמישה                              |
+| `hebrew_ordinal(gender)`                                 | Ordinal numbers                 | `{{ 5 \| hebrew_ordinal('m') }}` → חמישי                             |
+| `hebrew_indefinite`                                      | Indefinite number               | `{{ 5 \| hebrew_indefinite }}` → חמש                                 |
+| `hebrew_cardinal(gender, construct='absolute')`          | Cardinal number (tricky to use) | `{{ 5 \| hebrew_cardinal('m', 'construct') }}` → חמשת                |
+
+### Gender Parameter
+
+All filters accept flexible gender strings:
+
+- **Masculine**: `'masculine'`, `'male'`, `'m'`
+- **Feminine**: `'feminine'`, `'female'`, `'f'`
+
 ## Contributing
 
 Interested in contributing?
