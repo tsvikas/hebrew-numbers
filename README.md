@@ -101,6 +101,20 @@ If you know the gender and construct state, you can the number itself with `card
 - The form of the number following "פי" (times/multiplied by) to be in the masculine-absolute form: פי שניים, פי שלושה, פי ארבעה.
 - Use the masculine-absolute form to indicate the days of the month: אחד בכסלו, עשרה בטבת, אחד באפריל, שניים ביוני.
 
+## Niqqud Ezer (Helping Niqqud)
+
+All functions accept an optional `niqqud_ezer` parameter (enabled by default) that adds minimal vowel marks:
+
+- **1**: אֶחָד (masculine absolute) / אַחַד (masculine construct)
+- **3**: שָלוש (feminine absolute) / שְלוש (feminine construct)
+- **7**: שְבע (special feminine construct form in 17, 19, 700, 900)
+- **8**: שמונֶה (feminine) / שמונָה (masculine)
+- **9**: תְשע (special feminine construct form in 17, 19, 700, 900)
+
+To disable these vowel marks, set `niqqud_ezer=False`.
+
+**Note**: This is not full niqqud - only minimal vowel marks needed to distinguish pronunciation variants.
+
 ## Jinja2 Templates
 
 The library includes a Jinja2 extension for using Hebrew numbers in templates.

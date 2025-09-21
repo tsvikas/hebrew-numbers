@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+### Added
+
+- Optional `niqqud_ezer` parameter to control niqqud ezer (enabled by default)
+
 ## [v0.2.0] - 2025-01-16
 
 ### Added
