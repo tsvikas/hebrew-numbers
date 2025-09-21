@@ -65,15 +65,18 @@ def return_errors(  # type: ignore[explicit-any]
 @pytest.mark.parametrize(
     "construct", [ConstructState.ABSOLUTE, ConstructState.CONSTRUCT]
 )
+@pytest.mark.parametrize("niqqud_ezer", [False, True])
 def test_cardinal_number(
     data_regression: DataRegressionFixture,
     gender: GrammaticalGender,
     construct: ConstructState,
+    niqqud_ezer: bool,  # noqa: FBT001
 ) -> None:
     data = {
         n: return_errors(
             hebrew_numbers.cardinal_number,
             (n, gender, construct),
+            {"niqqud_ezer": niqqud_ezer},
             valid_exceptions=InvalidNumberError,
         )
         for n in NUMBERS_TO_TEST
@@ -81,11 +84,15 @@ def test_cardinal_number(
     data_regression.check(data)
 
 
-def test_indefinite_number(data_regression: DataRegressionFixture) -> None:
+@pytest.mark.parametrize("niqqud_ezer", [False, True])
+def test_indefinite_number(
+    data_regression: DataRegressionFixture, niqqud_ezer: bool  # noqa: FBT001
+) -> None:
     data = {
         n: return_errors(
             hebrew_numbers.indefinite_number,
             (n,),
+            {"niqqud_ezer": niqqud_ezer},
             valid_exceptions=InvalidNumberError,
         )
         for n in NUMBERS_TO_TEST
@@ -96,13 +103,17 @@ def test_indefinite_number(data_regression: DataRegressionFixture) -> None:
 @pytest.mark.parametrize(
     "gender", [GrammaticalGender.FEMININE, GrammaticalGender.MASCULINE]
 )
+@pytest.mark.parametrize("niqqud_ezer", [False, True])
 def test_ordinal_number(
-    data_regression: DataRegressionFixture, gender: GrammaticalGender
+    data_regression: DataRegressionFixture,
+    gender: GrammaticalGender,
+    niqqud_ezer: bool,  # noqa: FBT001
 ) -> None:
     data = {
         n: return_errors(
             hebrew_numbers.ordinal_number,
             (n, gender),
+            {"niqqud_ezer": niqqud_ezer},
             valid_exceptions=InvalidNumberError,
         )
         for n in NUMBERS_TO_TEST
@@ -114,16 +125,18 @@ def test_ordinal_number(
     "gender", [GrammaticalGender.FEMININE, GrammaticalGender.MASCULINE]
 )
 @pytest.mark.parametrize("definite", [False, True])
+@pytest.mark.parametrize("niqqud_ezer", [False, True])
 def test_count_prefix(
     data_regression: DataRegressionFixture,
     gender: GrammaticalGender,
     definite: bool,  # noqa: FBT001
+    niqqud_ezer: bool,  # noqa: FBT001
 ) -> None:
     data = {
         n: return_errors(
             hebrew_numbers.count_prefix,
             (n, gender),
-            {"definite": definite},
+            {"definite": definite, "niqqud_ezer": niqqud_ezer},
             valid_exceptions=InvalidNumberError,
         )
         for n in NUMBERS_TO_TEST
@@ -135,10 +148,12 @@ def test_count_prefix(
     "gender", [GrammaticalGender.FEMININE, GrammaticalGender.MASCULINE]
 )
 @pytest.mark.parametrize("definite", [False, True])
+@pytest.mark.parametrize("niqqud_ezer", [False, True])
 def test_count_noun(
     data_regression: DataRegressionFixture,
     gender: GrammaticalGender,
     definite: bool,  # noqa: FBT001
+    niqqud_ezer: bool,  # noqa: FBT001
 ) -> None:
     singular_form = {
         GrammaticalGender.MASCULINE: "ילד",
@@ -155,7 +170,7 @@ def test_count_noun(
         n: return_errors(
             hebrew_numbers.count_noun,
             (n, singular_form, plural_form, gender),
-            {"definite": definite},
+            {"definite": definite, "niqqud_ezer": niqqud_ezer},
             valid_exceptions=InvalidNumberError,
         )
         for n in NUMBERS_TO_TEST
