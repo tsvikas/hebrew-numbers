@@ -6,6 +6,7 @@
 from __future__ import annotations
 
 import enum
+import re
 import sys
 
 if sys.version_info >= (3, 12):
@@ -299,6 +300,8 @@ def cardinal_number(  # noqa: C901
     n: int,
     gender: GrammaticalGender | str,
     construct: ConstructState | bool,  # noqa: FBT001
+    *,
+    niqqud_ezer: bool = True,
 ) -> str:
     """Translate a positive integer into Hebrew words as a cardinal number (מספר מונה).
 
@@ -404,11 +407,13 @@ def cardinal_number(  # noqa: C901
             construct_state if n < 1000 else ConstructState.ABSOLUTE,  # noqa: PLR2004
         )
     words.extend(last_digits_words)
+    joined_words = _join_words(words)
+    if not niqqud_ezer:
+        joined_words = re.sub(r"[\u05B0-\u05BC\u05C1\u05C2\u05C7]", "", joined_words)
+    return joined_words
 
-    return _join_words(words)
 
-
-def indefinite_number(n: int) -> str:
+def indefinite_number(n: int, *, niqqud_ezer: bool = True) -> str:
     """Create a string representing an indefinite number (מספר סתמי).
 
     For negative numbers, the string will include a "minus" prefix (מינוס).
@@ -431,12 +436,21 @@ def indefinite_number(n: int) -> str:
     if n == 0:
         return "אפס"
     if n < 0:
-        n_str = cardinal_number(-n, GrammaticalGender.FEMININE, ConstructState.ABSOLUTE)
+        n_str = cardinal_number(
+            -n,
+            GrammaticalGender.FEMININE,
+            ConstructState.ABSOLUTE,
+            niqqud_ezer=niqqud_ezer,
+        )
         return f"מינוס {n_str}"
-    return cardinal_number(n, GrammaticalGender.FEMININE, ConstructState.ABSOLUTE)
+    return cardinal_number(
+        n, GrammaticalGender.FEMININE, ConstructState.ABSOLUTE, niqqud_ezer=niqqud_ezer
+    )
 
 
-def ordinal_number(n: int, gender: GrammaticalGender | str) -> str:
+def ordinal_number(
+    n: int, gender: GrammaticalGender | str, *, niqqud_ezer: bool = True
+) -> str:
     """Create a string representing an ordinal number (מספר סודר).
 
     Supports positive integers up to 10^21.
@@ -457,7 +471,9 @@ def ordinal_number(n: int, gender: GrammaticalGender | str) -> str:
     if n <= 0:
         raise InvalidNumberError("Number must be positive")
     if n > 10:  # noqa: PLR2004
-        return cardinal_number(n, grammatical_gender, ConstructState.ABSOLUTE)
+        return cardinal_number(
+            n, grammatical_gender, ConstructState.ABSOLUTE, niqqud_ezer=niqqud_ezer
+        )
     if grammatical_gender == GrammaticalGender.FEMININE:
         return {
             1: "ראשונה",
@@ -492,6 +508,7 @@ def count_prefix(
     gender: GrammaticalGender | str,
     *,
     definite: bool = False,
+    niqqud_ezer: bool = True,
 ) -> str:
     """Generate a Hebrew cardinal number (מספר מונה) suitable as a prefix before a noun.
 
@@ -530,16 +547,19 @@ def count_prefix(
         construct_state = (
             ConstructState.CONSTRUCT if definite else ConstructState.ABSOLUTE
         )
-    return cardinal_number(n, grammatical_gender, construct_state)
+    return cardinal_number(
+        n, grammatical_gender, construct_state, niqqud_ezer=niqqud_ezer
+    )
 
 
-def count_noun(
+def count_noun(  # noqa: PLR0913
     n: int,
     singular_form: str,
     plural_form: str,
     gender: GrammaticalGender | str,
     *,
     definite: bool = False,
+    niqqud_ezer: bool = True,
 ) -> str:
     """Generate a Hebrew phrase for counting a noun, handling singular and plural forms.
 
@@ -564,8 +584,10 @@ def count_noun(
     grammatical_gender = GrammaticalGender.from_string(gender)
     if n == 1:
         n_str = ("ה" if definite else "") + cardinal_number(
-            n, grammatical_gender, ConstructState.ABSOLUTE
+            n, grammatical_gender, ConstructState.ABSOLUTE, niqqud_ezer=niqqud_ezer
         )
         return f"{singular_form} {n_str}"
-    n_str = count_prefix(n, grammatical_gender, definite=definite)
+    n_str = count_prefix(
+        n, grammatical_gender, definite=definite, niqqud_ezer=niqqud_ezer
+    )
     return f"{n_str} {plural_form}"
