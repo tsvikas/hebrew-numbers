@@ -54,8 +54,6 @@ urls.issues = "https://github.com/tsvikas/hebrew-numbers/issues"
 requires-python = ">=3.9"
 dependencies = [
     "typing-extensions>=4.5.0; python_version < '3.12'",
-  # "typer >=0.16",
-  # "click >=0",
 ]
 
 [project.optional-dependencies]
