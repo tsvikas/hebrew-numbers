@@ -31,6 +31,19 @@ from .hebrew_numbers import (
     ordinal_number,
 )
 
+__all__ = [
+    "HebrewNumbersExtension",
+    "hebrew_cardinal_filter",
+    "hebrew_cardinal_filter_hebrew_params",
+    "hebrew_count_filter",
+    "hebrew_count_filter_hebrew_params",
+    "hebrew_indefinite_filter",
+    "hebrew_ordinal_filter",
+    "hebrew_ordinal_filter_hebrew_params",
+    "hebrew_prefix_filter",
+    "hebrew_prefix_filter_hebrew_params",
+]
+
 
 def _map_hebrew_gender(מין: str) -> GrammaticalGender:
     """Map Hebrew gender terms to English enum.
@@ -338,17 +351,3 @@ class HebrewNumbersExtension(Extension):
         environment.filters["מספר_סודר"] = hebrew_ordinal_filter_hebrew_params
         environment.filters["כמות_של"] = hebrew_count_filter_hebrew_params
         environment.filters["כמות"] = hebrew_prefix_filter_hebrew_params
-
-
-__all__ = [
-    "HebrewNumbersExtension",
-    "hebrew_cardinal_filter",
-    "hebrew_cardinal_filter_hebrew_params",
-    "hebrew_count_filter",
-    "hebrew_count_filter_hebrew_params",
-    "hebrew_indefinite_filter",
-    "hebrew_ordinal_filter",
-    "hebrew_ordinal_filter_hebrew_params",
-    "hebrew_prefix_filter",
-    "hebrew_prefix_filter_hebrew_params",
-]
