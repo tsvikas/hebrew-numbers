@@ -32,7 +32,6 @@ classifiers = [
   "Programming Language :: Python",
   "Programming Language :: Python :: 3",
   "Programming Language :: Python :: 3 :: Only",
-  "Programming Language :: Python :: 3.9",
   "Programming Language :: Python :: 3.10",
   "Programming Language :: Python :: 3.11",
   "Programming Language :: Python :: 3.12",
@@ -51,7 +50,7 @@ urls.changelog = "https://github.com/tsvikas/hebrew-numbers/blob/main/CHANGELOG.
 urls.issues = "https://github.com/tsvikas/hebrew-numbers/issues"
 # urls.funding = "https://github.com/sponsors/tsvikas"
 
-requires-python = ">=3.9"
+requires-python = ">=3.10"
 dependencies = [
     "typing-extensions>=4.5.0; python_version < '3.12'",
 ]
@@ -165,7 +164,7 @@ files = ["src", "tests"]
 mypy_path = "stubs"
 # ENABLE WHEN SCHEMA UPDATES: fixed_format_cache = true
 # set the platform
-python_version = "3.9"
+python_version = "3.10"
 # enable checks [last updated: mypy 1.18]
 strict = true
 # ENABLE WHEN SCHEMA UPDATES: strict_equality_for_none = true
@@ -266,6 +265,6 @@ flake8-comprehensions.allow-dict-calls-with-keyword-arguments = true
 
 
 [tool.pylint]
-py-version = "3.9"
+py-version = "3.10"
 ignore-paths = [".*/_version.py"]
 reports.output-format = "colorized"

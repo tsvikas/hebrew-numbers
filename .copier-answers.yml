@@ -13,7 +13,7 @@ license: MIT
 package_description: Convert numbers to Hebrew.
 package_name: hebrew_numbers
 project_name: hebrew-numbers
-python_min: 9
+python_min: 10
 user_email: tsvikas@gmail.com
 user_name: Tsvika Shapira
 year: 2025

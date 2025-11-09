@@ -105,17 +105,17 @@ jobs:
           # test with lowest resolution
           - resolution: lowest
             os: ubuntu-latest
-            python-version: '3.9'
+            python-version: '3.10'
           # test with different os
           - resolution: locked
             os: ubuntu-latest
-            python-version: '3.9'
+            python-version: '3.10'
           - resolution: locked
             os: macos-latest
-            python-version: '3.9'
+            python-version: '3.10'
           - resolution: locked
             os: windows-latest
-            python-version: '3.9'
+            python-version: '3.10'
       fail-fast: false
     runs-on: ${{ matrix.os }}
     name: test-${{ matrix.python-version }}-${{ matrix.resolution }}-${{ matrix.os }}
