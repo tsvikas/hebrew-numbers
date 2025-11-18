@@ -149,6 +149,7 @@ filterwarnings = [
   "default::DeprecationWarning",
   "error::DeprecationWarning:hebrew_numbers",
 ]
+log_level = "INFO"
 
 
 [tool.coverage]
