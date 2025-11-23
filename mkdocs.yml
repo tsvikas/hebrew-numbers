@@ -1,5 +1,10 @@
 site_name: hebrew-numbers
+site_url: 'https://hebrew-numbers.readthedocs.io/'
+site_author: Tsvika Shapira
 site_description: Convert numbers to Hebrew.
+
+repo_name: 'tsvikas/hebrew-numbers'
+repo_url: 'https://github.com/tsvikas/hebrew-numbers'
 
 theme:
   name: material

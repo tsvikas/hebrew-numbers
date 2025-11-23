@@ -42,13 +42,14 @@ classifiers = [
   "Topic :: Software Development :: Libraries",
   "Typing :: Typed",
 ]
-# urls.homepage = "https://hebrew-numbers.readthedocs.io"
-urls.source = "https://github.com/tsvikas/hebrew-numbers"
-urls.changelog = "https://github.com/tsvikas/hebrew-numbers/blob/main/CHANGELOG.md"
-# urls.releasenotes = "https://github.com/tsvikas/hebrew-numbers/releases"
-# urls.documentation = "https://hebrew-numbers.readthedocs.io"
-urls.issues = "https://github.com/tsvikas/hebrew-numbers/issues"
-# urls.funding = "https://github.com/sponsors/tsvikas"
+# urls.Homepage = "https://hebrew-numbers.readthedocs.io"
+urls.Source = "https://github.com/tsvikas/hebrew-numbers"
+urls.Changelog = "https://github.com/tsvikas/hebrew-numbers/blob/main/CHANGELOG.md"
+# urls.ReleaseNotes = "https://github.com/tsvikas/hebrew-numbers/releases"
+# urls.Documentation = "https://hebrew-numbers.readthedocs.io"
+urls.Issues = "https://github.com/tsvikas/hebrew-numbers/issues"
+# urls.Funding = "https://github.com/sponsors/tsvikas"
+# Discussions = "https://github.com/tsvikas/hebrew-numbers/discussions"
 
 requires-python = ">=3.10"
 dependencies = [
@@ -63,11 +64,6 @@ jinja = ["jinja2 >=3.0.0"]
 
 [project.gui-scripts]
 # hebrew-numbers = "hebrew_numbers.gui:app.run"
-
-
-[tool.uv]
-required-version = ">=0.7.3"
-default-groups = ["dev", "test", "typing"]
 
 
 [dependency-groups]
@@ -109,6 +105,11 @@ typing = [
   "mypy ~=1.18.0",
   # add "*-stubs" and "types-*" packages here (">=0")
 ]
+
+
+[tool.uv]
+required-version = ">=0.7.3"
+default-groups = ["dev", "test", "typing"]
 
 
 [tool.hatch]
