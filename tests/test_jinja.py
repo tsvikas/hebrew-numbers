@@ -11,11 +11,16 @@ from jinja2 import Environment
 from hebrew_numbers import InvalidNumberError
 from hebrew_numbers.jinja import (
     HebrewNumbersExtension,
+    _map_hebrew_boolean,
     hebrew_cardinal_filter,
+    hebrew_cardinal_filter_hebrew_params,
     hebrew_count_filter,
+    hebrew_count_filter_hebrew_params,
     hebrew_indefinite_filter,
     hebrew_ordinal_filter,
+    hebrew_ordinal_filter_hebrew_params,
     hebrew_prefix_filter,
+    hebrew_prefix_filter_hebrew_params,
 )
 
 
@@ -132,3 +137,125 @@ class TestIndividualFilters:
 
         with pytest.raises(InvalidNumberError):
             hebrew_ordinal_filter(0, "masculine")
+
+
+@pytest.mark.parametrize(
+    ("n", "gender", "expected"),
+    [
+        (3, "ז", "שלושה"),
+        (3, "זכר", "שלושה"),
+        (3, "זכרי", "שלושה"),
+        (3, "נ", "שָלוש"),
+        (3, "נקבה", "שָלוש"),
+        (3, "נקבי", "שָלוש"),
+    ],
+)
+def test_hebrew_cardinal_filter_hebrew_params_gender(
+    n: int, gender: str, expected: str
+) -> None:
+    """Test hebrew_cardinal_filter_hebrew_params with various Hebrew gender terms."""
+    assert hebrew_cardinal_filter_hebrew_params(n, gender) == expected
+
+
+@pytest.mark.parametrize(
+    ("n", "gender", "construct", "expected"),
+    [
+        (3, "ז", "נסמך", "שלושת"),
+        (3, "נ", "נסמך", "שְלוש"),
+        (3, "ז", "נפרד", "שלושה"),
+    ],
+)
+def test_hebrew_cardinal_filter_hebrew_params_construct(
+    n: int, gender: str, construct: str, expected: str
+) -> None:
+    """Test hebrew_cardinal_filter_hebrew_params with Hebrew construct state terms."""
+    assert hebrew_cardinal_filter_hebrew_params(n, gender, construct) == expected
+
+
+@pytest.mark.parametrize(
+    ("n", "gender", "expected"),
+    [
+        (1, "ז", "ראשון"),
+        (2, "זכר", "שני"),
+        (3, "זכרי", "שלישי"),
+        (1, "נ", "ראשונה"),
+        (2, "נקבה", "שנייה"),
+        (3, "נקבי", "שלישית"),
+    ],
+)
+def test_hebrew_ordinal_filter_hebrew_params(
+    n: int, gender: str, expected: str
+) -> None:
+    """Test hebrew_ordinal_filter_hebrew_params with Hebrew gender terms."""
+    assert hebrew_ordinal_filter_hebrew_params(n, gender) == expected
+
+
+@pytest.mark.parametrize(
+    ("n", "singular", "plural", "gender", "definite", "expected"),
+    [
+        (5, "ספר", "ספרים", "ז", "לא", "חמישה ספרים"),
+        (5, "הספר", "הספרים", "ז", "כן", "חמשת הספרים"),
+        (3, "בחורה", "בחורות", "נ", False, "שָלוש בחורות"),
+        (3, "הבחורה", "הבחורות", "נ", True, "שְלוש הבחורות"),
+    ],
+)
+def test_hebrew_count_filter_hebrew_params(  # noqa: PLR0913
+    n: int,
+    singular: str,
+    plural: str,
+    gender: str,
+    definite: bool | str,  # noqa: FBT001
+    expected: str,
+) -> None:
+    """Test hebrew_count_filter_hebrew_params with Hebrew boolean terms."""
+    result = hebrew_count_filter_hebrew_params(
+        n, singular, plural, gender, מיודע=definite
+    )
+    assert result == expected
+
+
+@pytest.mark.parametrize(
+    ("n", "gender", "definite", "expected"),
+    [
+        (7, "ז", None, "שבעה"),
+        (7, "נ", None, "שבע"),
+        (7, "ז", "כן", "שבעת"),
+        (7, "ז", "לא", "שבעה"),
+        (7, "ז", True, "שבעת"),
+        (7, "ז", False, "שבעה"),
+    ],
+)
+def test_hebrew_prefix_filter_hebrew_params(
+    n: int, gender: str, definite: bool | str | None, expected: str  # noqa: FBT001
+) -> None:
+    """Test hebrew_prefix_filter_hebrew_params with Hebrew parameters."""
+    if definite is None:
+        result = hebrew_prefix_filter_hebrew_params(n, gender)
+    else:
+        result = hebrew_prefix_filter_hebrew_params(n, gender, מיודע=definite)
+    assert result == expected
+
+
+def test_map_hebrew_boolean_invalid() -> None:
+    """Test _map_hebrew_boolean with invalid Hebrew boolean value."""
+    with pytest.raises(ValueError, match="Invalid Hebrew boolean value"):
+        _map_hebrew_boolean("invalid")
+
+
+@pytest.mark.parametrize(
+    ("template_str", "expected_result"),
+    [
+        ("{{ 42 | מספר_סתמי }}", "ארבעים ושתיים"),
+        ("{{ 3 | מספר_מונה('ז') }}", "שלושה"),
+        ("{{ 3 | מספר_מונה('נ', 'נסמך') }}", "שְלוש"),
+        ("{{ 1 | מספר_סודר('ז') }}", "ראשון"),
+        ("{{ 1 | מספר_סודר('נ') }}", "ראשונה"),
+        ("{{ 5 | כמות_של('ספר', 'ספרים', 'ז') }}", "חמישה ספרים"),
+        ("{{ 7 | כמות('ז') }}", "שבעה"),
+    ],
+)
+def test_hebrew_filter_names_in_jinja(template_str: str, expected_result: str) -> None:
+    """Test using Hebrew filter names in Jinja templates."""
+    env = Environment(extensions=[HebrewNumbersExtension], autoescape=True)
+    template = env.from_string(template_str)
+    assert template.render() == expected_result
