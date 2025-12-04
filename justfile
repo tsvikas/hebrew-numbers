@@ -108,7 +108,7 @@ test-lowest python:
 
 # Create a release commit
 release version: (_assert-legal-version version) _check
-  sed -i "s/## Unreleased/## Unreleased\n\n## v{{version}}/" CHANGELOG.md
+  sed -i "s/## \[Unreleased\]/## [Unreleased]\n\n## [v{{version}}] - $(date +%Y-%m-%d)/" CHANGELOG.md
   git add CHANGELOG.md
   git commit -m "🔖 Release v{{version}}"
   just _tag-skip-check {{version}} HEAD
