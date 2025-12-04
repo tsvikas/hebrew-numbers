@@ -4,6 +4,8 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+## [v0.2.1] - 2025-12-05
+
 ### Added
 
 - Type stub (`_version.pyi`) for `__version__`
