@@ -4,13 +4,13 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
-## [v0.2.1] - 2025-12-05
+## [0.2.1] - 2025-12-05
 
 ### Added
 
 - Type stub (`_version.pyi`) for `__version__`
 
-## [v0.2.0] - 2025-01-16
+## [0.2.0] - 2025-01-16
 
 ### Added
 
@@ -20,7 +20,7 @@ All notable changes to this project will be documented in this file.
 - Support for Hebrew parameter values (`'כן'`/`'לא'` for booleans, `'ז'`/`'נ'` for gender, `'נפרד'`/`'נסמך'` for construct state)
 - Optional jinja2 installation via `hebrew-numbers[jinja]` extra
 
-## [v0.1.1] - 2025-01-16
+## [0.1.1] - 2025-01-16
 
 ### Changed
 
@@ -29,7 +29,7 @@ All notable changes to this project will be documented in this file.
 - Enhanced function documentation with detailed Args, Returns, and Raises sections
 - Code quality improvements and linting fixes
 
-## [v0.1.0] - 2025-01-16
+## [0.1.0] - 2025-01-16
 
 ### Added
 
@@ -45,3 +45,9 @@ All notable changes to this project will be documented in this file.
 - Comprehensive test coverage
 - Documentation and examples
 - CI/CD pipeline with GitHub Actions
+
+[0.1.0]: https://github.com/tsvikas/hebrew-numbers/releases/tag/v0.1.0
+[0.1.1]: https://github.com/tsvikas/hebrew-numbers/compare/v0.1.0...v0.1.1
+[0.2.0]: https://github.com/tsvikas/hebrew-numbers/compare/v0.1.1...v0.2.0
+[0.2.1]: https://github.com/tsvikas/hebrew-numbers/compare/v0.2.0...v0.2.1
+[unreleased]: https://github.com/tsvikas/hebrew-numbers/compare/v0.2.1...HEAD
