@@ -199,7 +199,7 @@ def test_hebrew_ordinal_filter_hebrew_params(
         (3, "הבחורה", "הבחורות", "נ", True, "שְלוש הבחורות"),
     ],
 )
-def test_hebrew_count_filter_hebrew_params(  # noqa: PLR0913
+def test_hebrew_count_filter_hebrew_params(  # noqa: PLR0913, PLR0917
     n: int,
     singular: str,
     plural: str,
