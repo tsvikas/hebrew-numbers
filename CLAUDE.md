@@ -21,7 +21,6 @@ This is a Python library for converting numbers to Hebrew text representation. I
 - `uv run just test` - Run pytest tests
 - `uv run just lint` - Run ruff and mypy linting
 - `uv run just format` - Format code with black and ruff
-- `uv run just check` - Run all quality checks (test + lint + pre-commit)
 
 ### Individual Tools
 
@@ -29,7 +28,7 @@ This is a Python library for converting numbers to Hebrew text representation. I
 - `uv run mypy` - Type checking
 - `uv run ruff check` - Linting
 - `uv run black .` - Code formatting
-- `uv run pre-commit run --all-files` - All pre-commit hooks
+- `uv run prek run --all-files` - All pre-commit hooks
 
 ### Setup
 
@@ -52,7 +51,7 @@ This is a Python library for converting numbers to Hebrew text representation. I
 
 ### Code Quality Standards
 
-- Python 3.9+ compatibility required
+- Python 3.10+ compatibility required
 - Uses black for formatting, ruff for linting, mypy for type checking
 - Strict mypy configuration with comprehensive type checking
 - Extensive pre-commit hooks including spell checking and formatting
